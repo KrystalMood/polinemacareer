@@ -1,7 +1,8 @@
-import { ArrowRight } from "lucide-react";
-import { Clock, MapPin, DollarSign, Bookmark } from "lucide-react";
+import { ArrowRight, BookmarkCheck, Bookmark } from "lucide-react";
+import { Clock, MapPin, DollarSign } from "lucide-react";
 import templateImage from "@/public/templatePost.png";
 import Image from "next/image";
+import { useState } from "react";
 
 interface Job {
   title: string;
@@ -10,6 +11,7 @@ interface Job {
   location: string;
   payment: string;
   deadline: string;
+  bookmarked: boolean;
 }
 
 const jobs: Job[] = [
@@ -20,6 +22,7 @@ const jobs: Job[] = [
     location: "Australia",
     payment: "$30K-$35K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
   {
     title: "Software Engineer",
@@ -28,6 +31,7 @@ const jobs: Job[] = [
     location: "China",
     payment: "$50K-$60K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
   {
     title: "Junior Graphic Designer",
@@ -36,6 +40,7 @@ const jobs: Job[] = [
     location: "Canada",
     payment: "$50K-$70K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
   {
     title: "Product Designer",
@@ -44,6 +49,7 @@ const jobs: Job[] = [
     location: "United States",
     payment: "$35K-$40K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
   {
     title: "Marketing Officer",
@@ -52,6 +58,7 @@ const jobs: Job[] = [
     location: "Germany",
     payment: "$50K-$90K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
   {
     title: "Interaction Designer",
@@ -60,10 +67,20 @@ const jobs: Job[] = [
     location: "France",
     payment: "$5K-$10K",
     deadline: "4 Days Remaining",
+    bookmarked: false,
   },
 ];
 
 export default function IndexFeatures() {
+  const [job, setJob] = useState<Job[]>(jobs);
+
+  const handleBookmarked = (index: number) => {
+    const updatedJobs = job.map((job, i) =>
+      i === index ? { ...job, bookmarked: !job.bookmarked } : job
+    );
+    setJob(updatedJobs);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
@@ -83,49 +100,56 @@ export default function IndexFeatures() {
         </div>
 
         <div className="grid gap-6">
-          {jobs.map((job) => (
+          {job.map((jobItem, index) => (
             <div
-              key={job.title}
+              key={jobItem.title}
               className="group bg-white rounded-xl border border-gray-200 p-6 hover:border-sky-100 hover:shadow-lg hover:shadow-sky-50/50 transition-all duration-150"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-start sm:items-center gap-4">
                   <Image
                     src={templateImage}
-                    alt={job.title}
+                    alt={jobItem.title}
                     className="w-16 h-16 rounded-lg object-cover border border-gray-100 shadow-sm"
                   />
                   <div className="space-y-2">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                       <h2 className="text-xl font-semibold text-gray-900">
-                        {job.title}
+                        {jobItem.title}
                       </h2>
                       <span className="inline-flex px-3 py-1 text-sm font-medium text-sky-700 bg-sky-50 rounded-full w-fit">
-                        {job.type}
+                        {jobItem.type}
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                       <span className="inline-flex items-center">
                         <MapPin size={16} className="mr-1.5 text-gray-400" />
-                        {job.location}
+                        {jobItem.location}
                       </span>
                       <span className="inline-flex items-center">
                         <DollarSign
                           size={16}
                           className="mr-1.5 text-gray-400"
                         />
-                        {job.payment}
+                        {jobItem.payment}
                       </span>
                       <span className="inline-flex items-center">
                         <Clock size={16} className="mr-1.5 text-gray-400" />
-                        {job.deadline}
+                        {jobItem.deadline}
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 sm:ml-auto">
-                  <button className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-sky-600 rounded-lg hover:bg-sky-50 transition-colors">
-                    <Bookmark size={20} />
+                  <button
+                    onClick={() => handleBookmarked(index)}
+                    className="inline-flex items-center justify-center p-2 text-gray-400 hover:text-sky-600 rounded-lg hover:bg-sky-50 transition-colors"
+                  >
+                    {jobItem.bookmarked ? (
+                      <Bookmark size={20} fill="yellow" stroke="yellow" />
+                    ) : (
+                      <Bookmark size={20} />
+                    )}
                   </button>
                   <button className="inline-flex items-center px-6 py-2.5 bg-sky-50 text-sky-600 font-semibold rounded-lg group-hover:bg-yellow-400 group-hover:text-white transition-all duration-150">
                     Apply Now

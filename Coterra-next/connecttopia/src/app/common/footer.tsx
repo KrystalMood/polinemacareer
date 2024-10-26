@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Footer(): JSX.Element {
   return (
-    <div className="relative min-h-40 flex items-center justify-around bg-black">
+    <div className="relative min-h-40 flex items-center justify-around bg-[#1C2056]">
       {/* <Image
         src={backgroundImage}
         alt="Background"

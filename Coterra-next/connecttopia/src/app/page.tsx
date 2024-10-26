@@ -2,16 +2,13 @@
 import Image from "next/image";
 import IndexHero from "./components/index/hero";
 import Header from "./common/header";
-import IndexIntroduction from "./components/index/introduction";
 import Footer from "./common/footer";
 import FeaturedJobs from "./components/index/job";
-import Benefits from "./components/index/features";
-import PlatformPerformanceChart from "./components/index/charts";
-import IndexCTA from "./components/index/join-now";
 import IndexIntro from "./components/index/intro";
 import IndexLogo from "./components/index/logo";
 import IndexCategory from "./components/index/popular-category";
 import IndexFeatures from "./components/index/featured-job";
+import IndexCompany from "./components/index/top-company";
 
 export default function Home() {
   return (
@@ -23,13 +20,8 @@ export default function Home() {
       <FeaturedJobs />
       <IndexCategory />
       <IndexFeatures />
-      {/*
-      <IndexIntroduction />
-      <Benefits />
-      <PlatformPerformanceChart />
-      <FeaturedJobs />
-      <IndexCTA />
-      <Footer /> */}
+      <IndexCompany />
+      <Footer />
     </>
   );
 }

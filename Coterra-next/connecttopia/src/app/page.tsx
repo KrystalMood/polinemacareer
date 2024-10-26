@@ -9,6 +9,7 @@ import IndexLogo from "./components/index/logo";
 import IndexCategory from "./components/index/popular-category";
 import IndexFeatures from "./components/index/featured-job";
 import IndexCompany from "./components/index/top-company";
+import IndexEvent from "./components/index/event";
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
       <IndexCategory />
       <IndexFeatures />
       <IndexCompany />
+      <IndexLogo />
+      <IndexEvent />
       <Footer />
     </>
   );

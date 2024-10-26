@@ -10,6 +10,8 @@ import PlatformPerformanceChart from "./components/index/charts";
 import IndexCTA from "./components/index/join-now";
 import IndexIntro from "./components/index/intro";
 import IndexLogo from "./components/index/logo";
+import IndexCategory from "./components/index/popular-category";
+import IndexFeatures from "./components/index/featured-job";
 
 export default function Home() {
   return (
@@ -19,6 +21,8 @@ export default function Home() {
       <IndexLogo />
       <IndexIntro />
       <FeaturedJobs />
+      <IndexCategory />
+      <IndexFeatures />
       {/*
       <IndexIntroduction />
       <Benefits />

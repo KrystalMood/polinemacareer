@@ -69,7 +69,7 @@ export default function LoginForm() {
               </button>
               <p className="w-full inline-flex justify-end mt-2 font-thin text-gray-600">
                 <Link
-                  href="/forget-password"
+                  href="/auth/forget-password"
                   className="text-end text-sm hover:underline hover:text-gray-800 transition-all duration-300"
                 >
                   Forgot Password?
@@ -78,7 +78,7 @@ export default function LoginForm() {
             </div>
           </form>
           <Link
-            href="/register"
+            href="/auth/register"
             className=" mt-2 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-all duration-300"
           >
             Create Account

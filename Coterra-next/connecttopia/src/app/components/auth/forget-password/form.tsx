@@ -13,7 +13,7 @@ export default function ForgetPasswordForm() {
         </Link>
       </div>
       {/** Header Section */}
-      <div className="h-full w-fit mx-auto space-y-6 flex flex-col items-start justify-center text-start pr-[12rem]">
+      <div className="h-full w-fit mx-auto space-y-6 flex flex-col items-start justify-center text-start">
         <h1 className="text-4xl">Forget Password</h1>
         <div className="space-y-2">
           <p className="font-light text-gray-600">
@@ -46,6 +46,7 @@ export default function ForgetPasswordForm() {
           <button
             type="submit"
             className="inline-flex items-center justify-center gap-4 w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+            onClick={() => (window.location.href = "/auth/reset-password")}
           >
             Reset Password <ArrowRight />
           </button>

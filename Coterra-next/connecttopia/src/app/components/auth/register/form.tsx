@@ -142,6 +142,7 @@ const RegisterForm = () => {
               <button
                 type="submit"
                 className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+                onClick={() => (window.location.href = "/auth/email-verification")}
               >
                 Create Account
               </button>

@@ -1,28 +1,33 @@
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const listMenu = [
-  {
-    name: "Home",
-    a: "/",
-  },
-  {
-    name: "Contact",
-    a: "/contact",
-  },
-  {
-    name: "News",
-    a: "/news",
-  },
-  {
-    name: "About",
-    a: "/about",
-  },
-];
+const listMenu = ["Home", "Contact", "About Us"];
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const getPathFromMenuItem = (menuItem: string) => {
+    return menuItem === "Home"
+      ? "/"
+      : `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
+  };
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const index = listMenu.findIndex(
+      (item) => getPathFromMenuItem(item) === path
+    );
+    if (index !== -1) {
+      setCurrentPage(index);
+    }
+  });
+
+  const handleSwitchPage = (index: number) => {
+    setCurrentPage(index);
+    setIsActive(false);
+  };
 
   const handleClick = () => {
     setIsActive(!isActive);
@@ -37,30 +42,35 @@ const Header = () => {
           </h1>
 
           <nav className="hidden md:flex items-center gap-10">
-            {listMenu.map((menuItem) => (
+            {listMenu.map((menuItem, index) => (
               <Link
                 href={
-                  menuItem.name === "Home"
+                  menuItem === "Home"
                     ? "/"
-                    : `/${menuItem.name.toLowerCase().replace(/\s+/g, "")}`
+                    : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
                 }
-                key={menuItem.name}
-                className="text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300"
+                onClick={() => handleSwitchPage(index)}
+                key={menuItem}
+                className={`text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300 ${
+                  currentPage === index
+                    ? "border-b-2 border-[#3498db] text-[#3498db]"
+                    : ""
+                } `}
               >
-                {menuItem.name}
+                {menuItem}
               </Link>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-8 font-semibold">
             <Link
-              href="/login"
+              href="/auth/login"
               className="cursor-pointer text-gray-100 font-medium hover:text-[#F7D13A] hover:scale-105 transition duration-300"
             >
               Login
             </Link>
             <Link
-              href="/register"
+              href="/auth/register"
               className="cursor-pointer px-5 py-2 flex items-center gap-2 rounded-full text-gray-900  bg-[#F7D13A] hover:scale-105 hover:bg-[#F7D13A]/90 transition duration-300"
             >
               Register Now <ArrowRight className="w-5 h-5" />
@@ -95,19 +105,22 @@ const Header = () => {
               <div className="mt-8">
                 <div className="h-px bg-gray-200" />
                 <nav className="mt-8 flex flex-col space-y-6">
-                  {listMenu.map((menuItem) => (
+                  {listMenu.map((menuItem, index) => (
                     <Link
                       href={
-                        menuItem.name === "Home"
+                        menuItem === "Home"
                           ? "/"
-                          : `/${menuItem.name
-                              .toLowerCase()
-                              .replace(/\s+/g, "")}`
+                          : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
                       }
-                      key={menuItem.name}
-                      className="text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300"
+                      key={menuItem}
+                      onClick={() => handleSwitchPage(index)}
+                      className={`text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300 ${
+                        currentPage === index
+                          ? "border-b-2 border-[#3498db] text-[#3498db]"
+                          : ""
+                      } `}
                     >
-                      {menuItem.name}
+                      {menuItem}
                     </Link>
                   ))}
                 </nav>
@@ -115,13 +128,13 @@ const Header = () => {
 
               <div className="mt-auto space-y-6">
                 <Link
-                  href="/login"
+                  href="/auth/login"
                   className="block text-center text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300"
                 >
                   Login
                 </Link>
                 <Link
-                  href="/register"
+                  href="/auth/register"
                   className="block text-center px-8 py-3 rounded-full text-gray-900 font-semibold bg-[#F7D13A] hover:bg-[#F7D13A]/90 transition duration-300"
                 >
                   Register Now

@@ -10,7 +10,7 @@ export default function LoginForm() {
     <section className="h-screen">
       <div className="flex w-full justify-between items-center  bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="flex flex-col w-full lg:w-[50vw] justify-center items-center">
-          <div className="absolute top-4 left-4 text-gray-600 ">
+          <div className="absolute top-4 left-4 text-gray-600 transition-all duration-300 hover:scale-110">
             <Link href={"/"}>
               <RiArrowGoBackFill size={26} />
             </Link>
@@ -60,19 +60,29 @@ export default function LoginForm() {
             </div>
 
             {/** Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
-            >
-              Login
-            </button>
+            <div>
+              <button
+                type="submit"
+                className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+              >
+                Login
+              </button>
+              <p className="w-full inline-flex justify-end mt-2 font-thin text-gray-600">
+                <Link
+                  href="/forget-password"
+                  className="text-end text-sm hover:underline hover:text-gray-800 transition-all duration-300"
+                >
+                  Forgot Password?
+                </Link>
+              </p>
+            </div>
           </form>
-          <button
-            type="submit"
-            className=" mt-4 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
+          <Link
+            href="/register"
+            className=" mt-2 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-all duration-300"
           >
             Create Account
-          </button>
+          </Link>
 
           {/** Social Login Section */}
           <div className="mt-8">

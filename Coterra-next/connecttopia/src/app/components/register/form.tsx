@@ -32,8 +32,8 @@ const RegisterForm = () => {
         </div>
 
         {/* Right Form Section */}
-        <div className="relative w-full lg:w-1/2 flex flex-col items-center justify-center px-6 lg:px-16 py-6">
-          <div className="absolute top-4 left-4 text-gray-600 ">
+        <div className="w-full lg:w-1/2 flex flex-col items-center justify-center px-6 lg:px-16 py-6">
+          <div className="absolute top-4 left-4 text-gray-800 transition-all duration-300 hover:scale-110 ">
             <Link href={"/"}>
               <RiArrowGoBackFill size={26} />
             </Link>

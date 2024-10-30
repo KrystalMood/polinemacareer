@@ -54,7 +54,7 @@ const Header = () => {
 
           <div className="hidden md:flex items-center gap-8 font-semibold">
             <Link
-              href="#"
+              href="/login"
               className="cursor-pointer text-gray-100 font-medium hover:text-[#F7D13A] hover:scale-105 transition duration-300"
             >
               Login
@@ -115,7 +115,7 @@ const Header = () => {
 
               <div className="mt-auto space-y-6">
                 <Link
-                  href="#"
+                  href="/login"
                   className="block text-center text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300"
                 >
                   Login

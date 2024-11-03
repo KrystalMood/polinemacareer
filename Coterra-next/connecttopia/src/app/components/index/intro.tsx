@@ -79,9 +79,6 @@ export default function IndexIntro() {
             </div>
           ))}
         </div>
-        <h1 className="text-2xl text-white mt-10 italic">
-          -Hanya beberapa klik saja, mudah bukan??
-        </h1>
       </div>
     </section>
   );

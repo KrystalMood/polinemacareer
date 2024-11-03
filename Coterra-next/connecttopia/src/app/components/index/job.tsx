@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -44,15 +44,8 @@ const FeaturedJobs = () => {
     <section className="bg-[#1C2056] py-8">
       <div className="container mx-auto px-4 w-[90vw]">
         <div className="flex items-center justify-between py-8">
-          <p className="max-w-xl text-white text-xl italic">
-            Temukan peluang karier terbaik yang telah kami pilih khusus untukmu!
-            Jangan lewatkan kesempatan untuk melangkah lebih dekat menuju
-            impianmu dengan posisi-posisi bergengsi yang sedang menunggu talenta
-            hebat seperti dirimu. Dapatkan pekerjaan impianmu hari ini!
-          </p>
           <h2 className="text-5xl max-w-xl font-bold text-white mb-8 text-center">
-            Must-See{" "}
-            <span className="text-yellow-400">Career Opportunities</span>
+            In-Demand career 
           </h2>
         </div>
 

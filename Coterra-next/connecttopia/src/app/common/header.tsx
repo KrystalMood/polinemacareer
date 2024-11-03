@@ -1,27 +1,33 @@
 import { ArrowRight, Menu, X } from "lucide-react";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const listMenu = [
-  {
-    name: "Home",
-    a: "/index",
-  },
-  {
-    name: "Contact",
-    a: "/contact",
-  },
-  {
-    name: "News",
-    a: "/news",
-  },
-  {
-    name: "About",
-    a: "/about",
-  },
-];
+const listMenu = ["Home", "Contact", "About Us"];
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const getPathFromMenuItem = (menuItem: string) => {
+    return menuItem === "Home"
+      ? "/"
+      : `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
+  };
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const index = listMenu.findIndex(
+      (item) => getPathFromMenuItem(item) === path
+    );
+    if (index !== -1) {
+      setCurrentPage(index);
+    }
+  });
+
+  const handleSwitchPage = (index: number) => {
+    setCurrentPage(index);
+    setIsActive(false);
+  };
 
   const handleClick = () => {
     setIsActive(!isActive);
@@ -29,30 +35,46 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1C2056] shadow-lg text-white backdrop-blur-md">
-      <div className="h-24 px-6 md:px-8 mx-auto max-w-7xl">
+      <div className="h-16 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
-          <h1 className="font-bold text-2xl md:text-3xl text-[#F7D13A] hover:scale-105 transition-all duration-500 tracking-tight">
+          <h1 className="font-bold text-xl md:text-xl text-[#F7D13A] hover:scale-105 transition-all duration-500 tracking-tight">
             PolinemaCarrier
           </h1>
 
           <nav className="hidden md:flex items-center gap-10">
-            {listMenu.map((menuItem) => (
-              <a
-                key={menuItem.name}
-                className="text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300"
+            {listMenu.map((menuItem, index) => (
+              <Link
+                href={
+                  menuItem === "Home"
+                    ? "/"
+                    : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
+                }
+                onClick={() => handleSwitchPage(index)}
+                key={menuItem}
+                className={`text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300 ${
+                  currentPage === index
+                    ? "border-b-2 border-[#3498db] text-[#3498db]"
+                    : ""
+                } `}
               >
-                {menuItem.name}
-              </a>
+                {menuItem}
+              </Link>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-8 font-semibold">
-            <a className="cursor-pointer text-gray-100 font-medium hover:text-[#F7D13A] hover:scale-105 transition duration-300">
+            <Link
+              href="/auth/login"
+              className="cursor-pointer text-gray-100 font-medium hover:text-[#F7D13A] hover:scale-105 transition duration-300"
+            >
               Login
-            </a>
-            <a className="cursor-pointer px-8 py-3 flex items-center gap-2 rounded-full text-gray-900  bg-[#F7D13A] hover:scale-105 hover:bg-[#F7D13A]/90 transition duration-300">
+            </Link>
+            <Link
+              href="/auth/register"
+              className="cursor-pointer px-5 py-2 flex items-center gap-2 rounded-full text-gray-900  bg-[#F7D13A] hover:scale-105 hover:bg-[#F7D13A]/90 transition duration-300"
+            >
               Register Now <ArrowRight className="w-5 h-5" />
-            </a>
+            </Link>
           </div>
 
           <div className="flex md:hidden">
@@ -83,24 +105,40 @@ const Header = () => {
               <div className="mt-8">
                 <div className="h-px bg-gray-200" />
                 <nav className="mt-8 flex flex-col space-y-6">
-                  {listMenu.map((menuItem) => (
-                    <a
-                      key={menuItem.name}
-                      className="text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300"
+                  {listMenu.map((menuItem, index) => (
+                    <Link
+                      href={
+                        menuItem === "Home"
+                          ? "/"
+                          : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
+                      }
+                      key={menuItem}
+                      onClick={() => handleSwitchPage(index)}
+                      className={`text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300 ${
+                        currentPage === index
+                          ? "border-b-2 border-[#3498db] text-[#3498db]"
+                          : ""
+                      } `}
                     >
-                      {menuItem.name}
-                    </a>
+                      {menuItem}
+                    </Link>
                   ))}
                 </nav>
               </div>
 
               <div className="mt-auto space-y-6">
-                <a className="block text-center text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300">
+                <Link
+                  href="/auth/login"
+                  className="block text-center text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300"
+                >
                   Login
-                </a>
-                <a className="block text-center px-8 py-3 rounded-full text-gray-900 font-semibold bg-[#F7D13A] hover:bg-[#F7D13A]/90 transition duration-300">
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="block text-center px-8 py-3 rounded-full text-gray-900 font-semibold bg-[#F7D13A] hover:bg-[#F7D13A]/90 transition duration-300"
+                >
                   Register Now
-                </a>
+                </Link>
               </div>
             </div>
           </div>

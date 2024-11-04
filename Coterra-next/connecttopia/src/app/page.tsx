@@ -16,27 +16,14 @@ export default function Home() {
     <>
       <Header />
       <IndexHero />
-      <IndexLogo />
-<<<<<<< HEAD
       <FeaturedJobs />
       <IndexIntro />
-      {/*
-      <IndexIntroduction />
-      <Benefits />
-      <PlatformPerformanceChart />
-      <FeaturedJobs />
-      <IndexCTA />
-      <Footer /> */}
-=======
-      <IndexIntro />
-      {/* <FeaturedJobs /> */}
       <IndexCategory />
       <IndexFeatures />
       <IndexCompany />
-      <IndexLogo />
       <IndexEvent />
+      <IndexLogo />
       <Footer />
->>>>>>> cd26d05c14a86f7927e68758e5352df1cde95bf8
     </>
   );
 }

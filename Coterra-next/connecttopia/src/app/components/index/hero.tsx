@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import templateImage from "@/public/index/hero.png";
+import templateImage from "@/public/index/work.png";
 import Image from "next/image";
 import { Search, Briefcase, Users, Building2, Trophy } from "lucide-react";
 import gsap from "gsap";
@@ -182,10 +182,9 @@ export default function IndexHero() {
               ref={descriptionRef}
               className="text-base font-normal leading-relaxed text-black"
             >
-              With a user-friendly interface and a vast network of
-              professionals, we make job searching and hiring efficient and
-              effective. Join us and take the next step towards a brighter
-              future!
+              Experience a seamless hiring process and an enhanced job search. 
+              Our platform connects talent with opportunities, helping you unlock 
+              your potential for a successful career journey!
             </p>
 
             <div className="space-y-4">

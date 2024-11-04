@@ -1,5 +1,5 @@
 import { useState } from "react";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/index/work.png";
 import Link from "next/link";
 import {
   Apple,
@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import { IoArrowBack } from "react-icons/io5";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import { FaGoogle } from "react-icons/fa";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -163,14 +164,8 @@ const RegisterForm = () => {
 
               <div className="mt-6 flex justify-center gap-4">
                 <button className="p-3 rounded-lg border border-gray-300 hover:border-gray-400 bg-white shadow-sm transition-colors">
-                  <Facebook className="h-6 w-6 text-blue-600" />
-                </button>
-                <button className="p-3 rounded-lg border border-gray-300 hover:border-gray-400 bg-white shadow-sm transition-colors">
-                  <Apple className="h-6 w-6 text-gray-900" />
-                </button>
-                <button className="p-3 rounded-lg border border-gray-300 hover:border-gray-400 bg-white shadow-sm transition-colors">
-                  <Mail className="h-6 w-6 text-red-500" />
-                </button>
+                 <FaGoogle className="h-6 w-6 text-red-500" />
+               </button>
               </div>
             </div>
           </div>

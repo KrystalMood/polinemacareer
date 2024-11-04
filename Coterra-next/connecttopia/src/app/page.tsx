@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import IndexHero from "./components/index/hero";
-import Header from "./common/header";
+import { HomePage, Header } from '././common/header';
 import Footer from "./common/footer";
 import FeaturedJobs from "./components/index/job";
 import IndexIntro from "./components/index/intro";

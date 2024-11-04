@@ -1,4 +1,4 @@
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/index/work.png";
 import { Mail, Lock, Eye, EyeOff, Facebook, Apple } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

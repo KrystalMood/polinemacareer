@@ -126,11 +126,7 @@ export default function IndexIntro() {
               ref={descriptionRef}
               className="text-white/90 italic text-base md:text-lg font-light leading-relaxed"
             >
-              Aplikasi ini mempermudah kamu untuk menemukan pekerjaan impian
-              secara cepat dan efisien. Hanya dengan beberapa langkah sederhana,
-              kamu bisa langsung terhubung ke berbagai peluang kerja. Ayo mulai
-              sekarang, karena setiap langkah kecil bisa membawa kamu lebih
-              dekat ke karir yang kamu inginkan!
+
             </p>
           </div>
         </div>

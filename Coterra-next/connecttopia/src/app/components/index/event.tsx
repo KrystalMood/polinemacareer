@@ -1,4 +1,4 @@
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/peakpx.jpg";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 interface Event {

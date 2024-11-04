@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
 
 interface Company {
@@ -11,44 +11,44 @@ interface Company {
 
 const companies: Company[] = [
   {
-    name: "Dribbble",
+    name: "Astra International",
     logo: "/logos/dribbble.png",
     location: "United States",
     isFeatured: true,
   },
   {
-    name: "Upwork",
+    name: "Pertamina",
     logo: "/logos/upwork.png",
     location: "United States",
   },
   {
-    name: "Slack",
+    name: "Adaro Energy",
     logo: "/logos/slack.png",
     location: "China",
   },
   {
-    name: "Freepik",
+    name: "United Tractors",
     logo: "/logos/freepik.png",
     location: "United States",
   },
   {
-    name: "Dribbble",
+    name: "Pupuk Indonesia",
     logo: "/logos/dribbble.png",
     location: "United States",
     isFeatured: true,
   },
   {
-    name: "Upwork",
+    name: "Japfa Comfeed Indonesia",
     logo: "/logos/upwork.png",
     location: "United States",
   },
   {
-    name: "Slack",
+    name: "Erajaya Swasembada",
     logo: "/logos/slack.png",
     location: "China",
   },
   {
-    name: "Freepik",
+    name: "PELINDO",
     logo: "/logos/freepik.png",
     location: "United States",
   },

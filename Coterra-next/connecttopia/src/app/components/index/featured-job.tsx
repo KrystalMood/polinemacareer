@@ -1,6 +1,6 @@
 import { ArrowRight, BookmarkCheck, Bookmark } from "lucide-react";
 import { Clock, MapPin, DollarSign } from "lucide-react";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const jobs: Job[] = [
     title: "Senior UX Designer",
     image: "/api/placeholder/48/48",
     type: "Contract Base",
-    location: "Australia",
+    location: "Jakarta",
     payment: "$30K-$35K",
     deadline: "4 Days Remaining",
     bookmarked: false,
@@ -28,7 +28,7 @@ const jobs: Job[] = [
     title: "Software Engineer",
     image: "/api/placeholder/48/48",
     type: "Full Time",
-    location: "China",
+    location: "Surabaya",
     payment: "$50K-$60K",
     deadline: "4 Days Remaining",
     bookmarked: false,
@@ -37,7 +37,7 @@ const jobs: Job[] = [
     title: "Junior Graphic Designer",
     image: "/api/placeholder/48/48",
     type: "Full Time",
-    location: "Canada",
+    location: "Malang",
     payment: "$50K-$70K",
     deadline: "4 Days Remaining",
     bookmarked: false,
@@ -46,7 +46,7 @@ const jobs: Job[] = [
     title: "Product Designer",
     image: "/api/placeholder/48/48",
     type: "Full Time",
-    location: "United States",
+    location: "Bandung",
     payment: "$35K-$40K",
     deadline: "4 Days Remaining",
     bookmarked: false,
@@ -55,7 +55,7 @@ const jobs: Job[] = [
     title: "Marketing Officer",
     image: "/api/placeholder/48/48",
     type: "Internship",
-    location: "Germany",
+    location: "Jakarta",
     payment: "$50K-$90K",
     deadline: "4 Days Remaining",
     bookmarked: false,
@@ -64,7 +64,7 @@ const jobs: Job[] = [
     title: "Interaction Designer",
     image: "/api/placeholder/48/48",
     type: "Full Time",
-    location: "France",
+    location: "Malang",
     payment: "$5K-$10K",
     deadline: "4 Days Remaining",
     bookmarked: false,

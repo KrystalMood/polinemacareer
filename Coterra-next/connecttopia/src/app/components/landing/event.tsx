@@ -1,36 +1,7 @@
 import templateImage from "@/public/peakpx.jpg";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-interface Event {
-  title: string;
-  subtitle: string;
-  image: string;
-  date: string;
-}
-
-const events: Event[] = [
-  {
-    title: "JobFair 2024",
-    subtitle:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    image: "/images/jobfair-desk.jpg",
-    date: "August 14, 2024",
-  },
-  {
-    title: "JobFair 2024",
-    subtitle:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    image: "/images/jobfair-setup.jpg",
-    date: "August 14, 2024",
-  },
-  {
-    title: "Pelatihan Public Speaking",
-    subtitle:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    image: "/images/public-speaking.jpg",
-    date: "August 14, 2024",
-  },
-];
+import events from "@/app/data/index/event";
 export default function IndexEvent() {
   return (
     <div className="min-h-screen">

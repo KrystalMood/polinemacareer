@@ -1,58 +1,7 @@
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
-
-interface Company {
-  name: string;
-  logo: string;
-  location: string;
-  isFeatured?: boolean;
-}
-
-const companies: Company[] = [
-  {
-    name: "Astra International",
-    logo: "/logos/dribbble.png",
-    location: "United States",
-    isFeatured: true,
-  },
-  {
-    name: "Pertamina",
-    logo: "/logos/upwork.png",
-    location: "United States",
-  },
-  {
-    name: "Adaro Energy",
-    logo: "/logos/slack.png",
-    location: "China",
-  },
-  {
-    name: "United Tractors",
-    logo: "/logos/freepik.png",
-    location: "United States",
-  },
-  {
-    name: "Pupuk Indonesia",
-    logo: "/logos/dribbble.png",
-    location: "United States",
-    isFeatured: true,
-  },
-  {
-    name: "Japfa Comfeed Indonesia",
-    logo: "/logos/upwork.png",
-    location: "United States",
-  },
-  {
-    name: "Erajaya Swasembada",
-    logo: "/logos/slack.png",
-    location: "China",
-  },
-  {
-    name: "PELINDO",
-    logo: "/logos/freepik.png",
-    location: "United States",
-  },
-];
+import companies from "@/app/data/index/top-company";
 export default function IndexCompany() {
   return (
     <div className="min-h-screen bg-sky-50">

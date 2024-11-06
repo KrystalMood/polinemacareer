@@ -3,84 +3,11 @@ import { Clock, MapPin, DollarSign } from "lucide-react";
 import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
 import { useState } from "react";
-
-interface Job {
-  title: string;
-  image: string;
-  type: string;
-  location: string;
-  payment: string;
-  deadline: string;
-  bookmarked: boolean;
-}
-
-const jobs: Job[] = [
-  {
-    title: "Senior UX Designer",
-    image: "/api/placeholder/48/48",
-    type: "Contract Base",
-    location: "Jakarta",
-    payment: "$30K-$35K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-  {
-    title: "Software Engineer",
-    image: "/api/placeholder/48/48",
-    type: "Full Time",
-    location: "Surabaya",
-    payment: "$50K-$60K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-  {
-    title: "Junior Graphic Designer",
-    image: "/api/placeholder/48/48",
-    type: "Full Time",
-    location: "Malang",
-    payment: "$50K-$70K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-  {
-    title: "Product Designer",
-    image: "/api/placeholder/48/48",
-    type: "Full Time",
-    location: "Bandung",
-    payment: "$35K-$40K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-  {
-    title: "Marketing Officer",
-    image: "/api/placeholder/48/48",
-    type: "Internship",
-    location: "Jakarta",
-    payment: "$50K-$90K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-  {
-    title: "Interaction Designer",
-    image: "/api/placeholder/48/48",
-    type: "Full Time",
-    location: "Malang",
-    payment: "$5K-$10K",
-    deadline: "4 Days Remaining",
-    bookmarked: false,
-  },
-];
+import jobs from "@/app/data/index/featured-jobs";
+import useFeaturedJob from "@/app/libs/hooks/index/featured-job";
 
 export default function IndexFeatures() {
-  const [job, setJob] = useState<Job[]>(jobs);
-
-  const handleBookmarked = (index: number) => {
-    const updatedJobs = job.map((job, i) =>
-      i === index ? { ...job, bookmarked: !job.bookmarked } : job
-    );
-    setJob(updatedJobs);
-  };
-
+  const { job, handleBookmarked } = useFeaturedJob();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">

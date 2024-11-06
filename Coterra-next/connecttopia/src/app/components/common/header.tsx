@@ -1,10 +1,9 @@
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import RegisterButton from '../components/RegisterButton';
+import RegisterButton from "../RegisterButton";
 
 const listMenu = ["Home", "Contact", "About Us"];
-
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
@@ -46,14 +45,18 @@ function Header() {
           <nav className="hidden md:flex items-center gap-10">
             {listMenu.map((menuItem, index) => (
               <Link
-                href={menuItem === "Home"
-                  ? "/"
-                  : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`}
+                href={
+                  menuItem === "Home"
+                    ? "/"
+                    : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
+                }
                 onClick={() => handleSwitchPage(index)}
                 key={menuItem}
-                className={`text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300 ${currentPage === index
+                className={`text-gray-100 font-medium tracking-wide cursor-pointer hover:text-[#F7D13A] hover:scale-105 transition duration-300 ${
+                  currentPage === index
                     ? "border-b-2 border-[#3498db] text-[#3498db]"
-                    : ""} `}
+                    : ""
+                } `}
               >
                 {menuItem}
               </Link>
@@ -85,7 +88,9 @@ function Header() {
           </div>
 
           <div
-            className={`fixed h-screen inset-y-0 right-0 w-full max-w-sm bg-white transform transition-transform duration-300 ease-in-out ${isActive ? "translate-x-0" : "translate-x-full"}`}
+            className={`fixed h-screen inset-y-0 right-0 w-full max-w-sm bg-white transform transition-transform duration-300 ease-in-out ${
+              isActive ? "translate-x-0" : "translate-x-full"
+            }`}
           >
             <div className="h-full flex flex-col p-8">
               <div className="flex justify-between items-center">
@@ -103,14 +108,18 @@ function Header() {
                 <nav className="mt-8 flex flex-col space-y-6">
                   {listMenu.map((menuItem, index) => (
                     <Link
-                      href={menuItem === "Home"
-                        ? "/"
-                        : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={
+                        menuItem === "Home"
+                          ? "/"
+                          : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
+                      }
                       key={menuItem}
                       onClick={() => handleSwitchPage(index)}
-                      className={`text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300 ${currentPage === index
+                      className={`text-lg font-medium text-gray-900 hover:text-[#F7D13A] transition duration-300 ${
+                        currentPage === index
                           ? "border-b-2 border-[#3498db] text-[#3498db]"
-                          : ""} `}
+                          : ""
+                      } `}
                     >
                       {menuItem}
                     </Link>
@@ -141,4 +150,4 @@ function Header() {
   );
 }
 
-export default Header ;
+export default Header;

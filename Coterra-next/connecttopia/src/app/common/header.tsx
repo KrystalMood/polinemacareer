@@ -4,19 +4,7 @@ import { useEffect, useState } from "react";
 import RegisterButton from '../components/RegisterButton';
 
 const listMenu = ["Home", "Contact", "About Us"];
-const HomePage: React.FC = () => {
-  return (
-    <div>
-      <h1>Welcome to PolinemaCarrier</h1>
-      <Link
-        href="/auth/register"
-        className="block text-center px-8 py-3 rounded-full text-gray-900 font-semibold bg-[#F7D13A] hover:bg-[#F7D13A]/90 transition duration-300"
-      >
-        Register Now
-      </Link>
-    </div>
-  );
-};
+
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
@@ -153,4 +141,4 @@ function Header() {
   );
 }
 
-export { HomePage, Header };
+export default Header ;

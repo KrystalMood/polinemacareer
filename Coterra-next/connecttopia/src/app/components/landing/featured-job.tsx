@@ -20,7 +20,10 @@ export default function IndexFeatures() {
               Discover your next career opportunity
             </p>
           </div>
-          <button className="group inline-flex items-center text-sky-600 hover:text-sky-700 font-semibold transition-colors">
+          <button
+            onClick={() => (window.location.href = "/apply")}
+            className="group inline-flex items-center text-sky-600 hover:text-sky-700 font-semibold transition-colors"
+          >
             View All Jobs
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-150" />
           </button>

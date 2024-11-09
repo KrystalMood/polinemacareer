@@ -1,15 +1,15 @@
 "use client";
 import Image from "next/image";
-import IndexHero from "./components/landing/hero";
+import IndexHero from "./components/landing/hero-section";
 import Header from "./components/common/header";
 import Footer from "./components/common/footer";
-import FeaturedJobs from "./components/landing/job";
-import IndexIntro from "./components/landing/intro";
-import IndexLogo from "./components/landing/logo";
-import IndexCategory from "./components/landing/category";
+import FeaturedJobs from "./components/landing/job-listings";
+import IndexIntro from "./components/landing/how-it-works";
+import IndexLogo from "./components/landing/trusted-companies";
+import IndexCategory from "./components/landing/job-categories";
 import IndexFeatures from "./components/landing/featured-job";
-import IndexCompany from "./components/landing/top-company";
-import IndexEvent from "./components/landing/event";
+import IndexCompany from "./components/landing/top-companies";
+import IndexEvent from "./components/landing/upcoming-events";
 
 export default function Home() {
   return (

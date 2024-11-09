@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import categories from "@/app/data/index/category";
+import categories from "@/app/data/index/job-categories";
 
 const useCategoryAnimation = () => {
   const titleRef = useRef(null);

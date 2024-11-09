@@ -2,12 +2,11 @@ import { ArrowRight, BookmarkCheck, Bookmark } from "lucide-react";
 import { Clock, MapPin, DollarSign } from "lucide-react";
 import templateImage from "@/public/peakpx.jpg";
 import Image from "next/image";
-import { useState } from "react";
-import jobs from "@/app/data/index/featured-jobs";
 import useFeaturedJob from "@/app/libs/hooks/index/featured-job";
 
 export default function IndexFeatures() {
   const { job, handleBookmarked } = useFeaturedJob();
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
@@ -31,10 +30,9 @@ export default function IndexFeatures() {
 
         <div className="grid gap-6">
           {job.map((jobItem, index) => (
-            <button
+            <div
               key={jobItem.title}
-              onClick={() => (window.location.href = "main/jobs/apply")}
-              className="group bg-white rounded-xl border border-gray-200 p-6 hover:border-sky-100 hover:shadow-lg hover:shadow-sky-50/50 transition-all duration-150"
+              className="group bg-white rounded-xl border border-gray-200 p-6 hover:border-sky-100 hover:shadow-lg hover:shadow-sky-50/50 transition-all duration-300"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-start sm:items-center gap-4">
@@ -88,7 +86,7 @@ export default function IndexFeatures() {
                   </button>
                 </div>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>

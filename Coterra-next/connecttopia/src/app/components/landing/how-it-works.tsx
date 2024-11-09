@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { Briefcase, CheckCircle, FileText, UserPlus } from "lucide-react";
-import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { JOB_STEPS } from "@/app/data/index/intro";
+import { JOB_STEPS } from "@/app/data/index/how-it-works";
 import useIntroAnimation from "@/app/libs/animations/index/intro";
 
 export default function IndexIntro() {

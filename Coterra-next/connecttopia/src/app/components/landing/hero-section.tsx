@@ -1,7 +1,14 @@
 import React from "react";
 import templateImage from "@/public/index/work.png";
 import Image from "next/image";
-import { Search, Briefcase, Users, Building2, Trophy } from "lucide-react";
+import {
+  Search,
+  Briefcase,
+  Users,
+  Building2,
+  Trophy,
+  ArrowRight,
+} from "lucide-react";
 import { useHeroAnimation } from "@/app/libs/animations/index/hero";
 
 const SUGGESTED_JOBS = [

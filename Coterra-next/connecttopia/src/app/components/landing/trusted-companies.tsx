@@ -1,4 +1,4 @@
-import logoList from "@/app/data/index/logo";
+import logoList from "@/app/data/index/truested-companies";
 
 export default function IndexLogo(): JSX.Element {
   return (

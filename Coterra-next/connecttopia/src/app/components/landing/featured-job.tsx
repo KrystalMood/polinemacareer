@@ -21,7 +21,7 @@ export default function IndexFeatures() {
             </p>
           </div>
           <button
-            onClick={() => (window.location.href = "/apply")}
+            onClick={() => (window.location.href = "main/jobs/all-jobs")}
             className="group inline-flex items-center text-sky-600 hover:text-sky-700 font-semibold transition-colors"
           >
             View All Jobs
@@ -31,8 +31,9 @@ export default function IndexFeatures() {
 
         <div className="grid gap-6">
           {job.map((jobItem, index) => (
-            <div
+            <button
               key={jobItem.title}
+              onClick={() => (window.location.href = "main/jobs/apply")}
               className="group bg-white rounded-xl border border-gray-200 p-6 hover:border-sky-100 hover:shadow-lg hover:shadow-sky-50/50 transition-all duration-150"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
@@ -87,7 +88,7 @@ export default function IndexFeatures() {
                   </button>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

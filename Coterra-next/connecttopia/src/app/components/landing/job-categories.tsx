@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
-import categories from "@/app/data/index/category";
+import categories from "@/app/data/index/job-categories";
 import useCategoryAnimation from "@/app/libs/animations/index/category";
 
-
 export default function IndexCategory() {
-  const { titleRef, descriptionRef, buttonRef, cardsRef } = useCategoryAnimation() || { titleRef: null, descriptionRef: null, buttonRef: null, cardsRef: { current: [] } };
+  const { titleRef, descriptionRef, buttonRef, cardsRef } =
+    useCategoryAnimation() || {
+      titleRef: null,
+      descriptionRef: null,
+      buttonRef: null,
+      cardsRef: { current: [] },
+    };
   return (
     <div className="min-h-[50vh] bg-slate-50">
       <div className="mx-auto w-[90vw] max-w-7xl py-16">

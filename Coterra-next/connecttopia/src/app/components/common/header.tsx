@@ -10,9 +10,9 @@ function Header() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const getPathFromMenuItem = (menuItem: string) => {
-    return menuItem === "Home"
-      ? "/"
-      : `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
+    if (menuItem === "Home") return "/";
+    if (menuItem === "Contact") return "/main/contact";
+    return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1C2056] shadow-lg text-white backdrop-blur-md">
-      <div className="h-20 px-6 md:px-8 mx-auto max-w-7xl">
+      <div className="h-16 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
           <h1 className="font-bold text-2xl md:text-3xl text-amber-400 hover:text-amber-300 hover:scale-105 transition-all duration-500 tracking-tight">
             PolinemaCarrier
@@ -45,11 +45,7 @@ function Header() {
           <nav className="hidden md:flex items-center gap-10">
             {listMenu.map((menuItem, index) => (
               <Link
-                href={
-                  menuItem === "Home"
-                    ? "/"
-                    : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
-                }
+                href={getPathFromMenuItem(menuItem)}
                 onClick={() => handleSwitchPage(index)}
                 key={menuItem}
                 className={`text-gray-200 font-medium tracking-wide cursor-pointer hover:text-amber-300 hover:scale-105 transition duration-300 ${
@@ -108,11 +104,7 @@ function Header() {
                 <nav className="mt-8 flex flex-col space-y-6">
                   {listMenu.map((menuItem, index) => (
                     <Link
-                      href={
-                        menuItem === "Home"
-                          ? "/"
-                          : `/${menuItem.toLowerCase().replace(/\s+/g, "-")}`
-                      }
+                      href={getPathFromMenuItem(menuItem)}
                       key={menuItem}
                       onClick={() => handleSwitchPage(index)}
                       className={`text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300 ${

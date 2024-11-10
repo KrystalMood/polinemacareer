@@ -1,13 +1,28 @@
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import RegisterButton from "../RegisterButton";
+import templateImage from "@/public/templatePost.png";
+import Image from "next/image";
 
 const listMenu = ["Home", "Contact", "About Us"];
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [user, setUser] = useState<any | null>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.href = "/";
+  };
 
   const getPathFromMenuItem = (menuItem: string) => {
     if (menuItem === "Home") return "/";
@@ -60,18 +75,67 @@ function Header() {
           </nav>
 
           <div className="hidden md:flex items-center gap-8 font-semibold">
-            <Link
-              href="/auth/login"
-              className="cursor-pointer text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300"
-            >
-              Login
-            </Link>
-            <Link
-              href="/auth/register"
-              className="cursor-pointer px-6 py-2 flex items-center gap-2 rounded-full text-indigo-900 bg-amber-400 hover:bg-amber-300 hover:scale-105 transition duration-300 shadow-md"
-            >
-              Register Now <ArrowRight className="w-5 h-5" />
-            </Link>
+            {user ? (
+              <>
+                <div className="ml-44 relative group">
+                  <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300">
+                    <div className="relative">
+                      <Image
+                        src={user.photoURL || templateImage}
+                        alt="user photo"
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover shadow-md border-2 border-amber-400"
+                      />
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm" />
+                    </div>
+                    <div className="group-hover:rotate-180 transition-transform duration-300">
+                      <ChevronDown className="w-5 h-5 text-white" />
+                    </div>
+                  </div>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <Link
+                      href="/main/dashboard"
+                      className="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600"
+                    >
+                      Profile
+                    </Link>
+
+                    <div className="h-px bg-gray-200 my-2"></div>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem("user");
+                        window.location.reload();
+                      }}
+                      className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/login"
+                  className="cursor-pointer text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="cursor-pointer px-6 py-2 flex items-center gap-2 rounded-full text-indigo-900 bg-amber-400 hover:bg-amber-300 hover:scale-105 transition duration-300 shadow-md"
+                >
+                  Register Now <ArrowRight className="w-5 h-5" />
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="flex md:hidden">

@@ -63,7 +63,7 @@ export default function ContactContent() {
           <div className="z-10 space-y-6">
             <div className="flex items-center gap-4 group cursor-pointer">
               <Phone className="group-hover:text-amber-400 transition-colors" />
-              <p className="group-hover:text-amber-400 transition-colors">(123) 456-7890</p>
+              <p className="group-hover:text-amber-400 transition-colors">081235305531</p>
             </div>
             <div className="flex items-center gap-4 group cursor-pointer">
               <Mail className="group-hover:text-amber-400 transition-colors" />
@@ -90,10 +90,7 @@ export default function ContactContent() {
             ))}
           </div>
 
-          {/* Background decoration */}
-          <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4">
-            <div className="w-64 h-64 bg-amber-400/20 rounded-full blur-3xl" />
-          </div>
+         
         </div>
 
         {/* Right Section - Contact Form */}

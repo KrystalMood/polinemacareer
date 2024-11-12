@@ -27,6 +27,7 @@ function Header() {
   const getPathFromMenuItem = (menuItem: string) => {
     if (menuItem === "Home") return "/";
     if (menuItem === "Contact") return "/main/contact";
+    if (menuItem === "About Us") return "/main/about-us";
     return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
   };
 

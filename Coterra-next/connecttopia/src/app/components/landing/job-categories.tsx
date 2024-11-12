@@ -20,20 +20,20 @@ export default function IndexCategory() {
             <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-4">
           {categories.map((category) => (
             <div
               key={category.title}
-              className="group block space-y-4 rounded-2xl bg-white p-8 shadow-sm transition-all hover:shadow-md"
+              className="group block space-y-4 rounded-xl bg-white p-6 shadow-sm transition-all hover:shadow-md"
             >
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-sky-500">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-500">
                 {category.icon}
               </div>
               <div className="space-y-1">
-                <h2 className="text-xl font-semibold text-slate-900">
+                <h2 className="text-lg font-semibold text-slate-900">
                   {category.title}
                 </h2>
-                <p className="text-base text-slate-400">
+                <p className="text-sm text-slate-400">
                   {category.openPositions.toLocaleString()} Positions
                 </p>
               </div>

@@ -60,10 +60,9 @@ const Footer = () => {
               </svg>
               <span className="text-xl font-bold">PolinemaCareer</span>
             </div>
-            <p className="text-gray-400 mb-2">Call now: (319) 555-0115</p>
+            <p className="text-gray-400 mb-2">Call now: 081235305531</p>
             <p className="text-gray-400 text-sm">
-              8391 Elgin St. Celina, Delaware 19299, New York, United States of
-              America
+              Jl. Soekarno Hatta No.9, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141
             </p>
           </div>
 

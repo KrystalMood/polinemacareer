@@ -30,7 +30,7 @@ export default function MainDashboard() {
     const user = localStorage.getItem("user");
     if (user) {
       const userData = JSON.parse(user);
-      setUserName(userData.name || "");
+      setUserName(userData.nama || "");
     }
   }, []);
 
@@ -41,7 +41,7 @@ export default function MainDashboard() {
   const fetchJobs = async () => {
     try {
       setIsLoading(true);
-      const url = new URL("http://localhost/PolinemaCarrier/get_jobs.php");
+      const url = new URL("http://localhost/polinemakarir/api/get_jobs.php");
       if (searchTerm) url.searchParams.set("search", searchTerm);
       if (location) url.searchParams.set("location", location);
 

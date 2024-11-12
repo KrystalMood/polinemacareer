@@ -12,7 +12,7 @@ function Header() {
   const [user, setUser] = useState<any | null>(null);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("username");
     if (user) {
       setUser(JSON.parse(user));
     }
@@ -27,6 +27,7 @@ function Header() {
   const getPathFromMenuItem = (menuItem: string) => {
     if (menuItem === "Home") return "/";
     if (menuItem === "Contact") return "/main/contact";
+    if (menuItem === "About Us") return "/main/about-us";
     return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
   };
 

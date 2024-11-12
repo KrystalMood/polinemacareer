@@ -1,28 +1,27 @@
 "use client";
 import Image from "next/image";
-import IndexHero from "./components/index/hero";
-import Header from "./common/header";
-import Footer from "./common/footer";
-import FeaturedJobs from "./components/index/job";
-import IndexIntro from "./components/index/intro";
-import IndexLogo from "./components/index/logo";
-import IndexCategory from "./components/index/popular-category";
-import IndexFeatures from "./components/index/featured-job";
-import IndexCompany from "./components/index/top-company";
-import IndexEvent from "./components/index/event";
+import IndexHero from "./components/landing/hero-section";
+import Header from "./components/common/header";
+import Footer from "./components/common/footer";
+import FeaturedJobs from "./components/landing/job-listings";
+import IndexIntro from "./components/landing/how-it-works";
+import IndexLogo from "./components/landing/trusted-companies";
+import IndexCategory from "./components/landing/job-categories";
+import IndexFeatures from "./components/landing/featured-job";
+import IndexCompany from "./components/landing/top-companies";
+import IndexEvent from "./components/landing/upcoming-events";
 
 export default function Home() {
   return (
     <>
       <Header />
       <IndexHero />
-      <FeaturedJobs />
       <IndexIntro />
       <IndexCategory />
       <IndexFeatures />
       <IndexCompany />
-      <IndexEvent />
       <IndexLogo />
+      <IndexEvent />
       <Footer />
     </>
   );

@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "polinema_carrier";
+$database = "db_polinemakarir";
 
 $conn = new mysqli($host, $username, $password, $database);
 

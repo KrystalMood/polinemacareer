@@ -101,7 +101,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">John Doe</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Pramudya Surya</h3>
               <p className="text-gray-600">CEO & Founder</p>
             </div>
             {/* Add other team members here */}
@@ -111,7 +111,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">Jane Smith</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Giovano Alkandri</h3>
               <p className="text-gray-600">Chief Operating Officer</p>
             </div>
             <div className="space-y-4">
@@ -120,7 +120,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">Alice Johnson</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Atabik M</h3>
               <p className="text-gray-600">Head of Marketing</p>
             </div>
             <div className="space-y-4">
@@ -129,7 +129,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">Bob Brown</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Fauzie Ikhsanul</h3>
               <p className="text-gray-600">Lead Developer</p>
             </div>
             <div className="space-y-4">
@@ -138,7 +138,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">Bob Brown</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Tiara Mera</h3>
               <p className="text-gray-600">Lead Developer</p>
             </div>
             <div className="space-y-4">
@@ -147,7 +147,7 @@ export default function AboutUs() {
                 alt="Team Member"
                 className="rounded-full w-32 h-32 object-cover mx-auto"
               />
-              <h3 className="text-xl font-semibold text-gray-800">Bob Brown</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Zannur</h3>
               <p className="text-gray-600">Lead Developer</p>
             </div>
           </div>

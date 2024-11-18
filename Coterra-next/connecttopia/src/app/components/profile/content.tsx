@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/pakjokowi.jpeg";
 import { 
   Mail, 
   Phone, 
@@ -51,7 +51,7 @@ export default function ProfileContent() {
             <div className="mt-16">
               <div className="flex justify-between items-start">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{user.name || "User Name"}</h1>
+                  <h1 className="text-3xl font-bold text-gray-900">{user.name || "Pak Jokowi"}</h1>
                   <p className="text-lg text-gray-600">Frontend Developer</p>
                 </div>
                 <button className="flex items-center gap-2 px-4 py-2 bg-amber-400 text-gray-900 rounded-lg hover:bg-amber-500 transition-colors">

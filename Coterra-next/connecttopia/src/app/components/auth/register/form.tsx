@@ -21,6 +21,7 @@ const RegisterForm = () => {
     password: "",
     confirmPassword: "",
     role: "pelamar", // Default to 'pelamar'
+    gender: "" // Added gender field
   });
   const [error, setError] = useState("");
 
@@ -177,6 +178,37 @@ const RegisterForm = () => {
               </div>
             </div>
 
+            {/* Gender Selection (only if role is Pelamar) */}
+            {formRegist.role === "pelamar" && (
+              <div className="mt-4 flex items-center space-x-4">
+                <label className="text-gray-700">Gender:</label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value="male"
+                    checked={formRegist.gender === "male"}
+                    onChange={(e) => setFormRegist({ ...formRegist, gender: e.target.value })}
+                    className="text-blue-600"
+                  />
+                  <label htmlFor="male" className="text-gray-700">Male</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value="female"
+                    checked={formRegist.gender === "female"}
+                    onChange={(e) => setFormRegist({ ...formRegist, gender: e.target.value })}
+                    className="text-blue-600"
+                  />
+                  <label htmlFor="female" className="text-gray-700">Female</label>
+                </div>
+              </div>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
@@ -186,9 +218,7 @@ const RegisterForm = () => {
             </button>
 
             {error && (
-              <>
-                <p className="text-red-500 text-center mb-4">{error}</p>
-              </>
+              <p className="text-red-500 text-center mb-4">{error}</p>
             )}
           </form>
         </div>

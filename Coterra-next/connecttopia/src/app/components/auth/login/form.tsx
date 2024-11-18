@@ -18,32 +18,40 @@ export default function LoginForm() {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await fetch("http://sqlsrv.test/login.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch("http://sqlsrv.test/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      throw new Error("Login failed");
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const result = await response.json();
+
+      if (!result.success) {
+        setError(result.message);
+      } else {
+        // Simpan data pengguna di localStorage
+        localStorage.setItem("user", JSON.stringify(result.user)); // Simpan data pengguna
+
+        // Redirect berdasarkan role pengguna
+        if (result.role === "pelamar") {
+          router.push("/main/dashboard/pelamar"); // Halaman pelamar
+        } else if (result.role === "perusahaan") {
+          router.push("/main/dashboard/perusahaan"); // Halaman perusahaan
+        }
+      }
+    } catch (error: any) {
+      setError(error.message || "An unexpected error occurred");
     }
-
-    const result = await response.json();
-
-    if (!result.success) {
-      setError(result.message);
-    } else {
-      router.push("/main/dashboard");
-    }
-  } catch (error: any) {
-    setError(error.message || "An unexpected error occurred");
-  }
-};
+  };
 
   return (
     <div className="h-screen relative">

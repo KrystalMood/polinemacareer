@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
-import templateImage from "@/public/templatePost.png";
+import templateImage from "@/public/pakjokowi.jpeg";
 import Image from "next/image";
 
 const listMenu = ["Home", "Contact", "About Us"];
@@ -108,7 +108,7 @@ function Header() {
                   </div>
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <Link
-                      href="/main/dashboard"
+                      href="/main/dashboard/pelamar"
                       className="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600"
                     >
                       Dashboard

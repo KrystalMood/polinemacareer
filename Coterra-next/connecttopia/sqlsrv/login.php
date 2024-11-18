@@ -42,10 +42,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 // Check if password matches the one in the database (plain text comparison)
                 if ($result["password"] === $password) {
+                    // Determine the user role
+                    $roleId = $result["Role_idRole"];
+                    $role = "";
+
+                    if ($roleId == 2) {
+                        $role = "pelamar";
+                    } elseif ($roleId == 3) {
+                        $role = "perusahaan";
+                    }
+
                     echo json_encode([
                         "success" => true,
                         "message" => "Login successful",
-                        "user" => $result
+                        "user" => $result,
+                        "role" => $role // Add role information
                     ]);
                 } else {
                     echo json_encode([

@@ -20,10 +20,11 @@ const RegisterForm = () => {
     phone: "",
     password: "",
     confirmPassword: "",
+    role: "pelamar", // Default to 'pelamar'
   });
   const [error, setError] = useState("");
 
-  //make registSubmit
+  // Handle form submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleRegisterSubmit(formRegist, setError, router);
@@ -145,20 +146,48 @@ const RegisterForm = () => {
               </button>
             </div>
 
+            {/* Role Selection */}
+            <div className="mt-4 flex items-center">
+              <label htmlFor="role" className="mr-4 text-gray-700">Select Role:</label>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="pelamar"
+                    name="role"
+                    value="pelamar"
+                    checked={formRegist.role === "pelamar"}
+                    onChange={(e) => setFormRegist({ ...formRegist, role: e.target.value })}
+                    className="text-blue-600"
+                  />
+                  <label htmlFor="pelamar" className="text-gray-700">Pelamar</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="perusahaan"
+                    name="role"
+                    value="perusahaan"
+                    checked={formRegist.role === "perusahaan"}
+                    onChange={(e) => setFormRegist({ ...formRegist, role: e.target.value })}
+                    className="text-blue-600"
+                  />
+                  <label htmlFor="perusahaan" className="text-gray-700">Perusahaan</label>
+                </div>
+              </div>
+            </div>
+
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
-              // onClick={() =>
-              //   (window.location.href = "/auth/email-verification")
-              // }
             >
               Create Account
             </button>
+
             {error && (
               <>
                 <p className="text-red-500 text-center mb-4">{error}</p>
-                {/* {setTimeout(() => setError(""), 3000)} */}
               </>
             )}
           </form>

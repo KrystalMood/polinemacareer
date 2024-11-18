@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import templateImage from "@/public/templatePost.png";
 import Image from "next/image";
 
@@ -11,19 +11,29 @@ function Header() {
   const [currentPage, setCurrentPage] = useState(0);
   const [user, setUser] = useState<any | null>(null);
 
+  // This effect runs on component mount to load user data from localStorage
   useEffect(() => {
-    const user = localStorage.getItem("username");
-    if (user) {
-      setUser(JSON.parse(user));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      console.log("User found in localStorage:", storedUser); // Debugging log
+      setUser(JSON.parse(storedUser));
     }
-  }, []);
+  }, []); // Only runs once on mount
 
+  // Debugging: Watch for any changes in the user state
+  useEffect(() => {
+    console.log("Current user state:", user); // Debugging log
+  }, [user]);
+
+  // Handle logout and clear localStorage
   const handleLogout = () => {
+    console.log("Logging out..."); // Debugging log
     localStorage.removeItem("user");
     setUser(null);
-    window.location.href = "/";
+    window.location.href = "/"; // Redirect to home after logout
   };
 
+  // Get the correct path for the menu items
   const getPathFromMenuItem = (menuItem: string) => {
     if (menuItem === "Home") return "/";
     if (menuItem === "Contact") return "/main/contact";
@@ -31,6 +41,7 @@ function Header() {
     return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
   };
 
+  // Update the currentPage state when the pathname changes
   useEffect(() => {
     const path = window.location.pathname;
     const index = listMenu.findIndex(
@@ -39,11 +50,12 @@ function Header() {
     if (index !== -1) {
       setCurrentPage(index);
     }
-  });
+  }, [user]); // Only runs on initial mount
 
+  // Switch page (for active menu items)
   const handleSwitchPage = (index: number) => {
     setCurrentPage(index);
-    setIsActive(false);
+    setIsActive(false); // Close the mobile menu after switching page
   };
 
   const handleClick = () => {
@@ -110,10 +122,7 @@ function Header() {
 
                     <div className="h-px bg-gray-200 my-2"></div>
                     <button
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        window.location.reload();
-                      }}
+                      onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
                     >
                       Logout

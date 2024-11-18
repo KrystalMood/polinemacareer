@@ -17,11 +17,33 @@ export default function LoginForm() {
   });
   const [error, setError] = useState("");
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await handleLoginSubmit(formData, setError, router);
-  };
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://sqlsrv.test/login.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Login failed");
+    }
+
+    const result = await response.json();
+
+    if (!result.success) {
+      setError(result.message);
+    } else {
+      router.push("/main/dashboard");
+    }
+  } catch (error: any) {
+    setError(error.message || "An unexpected error occurred");
+  }
+};
 
   return (
     <div className="h-screen relative">
@@ -60,7 +82,7 @@ export default function LoginForm() {
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Email address"
+                placeholder="username"
                 className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-colors bg-white shadow-sm"
                 required
                 value={formData.username}
@@ -106,7 +128,6 @@ export default function LoginForm() {
             {error && (
               <>
                 <p className="text-red-500 text-center mb-4">{error}</p>
-                {setTimeout(() => setError(""), 3000)}
               </>
             )}
           </form>

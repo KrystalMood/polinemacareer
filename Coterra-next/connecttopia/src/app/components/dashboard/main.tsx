@@ -19,20 +19,41 @@ import {
 
 export default function MainDashboard() {
   const [salaryActive, setSalaryActive] = useState<string>("monthly");
-  const [userName, setUserName] = useState<string>("");
+  const [userName, setUserName] = useState<string>(""); // Store the user's name
   const [jobs, setJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
+  // Fetch user information on component mount
   useEffect(() => {
+    // Check if user info is available in localStorage
     const user = localStorage.getItem("user");
     if (user) {
       const userData = JSON.parse(user);
-      setUserName(userData.nama || "");
+      setUserName(userData.nama || ""); // Set username if found in localStorage
+    } else {
+      // If no user data is found in localStorage, you can make an API call to fetch user data if needed
+      fetchUserInfo();
     }
   }, []);
+
+  // Function to fetch user information from an API (optional)
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch("http://sqlsrv.test/dashboard.php");
+      const result = await response.json();
+      if (result && result.user) {
+        setUserName(result.user.name || ""); // Replace 'name' with the correct field
+      } else {
+        setError("Failed to fetch user data");
+      }
+    } catch (error) {
+      setError("Failed to fetch user data");
+      console.error(error);
+    }
+  };
 
   const handleSalaryClick = (salaryType: string) => {
     setSalaryActive(salaryType);
@@ -41,7 +62,7 @@ export default function MainDashboard() {
   const fetchJobs = async () => {
     try {
       setIsLoading(true);
-      const url = new URL("http://localhost/polinemakarir/api/get_jobs.php");
+      const url = new URL("http://sqlsrv.test/dashboard.php");
       if (searchTerm) url.searchParams.set("search", searchTerm);
       if (location) url.searchParams.set("location", location);
 
@@ -69,22 +90,22 @@ export default function MainDashboard() {
     fetchJobs();
   };
 
-  if (userName === "") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-gray-600">
-          Please login to view your dashboard
-        </p>
-      </div>
-    );
-  }
+  // if (userName === "") {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <p className="text-xl text-gray-600">
+  //         Please login to view your dashboard
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="py-28 mx-auto max-w-[90vw] px-4 sm:px-6 lg:px-8">
         <div className="text-start w-full">
           <h1 className="text-5xl font-bold tracking-tight text-gray-800 sm:text-6xl">
-            Hello {userName}, <br /> Let's find{" "}
+            Hello, <br /> Let's find{" "}
             <span className="text-blue-500">some jobs</span> for you
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">

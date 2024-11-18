@@ -12,6 +12,7 @@ import IndexCompany from "./components/landing/top-companies";
 import IndexEvent from "./components/landing/upcoming-events";
 
 export default function Home() {
+   
   return (
     <>
       <Header />

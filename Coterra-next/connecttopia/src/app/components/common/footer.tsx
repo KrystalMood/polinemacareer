@@ -14,7 +14,14 @@ const getPathFromMenuItem = (menuItem: string) => {
   if (menuItem === "Home") return "/";
   if (menuItem === "Contact") return "/main/contact";
   if (menuItem === "About") return "/main/about-us";
-  if (menuItem === "Article") return "#upcoming-events";
+  if (menuItem === "Article") return "/main/events/id";
+  if (menuItem === "Saved jobs") return "/main/jobs/saved-jobs";
+  if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
+  if (menuItem === "Candidate Dashboard") return "/main/dashboard/pelamar";
+  if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
+  if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
+  if (menuItem === "Employers Dashboard") return "/main/dashboard/perusahaan";
+  
   return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
 };
 
@@ -31,9 +38,8 @@ const footerSections: FooterSection[] = [
     title: "Candidate",
     links: [
       { title: "Browse Jobs", href: "/browse-jobs" },
-      { title: "Browse Employers", href: "/browse-employers" },
       { title: "Candidate Dashboard", href: "/candidate-dashboard" },
-      { title: "Saved Jobs", href: "/saved-jobs" },
+      { title: "Saved jobs", href: getPathFromMenuItem("savedjobs") },
     ],
   },
   {
@@ -41,7 +47,7 @@ const footerSections: FooterSection[] = [
     links: [
       { title: "Post a Job", href: "/post-job" },
       { title: "Browse Candidates", href: "/browse-candidates" },
-      { title: "Employers Dashboard", href: "/employers-dashboard" },
+      { title: "Employers Dashboard", href: getPathFromMenuItem("employee") },
       { title: "Applications", href: "/applications" },
     ],
   },

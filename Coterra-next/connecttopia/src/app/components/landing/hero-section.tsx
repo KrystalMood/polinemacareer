@@ -46,10 +46,6 @@ export default function IndexHero() {
             </h1>
           </div>
 
-          <span className="inline-flex px-4 py-2 text-sm bg-blue-50 text-yellow-500 rounded-full font-medium">
-            #1 Job Search Platform in Indonesia
-          </span>
-
           <div className="space-y-8">
             <p className="text-lg font-normal leading-relaxed text-gray-600">
               Experience a seamless hiring process and an enhanced job search.
@@ -59,15 +55,15 @@ export default function IndexHero() {
 
             <div className="space-y-6">
               <div className="relative group">
-                <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                {/* <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400 group-hover:text-blue-500 transition-colors" />
                 <input
                   type="text"
                   placeholder="Search job titles..."
                   className="h-14 w-full bg-gray-100 rounded-2xl pl-12 text-base text-gray-800 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all border border-gray-200 hover:border-blue-500/50"
-                />
+                /> */}
               </div>
 
-              <button className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-blue-200 flex items-center justify-center gap-2">
+              <button className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-blue-200 flex items-center justify-center gap-2" onClick={() => (window.location.href = "main/jobs/all-jobs")}>
                 Find Job
                 <ArrowRight className="w-5 h-5" />
               </button>

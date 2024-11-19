@@ -17,15 +17,16 @@ export default function IndexEvent() {
               Connecting Innovators and Creatives for a Brighter Tomorrow
             </p>
           </div>
-          <button className="px-7 py-3 bg-yellow-300 uppercase rounded-md shadow-md hover:scale-105 transition-all duration-200">
+          <button className="px-7 py-3 bg-yellow-300 uppercase rounded-md shadow-md hover:scale-105 transition-all duration-200" onClick={() => (window.location.href = "main/dashboard-events")}>
             View All
           </button>
         </div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" onClick={() => (window.location.href = "main/events/id")}>
           {events.map((event) => (
             <div
               key={event.title}
               className="bg-white shadow-lg rounded-lg group cursor-pointer hover:scale-[1.03] hover:shadow-2xl transition-all duration-200"
+              
             >
               <div className="relative">
                 <Image

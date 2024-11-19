@@ -19,13 +19,7 @@ export default function IndexFeatures() {
               Discover your next career opportunity
             </p>
           </div>
-          <button
-            onClick={() => (window.location.href = "main/jobs/all-jobs")}
-            className="group inline-flex items-center text-sky-600 hover:text-sky-700 font-semibold transition-colors"
-          >
-            View All Jobs
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform duration-150" />
-          </button>
+         
         </div>
 
         <div className="grid gap-6">
@@ -80,7 +74,7 @@ export default function IndexFeatures() {
                       <Bookmark size={20} />
                     )}
                   </button>
-                  <button className="inline-flex items-center px-6 py-2.5 bg-sky-50 text-sky-600 font-semibold rounded-lg group-hover:bg-yellow-400 group-hover:text-white transition-all duration-150">
+                  <button className="inline-flex items-center px-6 py-2.5 bg-sky-50 text-sky-600 font-semibold rounded-lg group-hover:bg-yellow-400 group-hover:text-white transition-all duration-150" onClick={() => (window.location.href = "main/jobs/apply")}>
                     Apply Now
                     <ArrowRight size={18} className="ml-2" />
                   </button>

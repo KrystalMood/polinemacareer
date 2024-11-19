@@ -18,7 +18,7 @@ export default function Home() {
       <Header />
       <IndexHero />
       <IndexIntro />
-      <IndexCategory />
+      {/* <IndexCategory /> */}
       <IndexFeatures />
       <IndexCompany />
       <IndexLogo />

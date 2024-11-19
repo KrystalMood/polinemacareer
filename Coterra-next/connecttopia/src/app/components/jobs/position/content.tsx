@@ -57,7 +57,7 @@ export default function PositionContent() {
             </div>
             
             <div className="flex flex-col gap-4">
-              <button className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold hover:bg-yellow-500 transition-colors">
+              <button className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold hover:bg-yellow-500 transition-colors" onClick={() => (window.location.href = "main/jobs/apply")}>
                 Apply Now
                 <ArrowRight className="w-5 h-5 inline ml-2" />
               </button>

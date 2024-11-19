@@ -35,7 +35,7 @@ function Header() {
 
   // Get the correct path for the menu items
   const getPathFromMenuItem = (menuItem: string) => {
-    if (menuItem === "Home") return "/";
+    if (menuItem === "Home") return "/main/dashboard/pelamar";
     if (menuItem === "Contact") return "/main/contact";
     if (menuItem === "About Us") return "/main/about-us";
     return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
@@ -66,9 +66,12 @@ function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1C2056] shadow-lg text-white backdrop-blur-md">
       <div className="h-16 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
-          <h1 className="font-bold text-2xl md:text-3xl text-amber-400 hover:text-amber-300 hover:scale-105 transition-all duration-500 tracking-tight">
+          <button onClick={() => (window.location.href = "/")}>
+           <h1 className="font-bold text-2xl md:text-3xl text-amber-400 hover:text-amber-300 hover:scale-105 transition-all duration-500 tracking-tight">
             PolinemaCareer
           </h1>
+        </button>
+         
 
           <nav className="hidden md:flex items-center gap-10">
             {listMenu.map((menuItem, index) => (

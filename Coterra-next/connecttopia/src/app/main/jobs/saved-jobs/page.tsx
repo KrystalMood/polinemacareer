@@ -12,10 +12,10 @@ export default function SavedJobsPage() {
       <Header />
       <div className="bg-gray-50 min-h-screen pt-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          {/* Page Title */}
+          
           <h1 className="text-4xl font-bold text-gray-900 mb-6">Saved Jobs</h1>
 
-          {/* Saved Jobs List */}
+
           <div className="space-y-6">
             {savedJobs.length > 0 ? (
               <div className="space-y-4">

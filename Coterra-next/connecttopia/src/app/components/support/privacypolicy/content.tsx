@@ -3,104 +3,162 @@ import React from "react";
 
 export default function PrivacyPolicyContent() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-20">
+      <div className="max-w-5xl mx-auto px-6">
         {/* Privacy Policy Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-900">Privacy Policy</h1>
-          <p className="text-lg text-gray-600">
-            We are committed to protecting your privacy and safeguarding the personal information you share with us. This Privacy Policy explains how we collect, use, and protect your data.
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
+            Privacy Policy
+          </h1>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Welcome to PolinemaCareer! Your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information while helping you connect with career opportunities tailored for Politeknik Negeri Malang students and alumni.
           </p>
         </div>
 
         {/* Privacy Policy Content */}
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Introduction</h2>
-          <p className="text-gray-700 mb-6">
-            Welcome to our Privacy Policy. We value your privacy and are committed to protecting the personal information you share with us. By accessing or using our website and services, you agree to the terms of this Privacy Policy. If you do not agree with any of the terms outlined in this policy, please refrain from using our services.
-          </p>
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          {/* Section - Introduction */}
+          <Section
+            title="Introduction"
+            paragraphs={[
+              "PolinemaCareer is a job-seeking platform created exclusively for Politeknik Negeri Malang students and alumni. This Privacy Policy outlines how we handle your personal information when you use our platform to find or post jobs.",
+              "By using PolinemaCareer, you agree to the terms of this Privacy Policy. If you do not agree, please refrain from using the platform.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Information We Collect</h2>
-          <p className="text-gray-700 mb-6">
-            We collect various types of information to provide and improve our services to you. This includes both personal and non-personal information. The types of information we collect include:
-          </p>
-          <ul className="list-disc pl-6 text-gray-700 mb-6">
-            <li>Personal details such as your name, email address, and phone number.</li>
-            <li>Account information when you create an account, such as your username and password.</li>
-            <li>Technical information including your IP address, browser type, and device information.</li>
-            <li>Payment information when you make purchases through our platform.</li>
-            <li>Usage data, such as how you interact with our website and services.</li>
-          </ul>
+          {/* Section - Information We Collect */}
+          <Section
+            title="Information We Collect"
+            paragraphs={[
+              "To provide our services effectively, we collect certain information from users, including:",
+            ]}
+            listItems={[
+              "Personal details such as your full name, student ID (if applicable), email address, and phone number.",
+              "Educational background and career-related information, such as your major, graduation year, resume, or portfolio links.",
+              "Technical information, including your IP address, browser type, and device details.",
+              "Activity data, such as job applications, saved jobs, and profile visits.",
+              "Information provided by companies posting job listings on our platform.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">How We Use Your Information</h2>
-          <p className="text-gray-700 mb-6">
-            We use the information we collect for a variety of purposes, including:
-          </p>
-          <ul className="list-disc pl-6 text-gray-700 mb-6">
-            <li>To provide, operate, and improve our services.</li>
-            <li>To personalize your experience and show content relevant to you.</li>
-            <li>To communicate with you, including sending updates, promotions, or other information you have consented to receive.</li>
-            <li>To process transactions, including payment and fulfillment of products or services.</li>
-            <li>To detect and prevent fraud or security breaches.</li>
-            <li>To comply with legal obligations and enforce our Terms of Service.</li>
-          </ul>
+          {/* Section - How We Use Your Information */}
+          <Section
+            title="How We Use Your Information"
+            paragraphs={[
+              "The information we collect is used to:",
+            ]}
+            listItems={[
+              "Facilitate job matching and improve your experience on the platform.",
+              "Allow companies to view your profile and contact you for job opportunities.",
+              "Verify the authenticity of student or alumni accounts.",
+              "Provide career guidance and personalized recommendations.",
+              "Ensure the security and functionality of the platform.",
+              "Send notifications about job openings, events, or updates relevant to your profile.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Cookies and Tracking Technologies</h2>
-          <p className="text-gray-700 mb-6">
-            We use cookies and similar tracking technologies to track activity on our website. Cookies help us analyze how our users interact with the site, allowing us to improve the functionality and user experience. Cookies may collect information such as browsing behavior, preferences, and IP addresses.
-          </p>
-          <p className="text-gray-700 mb-6">
-            You can control the use of cookies at the browser level, but if you choose to disable cookies, some features of the site may not work properly.
-          </p>
+          {/* Section - Cookies and Tracking */}
+          <Section
+            title="Cookies and Tracking Technologies"
+            paragraphs={[
+              "PolinemaCareer uses cookies and similar technologies to improve your user experience. Cookies allow us to remember your preferences, track your activity, and provide relevant job suggestions.",
+              "You can manage cookies through your browser settings, but disabling them may limit some features of the platform.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Data Sharing and Disclosure</h2>
-          <p className="text-gray-700 mb-6">
-            We do not sell, rent, or trade your personal information to third parties. However, we may share your data with third-party service providers who assist us in operating our business, such as payment processors, hosting services, and marketing platforms. These third parties are bound by confidentiality agreements and are only permitted to use your data for the purpose of providing services to us.
-          </p>
-          <p className="text-gray-700 mb-6">
-            We may also disclose your personal information if required by law, such as in response to a court order or government investigation, or to protect the rights, property, or safety of our company, our users, or others.
-          </p>
+          {/* Section - Data Sharing */}
+          <Section
+            title="Data Sharing and Disclosure"
+            paragraphs={[
+              "Your personal information is only shared in the following circumstances:",
+            ]}
+            listItems={[
+              "With employers or recruiters who post job openings on PolinemaCareer, allowing them to view your profile and contact you for job opportunities.",
+              "With service providers who assist in operating and maintaining the platform, such as hosting and email communication services. These providers are bound by confidentiality agreements.",
+              "When required by law, such as in response to legal requests or to protect the rights and safety of PolinemaCareer, its users, or others.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Data Security</h2>
-          <p className="text-gray-700 mb-6">
-            We implement industry-standard security measures to protect your personal data from unauthorized access, use, alteration, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
-          </p>
+          {/* Section - Data Security */}
+          <Section
+            title="Data Security"
+            paragraphs={[
+              "We prioritize the security of your personal data. PolinemaCareer implements robust measures to protect your information from unauthorized access or misuse.",
+              "However, no system is completely secure. We encourage you to protect your account by using a strong password and avoiding sharing login credentials.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Your Rights and Choices</h2>
-          <p className="text-gray-700 mb-6">
-            As a user, you have several rights regarding your personal data:
-          </p>
-          <ul className="list-disc pl-6 text-gray-700 mb-6">
-            <li>You have the right to access the personal information we hold about you.</li>
-            <li>You can request corrections to any inaccuracies in your personal data.</li>
-            <li>You can request the deletion of your personal data, subject to certain legal obligations.</li>
-            <li>You can opt-out of receiving marketing communications at any time by following the unsubscribe instructions in our emails.</li>
-          </ul>
+          {/* Section - Your Rights */}
+          <Section
+            title="Your Rights and Choices"
+            paragraphs={[
+              "As a user of PolinemaCareer, you have rights regarding your personal information:",
+            ]}
+            listItems={[
+              "Access your personal data and review the information we hold about you.",
+              "Request corrections to inaccuracies in your profile information.",
+              "Delete your account and associated data, subject to legal obligations.",
+              "Opt out of receiving promotional emails or notifications.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">International Data Transfers</h2>
-          <p className="text-gray-700 mb-6">
-            If you are located outside of the United States, please note that your personal data may be transferred to, stored, and processed in countries outside your home country. By using our services, you consent to the transfer of your data to other countries.
-          </p>
+          {/* Section - Data Retention */}
+          <Section
+            title="Retention of Data"
+            paragraphs={[
+              "Your data is retained as long as your account is active or as required to fulfill our services. Once your account is deleted, we will remove your data unless retention is required for legal or operational purposes.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Retention of Data</h2>
-          <p className="text-gray-700 mb-6">
-            We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, to comply with legal obligations, and to enforce our agreements.
-          </p>
+          {/* Section - Changes */}
+          <Section
+            title="Changes to This Privacy Policy"
+            paragraphs={[
+              "PolinemaCareer may update this Privacy Policy from time to time. Any updates will be posted on this page with the revised date. Please review it periodically to stay informed about how we protect your information.",
+            ]}
+          />
 
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Changes to This Privacy Policy</h2>
-          <p className="text-gray-700 mb-6">
-            We may update our Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically to stay informed about how we are protecting your personal data.
-          </p>
-
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact Us</h2>
-          <p className="text-gray-700 mb-6">
-            If you have any questions or concerns about this Privacy Policy or the way we handle your personal information, please contact us at:
-          </p>
+          {/* Section - Contact */}
+          <Section
+            title="Contact Us"
+            paragraphs={[
+              "For questions or concerns about this Privacy Policy or how your data is handled, please contact us at:",
+            ]}
+          />
           <p className="text-gray-700">
-            <strong>Email:</strong> support@example.com
+            <strong>Email:</strong> support@polinemacareer.com
           </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Reusable Section Component
+function Section({
+  title,
+  paragraphs = [],
+  listItems = [],
+}: {
+  title: string;
+  paragraphs?: string[];
+  listItems?: string[];
+}) {
+  return (
+    <div className="mb-8">
+      <h2 className="text-xl font-semibold text-gray-900 mb-4">{title}</h2>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className="text-gray-700 mb-4 leading-relaxed">
+          {paragraph}
+        </p>
+      ))}
+      {listItems.length > 0 && (
+        <ul className="list-disc pl-6 text-gray-700 space-y-2">
+          {listItems.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

@@ -15,12 +15,15 @@ const getPathFromMenuItem = (menuItem: string) => {
   if (menuItem === "Contact") return "/main/contact";
   if (menuItem === "About") return "/main/about-us";
   if (menuItem === "Article") return "/main/events/id";
-  if (menuItem === "Saved jobs") return "/main/jobs/saved-jobs";
   if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
   if (menuItem === "Candidate Dashboard") return "/main/dashboard/pelamar";
-  if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
-  if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
+  if (menuItem === "Saved jobs") return "/main/jobs/saved-jobs";
+  if (menuItem === "Post a Job") return "/main/jobs/all-jobs";
+  if (menuItem === "Browse Candidates") return "/main/jobs/all-jobs";
   if (menuItem === "Employers Dashboard") return "/main/dashboard/perusahaan";
+  if (menuItem === "Faqs") return "/main/support/Faq";
+  if (menuItem === "Privacy Policy") return "/main/support/privacyPolicy";
+  if (menuItem === "Terms & Conditions") return "/main/support/Terms&Condition";
   
   return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
 };

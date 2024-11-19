@@ -109,8 +109,8 @@ export default function MainDashboard() {
             <span className="text-blue-500">potential employee</span> for your company
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Browse thousands of job opportunities and take the next step in your
-            career journey.
+            Browse thousands talent opportunities and take the next step in your
+            company journey.
           </p>
 
           <form
@@ -296,7 +296,7 @@ export default function MainDashboard() {
           <div className="w-1/4">
             <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <h2 className="text-xl font-semibold text-gray-800">
-                Job Alerts
+                Talent alerts
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 Get notified when new jobs match your preferences
@@ -313,7 +313,7 @@ export default function MainDashboard() {
 
             <div className="mt-4 bg-white p-6 rounded-lg shadow-md border border-gray-200">
               <h2 className="text-xl font-semibold text-gray-800">
-                Get noticed faster
+                Sort potential faster
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 Get noticed faster with a premium job listing

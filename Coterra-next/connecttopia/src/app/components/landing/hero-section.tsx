@@ -42,7 +42,7 @@ export default function IndexHero() {
             </span>
             <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-tight">
               Find Your Dream Job with{" "}
-              <span className="text-yellow-500">PolinemaCarrier</span>
+              <span className="text-yellow-500">PolinemaCareer</span>
             </h1>
           </div>
 

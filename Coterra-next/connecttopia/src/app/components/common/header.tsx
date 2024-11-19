@@ -67,7 +67,7 @@ function Header() {
       <div className="h-16 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
           <h1 className="font-bold text-2xl md:text-3xl text-amber-400 hover:text-amber-300 hover:scale-105 transition-all duration-500 tracking-tight">
-            PolinemaCarrier
+            PolinemaCareer
           </h1>
 
           <nav className="hidden md:flex items-center gap-10">

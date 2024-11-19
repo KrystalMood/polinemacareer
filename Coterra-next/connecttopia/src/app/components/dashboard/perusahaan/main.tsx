@@ -113,7 +113,7 @@ export default function MainDashboard() {
             company journey.
           </p>
 
-          <form
+          {/* <form
             onSubmit={handleSearch}
             className="mt-10 flex w-full items-center justify-start gap-x-3"
           >
@@ -324,7 +324,7 @@ export default function MainDashboard() {
                 className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

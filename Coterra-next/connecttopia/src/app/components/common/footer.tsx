@@ -48,7 +48,7 @@ const footerSections: FooterSection[] = [
       { title: "Post a Job", href: "/post-job" },
       { title: "Browse Candidates", href: "/browse-candidates" },
       { title: "Employers Dashboard", href: getPathFromMenuItem("employee") },
-      { title: "Applications", href: "/applications" },
+      
     ],
   },
   {

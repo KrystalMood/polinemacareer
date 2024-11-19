@@ -113,7 +113,7 @@ export default function MainDashboard() {
             career journey.
           </p>
 
-          <form
+          {/* <form
             onSubmit={handleSearch}
             className="mt-10 flex w-full items-center justify-start gap-x-3"
           >
@@ -143,10 +143,10 @@ export default function MainDashboard() {
             >
               Search
             </button>
-          </form>
+          </form> */}
         </div>
 
-        <div className="flex gap-4 mt-8">
+        {/* <div className="flex gap-4 mt-8">
           <div className="w-1/5 bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <h2 className="text-xl font-semibold text-gray-800">Filters</h2>
             <div className="mt-4 space-y-6">
@@ -325,7 +325,7 @@ export default function MainDashboard() {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

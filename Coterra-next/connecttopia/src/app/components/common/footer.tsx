@@ -18,8 +18,8 @@ const getPathFromMenuItem = (menuItem: string) => {
   if (menuItem === "Browse Jobs") return "/main/jobs/all-jobs";
   if (menuItem === "Candidate Dashboard") return "/main/dashboard/pelamar";
   if (menuItem === "Saved jobs") return "/main/jobs/saved-jobs";
-  if (menuItem === "Post a Job") return "/main/jobs/all-jobs";
-  if (menuItem === "Browse Candidates") return "/main/jobs/all-jobs";
+  if (menuItem === "Post a Job") return "/main/jobs/post-a-job";
+  if (menuItem === "Browse Candidates") return "/main/jobs/all-job";
   if (menuItem === "Employers Dashboard") return "/main/dashboard/perusahaan";
   if (menuItem === "Faqs") return "/main/support/Faq";
   if (menuItem === "Privacy Policy") return "/main/support/privacyPolicy";

@@ -15,116 +15,188 @@ export default function AllJobsContent() {
   return (
     <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Search Section */}
-        <div className="bg-white p-4 rounded-lg shadow-sm flex flex-wrap gap-4 items-center">
-          <div className="flex-1 min-w-[200px] relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Job title, Keyword..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        {/* Judul Utama */}
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl font-semibold text-[#0d5c91]">
+            Post a Job
+          </h1>
+          <p className="text-lg text-gray-600">
+            Create a job posting in just a few steps and connect with the best talent for your needs!
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="space-y-8 mt-10">
+          {/* Row 1: Company Name & Contact Name */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Company Name
+              </label>
+              <input
+                type="text"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter company name"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Contact Name
+              </label>
+              <input
+                type="text"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter your name"
+              />
+            </div>
+          </div>
+
+          {/* Row 2: Email & Phone */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Phone
+              </label>
+              <input
+                type="tel"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter your phone number"
+              />
+            </div>
+          </div>
+
+          {/* Row 3: Job Title & Category */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Job Title
+              </label>
+              <input
+                type="text"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter job title"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Category
+              </label>
+              <select className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none">
+                <option>Select category...</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 4: Location & Budget */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Location
+              </label>
+              <input
+                type="text"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter location"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Budget
+              </label>
+              <input
+                type="text"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+                placeholder="Enter budget"
+              />
+            </div>
+          </div>
+
+          {/* Row 5: Start Date & Skills Required */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                When should the freelancer start this project?
+              </label>
+              <input
+                type="date"
+                className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Skills Required
+              </label>
+              <select className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none">
+                <option>Select skills...</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Row 6: Experience Level & Project Type */}
+          <div className="flex gap-6">
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Experience Level
+              </label>
+              <select className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none">
+                <option>Select experience level...</option>
+              </select>
+            </div>
+            <div className="flex-1">
+              <label className="block text-[#01020f] text-base font-semibold mb-2">
+                Project Type
+              </label>
+              <select className="w-full h-11 bg-white rounded-lg border border-neutral-200 px-4 focus:outline-none">
+                <option>Select project type...</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Project Description */}
+          <div>
+            <label className="block text-[#01020f] text-base font-semibold mb-2">
+              Project Description
+            </label>
+            <textarea
+              className="w-full h-44 bg-white rounded-lg border border-neutral-200 px-4 py-2 focus:outline-none"
+              placeholder="Write a brief description..."
             />
           </div>
-          <div className="flex-1 min-w-[200px] relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Location"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+
+          {/* Upload Documents */}
+          <div>
+            <label className="block text-[#01020f] text-base font-semibold mb-2">
+              Upload any relevant documents, such as project briefs or design references
+            </label>
+            <div className="h-24 bg-white border-2 border-[#0d5c91] rounded-lg flex flex-col justify-center items-center">
+              <p className="text-[#01020f] text-base">Drag your file(s) or <strong>browse</strong></p>
+              <p className="text-[#01020f] text-sm">Max 10 MB files are allowed</p>
+            </div>
           </div>
-          <div className="flex-1 min-w-[200px]">
-            <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">Select Category</option>
-              <option value="design">Design</option>
-              <option value="development">Development</option>
-              <option value="marketing">Marketing</option>
-            </select>
+
+          {/* Terms & Submit */}
+          <div className="flex items-center gap-4">
+            <input type="checkbox" className="w-5 h-5 border border-neutral-200 rounded-md" />
+            <p className="text-[#01020f] text-sm">
+              By submitting this form you agree to our Terms of Service and Privacy Policy.
+            </p>
           </div>
-          <button className="px-6 py-2 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
-            Find Job
+          <button className="w-32 h-12 bg-[#0d5c91] text-white rounded-lg font-medium">
+            Submit
           </button>
-        </div>
-
-        {/* Filters */}
-        <div className="flex justify-between items-center mt-6 mb-8">
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-              <Filter className="w-4 h-4" />
-              Advance Filter
-            </button>
-            <div className="flex gap-2">
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                Design
-              </span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                New York
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <select className="px-4 py-2 border border-gray-300 rounded-lg">
-              <option>Latest</option>
-              <option>Oldest</option>
-            </select>
-            <select className="px-4 py-2 border border-gray-300 rounded-lg">
-              <option>12 per page</option>
-              <option>24 per page</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Job Listings */}
-        <div className="space-y-4">
-          {jobs.map((job, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex gap-4">
-                  <Image
-                    src={job.image}
-                    alt="Company logo"
-                    width={50}
-                    height={50}
-                    className="rounded-lg"
-                  />
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-semibold text-lg">
-                        {job.title}
-                      </h3>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">
-                        {job.type}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" /> {job.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <DollarSign className="w-4 h-4" /> {job.payment}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" /> {job.deadline}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button className="p-2 hover:bg-gray-100 rounded-lg">
-                    <Bookmark className={`w-5 h-5 ${job.bookmarked ? 'text-blue-500' : 'text-gray-400'}`} />
-                  </button>
-                  <button className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                    Apply Now →
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
   );
 }
+

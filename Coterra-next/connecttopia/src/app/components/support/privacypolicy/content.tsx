@@ -5,19 +5,19 @@ export default function PrivacyPolicyContent() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-20">
       <div className="max-w-5xl mx-auto px-6">
-        {/* Privacy Policy Header */}
+       
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
+          <h1 className="text-4xl font-semibold text-gray-900 mb-4">
             Privacy Policy
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            Welcome to PolinemaCareer! Your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information while helping you connect with career opportunities tailored for Politeknik Negeri Malang students and alumni.
+          <p className="text-lg text-justify text-gray-600 leading-relaxed">
+            Welcome to PolinemaCareer, your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information while helping you connect with career opportunities. 
           </p>
         </div>
 
-        {/* Privacy Policy Content */}
+        
         <div className="bg-white rounded-lg shadow-lg p-8">
-          {/* Section - Introduction */}
+       
           <Section
             title="Introduction"
             paragraphs={[
@@ -26,7 +26,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Information We Collect */}
+          
           <Section
             title="Information We Collect"
             paragraphs={[
@@ -41,7 +41,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - How We Use Your Information */}
+         
           <Section
             title="How We Use Your Information"
             paragraphs={[
@@ -57,7 +57,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Cookies and Tracking */}
+         
           <Section
             title="Cookies and Tracking Technologies"
             paragraphs={[
@@ -66,7 +66,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Data Sharing */}
+         
           <Section
             title="Data Sharing and Disclosure"
             paragraphs={[
@@ -79,7 +79,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Data Security */}
+         
           <Section
             title="Data Security"
             paragraphs={[
@@ -88,7 +88,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Your Rights */}
+          
           <Section
             title="Your Rights and Choices"
             paragraphs={[
@@ -102,7 +102,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Data Retention */}
+          
           <Section
             title="Retention of Data"
             paragraphs={[
@@ -110,7 +110,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Changes */}
+          
           <Section
             title="Changes to This Privacy Policy"
             paragraphs={[
@@ -118,7 +118,7 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          {/* Section - Contact */}
+
           <Section
             title="Contact Us"
             paragraphs={[
@@ -126,7 +126,9 @@ export default function PrivacyPolicyContent() {
             ]}
           />
           <p className="text-gray-700">
-            <strong>Email:</strong> support@polinemacareer.com
+            <strong>Email :</strong> contact@polinemacarrier.com
+            <div></div>
+            <strong>Phone Number :</strong> 081235305531
           </p>
         </div>
       </div>
@@ -134,7 +136,7 @@ export default function PrivacyPolicyContent() {
   );
 }
 
-// Reusable Section Component
+
 function Section({
   title,
   paragraphs = [],

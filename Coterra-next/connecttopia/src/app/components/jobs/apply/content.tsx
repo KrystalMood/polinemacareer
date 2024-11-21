@@ -154,7 +154,7 @@ export default function ApplyContent() {
                 <Bookmark className="w-5 h-5 text-[#0A65CC] group-hover:text-white" />
               </button>
 
-              <button className="px-12 py-3 inline-flex items-center gap-2 rounded-md bg-[#F7D13A] hover:bg-[#e5c235] transition-all duration-300 font-medium">
+              <button className="px-12 py-3 inline-flex items-center gap-2 rounded-md bg-[#F7D13A] hover:bg-[#e5c235] transition-all duration-300 font-medium" onClick={() => (window.location.href = "/auth/verif-apply/page")}>
                 Apply Now
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </button>

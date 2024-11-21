@@ -47,7 +47,7 @@ function Header() {
     const index = listMenu.findIndex(
       (item) => getPathFromMenuItem(item) === path
     );
-    if (index !== -1) {
+    if (index !== null) {
       setCurrentPage(index);
     }
   }, [user]); // Only runs on initial mount

@@ -24,6 +24,7 @@ const getPathFromMenuItem = (menuItem: string) => {
   if (menuItem === "Faqs") return "/main/support/Faq";
   if (menuItem === "Privacy Policy") return "/main/support/privacyPolicy";
   if (menuItem === "Terms & Conditions") return "/main/support/Terms&Condition";
+  if (menuItem === "Post an Event") return "/main/events/[id]/post-event";
   
   return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
 };
@@ -49,6 +50,7 @@ const footerSections: FooterSection[] = [
     title: "Employers",
     links: [
       { title: "Post a Job", href: "/post-job" },
+      { title: "Post an Event", href: "/post-event" },
       { title: "Browse Candidates", href: "/browse-candidates" },
       { title: "Employers Dashboard", href: getPathFromMenuItem("employee") },
       

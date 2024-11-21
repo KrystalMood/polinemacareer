@@ -1,23 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function PrivacyPolicyContent() {
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure this page renders only on the client-side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // Prevent server-rendered mismatch
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-20">
       <div className="max-w-5xl mx-auto px-6">
-       
         <div className="text-center mb-12">
           <h1 className="text-4xl font-semibold text-gray-900 mb-4">
             Privacy Policy
           </h1>
           <p className="text-lg text-justify text-gray-600 leading-relaxed">
-            Welcome to PolinemaCareer, your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information while helping you connect with career opportunities. 
+            Welcome to PolinemaCareer, your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information while helping you connect with career opportunities.
           </p>
         </div>
 
-        
         <div className="bg-white rounded-lg shadow-lg p-8">
-       
           <Section
             title="Introduction"
             paragraphs={[
@@ -26,7 +34,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          
           <Section
             title="Information We Collect"
             paragraphs={[
@@ -41,12 +48,9 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-         
           <Section
             title="How We Use Your Information"
-            paragraphs={[
-              "The information we collect is used to:",
-            ]}
+            paragraphs={["The information we collect is used to:"]}
             listItems={[
               "Facilitate job matching and improve your experience on the platform.",
               "Allow companies to view your profile and contact you for job opportunities.",
@@ -57,7 +61,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-         
           <Section
             title="Cookies and Tracking Technologies"
             paragraphs={[
@@ -66,7 +69,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-         
           <Section
             title="Data Sharing and Disclosure"
             paragraphs={[
@@ -79,7 +81,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-         
           <Section
             title="Data Security"
             paragraphs={[
@@ -88,7 +89,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          
           <Section
             title="Your Rights and Choices"
             paragraphs={[
@@ -102,7 +102,6 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          
           <Section
             title="Retention of Data"
             paragraphs={[
@@ -110,14 +109,12 @@ export default function PrivacyPolicyContent() {
             ]}
           />
 
-          
           <Section
             title="Changes to This Privacy Policy"
             paragraphs={[
               "PolinemaCareer may update this Privacy Policy from time to time. Any updates will be posted on this page with the revised date. Please review it periodically to stay informed about how we protect your information.",
             ]}
           />
-
 
           <Section
             title="Contact Us"
@@ -127,7 +124,7 @@ export default function PrivacyPolicyContent() {
           />
           <p className="text-gray-700">
             <strong>Email :</strong> contact@polinemacarrier.com
-            <div></div>
+            <br />
             <strong>Phone Number :</strong> 081235305531
           </p>
         </div>
@@ -135,7 +132,6 @@ export default function PrivacyPolicyContent() {
     </div>
   );
 }
-
 
 function Section({
   title,

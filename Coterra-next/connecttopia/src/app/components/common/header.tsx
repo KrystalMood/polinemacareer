@@ -101,7 +101,7 @@ function Header() {
                         alt="user photo"
                         width={40}
                         height={40}
-                        className="rounded-full object-cover shadow-md border-2 border-amber-400"
+                        className="rounded-full shadow-md  border-amber-400"
                       />
                       <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm" />
                     </div>

@@ -3,9 +3,9 @@ import Image from "next/image";
 import templateImage from "@/public/peakpx.jpg";
 import { Calendar, Clock, MapPin, Share2, Users } from "lucide-react";
 
-export default function EventDetail() {
+export default function EventDetail({ className }: { className?: string }) {
   return (
-    <div className="min-h-screen bg-gray-50 pt-24">
+    <div className={`min-h-screen bg-gray-50 ${className || ""}`}>
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">

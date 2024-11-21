@@ -11,6 +11,6 @@ export default function JobPositionPage() {
       <AllJobsContent />
       <Footer />
     </>
-    
+
   );
 } 

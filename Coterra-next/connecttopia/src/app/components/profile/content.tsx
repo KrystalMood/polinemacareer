@@ -24,14 +24,7 @@ export default function ProfileContent() {
     }
   }, []);
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-gray-600">Please login to view your profile</p>
-      </div>
-    );
-  }
-
+  
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="max-w-7xl mx-auto px-4 py-12">

@@ -18,6 +18,11 @@ const SUGGESTED_JOBS = [
   "Sales",
   "Digital Marketing",
   "Programming",
+  "Data Science",
+  "UI/UX Design",
+  "Finance",
+  "Human Resources",
+  "Engineering"
 ];
 
 const STATS = [

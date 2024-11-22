@@ -8,6 +8,8 @@ export interface FormRegist {
   email: string;
   username: string;
   phone: string;
+  role: string;
+  gender: string;
   password: string;
   confirmPassword: string;
 }

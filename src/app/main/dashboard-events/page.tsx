@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/app/components/common/header";
+import Header from "@/app/components/common/header/header";
 import Footer from "@/app/components/common/footer";
 import React, { useState } from "react";
 import EventDetail from "../../components/events/dashboard/content";
@@ -16,7 +16,9 @@ export default function Page() {
         {/* Highlight Event Section */}
         <section className="mb-12">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Highlight Event</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              Highlight Event
+            </h2>
             <div className="bg-white rounded-lg shadow-md p-4">
               {/* Add tighter spacing for the EventDetail */}
               <EventDetail className="pt-0" />

@@ -70,7 +70,7 @@ export default function Faqcontent() {
                   className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100 rounded-lg"
                   onClick={() => toggleAccordion(index)}
                 >
-                  <h3 className="text-xl font-semibold text-gray-900">{term.title}</h3>
+                  <h3 className="text-xl font-semibold text-gray-700">{term.title}</h3>
                   <ChevronDown
                     className={`w-6 h-6 text-gray-600 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""}`}
                   />

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Header from "../../../components/common/header";
+import Header from "../../../components/common/header/header";
 import Footer from "../../../components/common/footer";
 import ApplyContent from "@/app/components/jobs/apply/content";
 

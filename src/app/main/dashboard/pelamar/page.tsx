@@ -1,6 +1,6 @@
 "use client";
 import Footer from "@/app/components/common/footer";
-import Header from "@/app/components/common/header";
+import Header from "@/app/components/common/header/header";
 import MainDashboard from "@/app/components/dashboard/pelamar/main";
 import React from "react";
 

@@ -1,13 +1,23 @@
 export const MENU_ITEMS = [
   { label: "Jobs", href: "/main/jobs" },
-  { label: "Companies", href: "/companies" },
-  { label: "About Us", href: "/about-us" },
-  { label: "Contact", href: "/contact" },
+  { label: "Companies", href: "/main/companies" },
+  { label: "About Us", href: "/main/about-us" },
+  { label: "Contact", href: "/main/contact" },
 ];
 
 export const getPathFromMenuItem = (menuItem: string) => {
-  if (menuItem === "Home") return "/main/dashboard/pelamar";
-  if (menuItem === "Contact") return "/main/contact";
-  if (menuItem === "About Us") return "/main/about-us";
-  return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
-}; 
+  switch (menuItem) {
+    case "Home":
+      return "/main/dashboard/pelamar";
+    case "Jobs": 
+      return "/main/jobs";
+    case "Companies":
+      return "/main/companies";  
+    case "Contact":
+      return "/main/contact";
+    case "About Us":
+      return "/main/about-us";
+    default:
+      return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
+  }
+};

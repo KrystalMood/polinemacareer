@@ -10,6 +10,7 @@ import HowItWorks from "./components/landing/how-it-works";
 import FeaturedJobs from "./components/landing/featured-job";
 import SuccessStories from "@/app/components/landing/success-stories";
 import Introduction from "@/app/components/landing/introduction";
+import Category from "./components/landing/job-categories";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Hero />
       <HowItWorks />
       <Introduction />
+      <Category/>
       <FeaturedJobs />
       <Companies />
       <SuccessStories />

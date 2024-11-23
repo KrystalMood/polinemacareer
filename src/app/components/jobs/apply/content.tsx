@@ -94,34 +94,39 @@ export default function ApplyContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#fffaf8] to-white">
+      <div className="mx-auto w-[90vw] max-w-7xl py-16">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
           <div className="flex items-center gap-6">
-            <Image
-              src={templateImage}
-              alt="Job Image"
-              className="shadow-md w-24 h-24 rounded-full object-cover"
-            />
+            <div className="relative">
+              <Image
+                src={templateImage}
+                alt="Job Image"
+                className="w-24 h-24 rounded-xl object-cover shadow-md group-hover:shadow-lg transition-all duration-300"
+              />
+              <div className="absolute -top-2 -right-2 bg-[#ff9b71]/10 rounded-full p-1.5">
+                <Bookmark className="w-5 h-5 text-[#ff9b71]" />
+              </div>
+            </div>
 
             <div>
               <div className="flex flex-wrap items-center gap-4 mb-4">
-                <h1 className="text-4xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-gray-900">
                   Senior UX Design
                 </h1>
-                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                <span className="px-3 py-1 text-sm font-medium text-[#ff9b71] bg-[#ff9b71]/10 rounded-full">
                   Featured
                 </span>
-                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                <span className="px-3 py-1 text-sm font-medium text-[#ff9b71] bg-[#ff9b71]/10 rounded-full">
                   Full Time
                 </span>
               </div>
               <div className="flex flex-wrap gap-6">
                 <p className="text-sm text-gray-600 inline-flex items-center gap-2">
-                  <Link className="w-4 h-4 text-gray-400" />
+                  <Link className="w-4 h-4 text-[#ff9b71]" />
                   <a
                     href="http://instagram.com/username"
-                    className="hover:text-blue-600 transition-colors"
+                    className="hover:text-[#ff9b71] transition-colors"
                   >
                     instagram.com/username
                   </a>
@@ -149,19 +154,20 @@ export default function ApplyContent() {
           </div>
 
           <div className="flex flex-col items-end space-y-4">
-            <div className="flex items-center gap-4">
-              <button className="bg-[#E7F0FA] p-3 rounded-md hover:bg-[#0A65CC] hover:text-white transition-all duration-300 group">
-                <Bookmark className="w-5 h-5 text-[#0A65CC] group-hover:text-white" />
-              </button>
-
-              <button className="px-12 py-3 inline-flex items-center gap-2 rounded-md bg-[#F7D13A] hover:bg-[#e5c235] transition-all duration-300 font-medium" onClick={() => (window.location.href = "/auth/verif-apply/page")}>
-                Apply Now
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
+            <button
+              onClick={() => (window.location.href = "/auth/verif-apply/page")}
+              className="inline-flex items-center px-8 py-3 bg-[#ff9b71] text-white font-semibold rounded-xl 
+              hover:bg-[#ff8c5c] transition-all duration-200"
+            >
+              Apply Now
+              <ArrowRight
+                size={18}
+                className="ml-2 group-hover:translate-x-1"
+              />
+            </button>
             <p className="text-sm text-gray-600">
-              Job expires on:{" "}
-              <span className="font-semibold text-[#E05151]">
+              Expires:{" "}
+              <span className="font-semibold text-[#ff9b71]">
                 June 30, 2024
               </span>
             </p>
@@ -169,70 +175,84 @@ export default function ApplyContent() {
         </div>
 
         <div className="mt-16 flex flex-col lg:flex-row justify-between gap-12">
-          <div className="lg:max-w-2xl">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              Job Description
-            </h2>
-            {text
-              .split(/\s+/)
-              .reduce((acc: string[], word, i) => {
-                const paragraphIndex = Math.floor(i / 40);
-                acc[paragraphIndex] = (acc[paragraphIndex] || "") + word + " ";
-                return acc;
-              }, [])
-              .map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="mb-6 text-lg leading-relaxed text-gray-600 font-normal tracking-wide"
-                >
-                  {paragraph}
-                </p>
-              ))}
+          <div className="lg:max-w-2xl space-y-12">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Job Description
+              </h2>
+              {text
+                .split(/\s+/)
+                .reduce((acc: string[], word, i) => {
+                  const paragraphIndex = Math.floor(i / 40);
+                  acc[paragraphIndex] =
+                    (acc[paragraphIndex] || "") + word + " ";
+                  return acc;
+                }, [])
+                .map((paragraph, index) => (
+                  <p
+                    key={index}
+                    className="mb-6 text-lg leading-relaxed text-gray-600 font-normal tracking-wide"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+            </div>
 
-            <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-8">
-              Responsibilities
-            </h2>
-            <ul className="space-y-4 text-lg text-gray-600 list-disc marker:text-gray-400 ml-6">
-              <li className="leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </li>
-              <li className="leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </li>
-              <li className="leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </li>
-              <li className="leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </li>
-            </ul>
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Responsibilities
+              </h2>
+              <ul className="space-y-4 text-lg text-gray-600 list-disc marker:text-gray-400 ml-6">
+                <li className="leading-relaxed">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </li>
+                <li className="leading-relaxed">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </li>
+                <li className="leading-relaxed">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </li>
+                <li className="leading-relaxed">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </li>
+              </ul>
+            </div>
 
-            <div className="flex flex-wrap items-center gap-6 mt-12">
-              <h3 className="text-2xl font-semibold text-gray-900">
-                Share this job:
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                Share this job
               </h3>
               <div className="flex flex-wrap gap-4">
-                <button className="inline-flex items-center gap-2 border-2 px-6 py-3 rounded-md hover:bg-gray-50 transition-colors">
-                  <Facebook className="w-5 h-5 text-[#0A65CC]" />
-                  <span className="text-[#0A65CC] font-medium">Facebook</span>
+                <button
+                  className="inline-flex items-center px-6 py-3 bg-[#ff9b71]/10 text-[#ff9b71] 
+                font-semibold rounded-xl hover:bg-[#ff9b71] hover:text-white transition-all duration-200"
+                >
+                  <Facebook className="w-5 h-5 mr-2" />
+                  Facebook
                 </button>
 
-                <button className="inline-flex items-center gap-2 border-2 px-6 py-3 rounded-md hover:bg-gray-50 transition-colors">
-                  <Twitter className="w-5 h-5 text-[#1DA1F2]" />
-                  <span className="text-[#1DA1F2] font-medium">Twitter</span>
+                <button
+                  className="inline-flex items-center px-6 py-3 bg-[#ff9b71]/10 text-[#ff9b71] 
+                font-semibold rounded-xl hover:bg-[#ff9b71] hover:text-white transition-all duration-200"
+                >
+                  <Twitter className="w-5 h-5 mr-2" />
+                  Twitter
                 </button>
 
-                <button className="inline-flex items-center gap-2 border-2 px-6 py-3 rounded-md hover:bg-gray-50 transition-colors">
-                  <FaPinterest className="w-5 h-5 text-[#E60023]" />
-                  <span className="text-[#E60023] font-medium">Pinterest</span>
+                <button
+                  className="inline-flex items-center px-6 py-3 bg-[#ff9b71]/10 text-[#ff9b71] 
+                font-semibold rounded-xl hover:bg-[#ff9b71] hover:text-white transition-all duration-200"
+                >
+                  <FaPinterest className="w-5 h-5 mr-2" />
+                  Pinterest
                 </button>
               </div>
             </div>
           </div>
 
           <div className="lg:w-1/3 space-y-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Job Overview
               </h2>
 
@@ -262,7 +282,7 @@ export default function ApplyContent() {
                     key={index}
                     className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors"
                   >
-                    <item.icon className="w-8 h-8 text-[#0A65CC]" />
+                    <item.icon className="w-8 h-8 text-[#ff9b71]" />
                     <p className="text-sm font-medium text-gray-500 text-center">
                       {item.label}
                     </p>
@@ -274,7 +294,7 @@ export default function ApplyContent() {
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-center gap-6 mb-6">
                 <Image
                   src={templateImage}
@@ -320,26 +340,22 @@ export default function ApplyContent() {
         </div>
 
         <div className="mt-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Related Jobs
             </h2>
-
-            <div className="flex items-center gap-3">
-              <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <ChevronLeft className="w-6 h-6 text-gray-400" />
-              </button>
-              <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <ChevronRight className="w-6 h-6 text-gray-400" />
-              </button>
-            </div>
+            <p className="text-lg text-gray-600">
+              Discover similar opportunities that match your profile
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedJobs.map((job, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl 
+                transition-all duration-300 hover:-translate-y-1 border border-[#ff9b71]/10 
+                hover:border-[#ff9b71]/30"
               >
                 <div className="flex items-center gap-4">
                   <Image
@@ -375,7 +391,7 @@ export default function ApplyContent() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                  <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                  <button className="text-sm font-medium text-[#ff9b71] hover:text-[#a58c82] transition-colors">
                     View Details
                   </button>
                   <button className="text-sm font-medium text-gray-600 hover:text-gray-700 transition-colors flex items-center gap-1">

@@ -10,7 +10,7 @@ export const useHeaderNavigation = () => {
     const index = MENU_ITEMS.findIndex(
       (item) => getPathFromMenuItem(item.label) === path
     );
-    if (index !== -1) {
+    if (index !== null) {
       setCurrentPage(index);
     }
   }, []);

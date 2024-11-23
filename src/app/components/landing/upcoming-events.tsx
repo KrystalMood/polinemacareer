@@ -1,5 +1,5 @@
 import templateImage from "@/public/peakpx.jpg";
-import { ChevronRight, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowRight, Clock } from "lucide-react";
 import Image from "next/image";
 import events from "@/app/data/index/upcoming-events";
 import { useRouter } from "next/navigation";
@@ -8,60 +8,107 @@ export default function Events() {
   const router = useRouter();
 
   return (
-    <div className="min-h-[50vh] bg-[#fffaf8]">
+    <div className="min-h-[50vh] bg-gradient-to-b from-[#fffaf8] to-white">
       <div className="mx-auto w-[90vw] max-w-7xl py-16">
         {/* Header Section */}
-        <div className="mb-10 max-w-[90vw] mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-3">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-0">
-              Upcoming Events
-            </h1>
-            <p className="text-lg text-gray-600">
-              Connecting Innovators and Creatives for a Brighter Tomorrow
-            </p>
-          </div>
-          <button
-            onClick={() => router.push("/main/dashboard-events")}
-            className="group flex items-center text-md font-semibold text-[#ff9b71] hover:text-[#ffb699] transition-colors"
-          >
-            View All Events
-            <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
-          </button>
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Upcoming Events
+          </h1>
+          <p className="text-lg text-gray-600">
+            Join our exclusive career events and networking opportunities
+          </p>
         </div>
 
         {/* Events Grid */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event) => (
             <div
-              key={event.title}
-              className="group bg-white rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200"
+              key={event.id}
+              className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {/* Event Image */}
-              <div className="relative">
+              <div className="relative h-48 md:h-56">
                 <Image
                   src={templateImage}
                   alt={event.title}
-                  className="rounded-t-lg object-cover h-[23rem]"
+                  className="w-full h-full object-cover rounded-t-2xl"
+                  layout="fill"
                 />
-                <div className="absolute w-full h-full inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-t-lg opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent rounded-t-2xl">
+                  {/* Event Date Badge */}
+                  <div className="absolute top-4 right-4 bg-white/95 rounded-lg p-2 backdrop-blur-sm">
+                    <div className="text-center">
+                      <span className="block text-sm font-semibold text-[#ff9b71]">
+                        {new Date(event.date).toLocaleDateString('en-US', { month: 'short' })}
+                      </span>
+                      <span className="block text-xl font-bold text-gray-900">
+                        {new Date(event.date).getDate()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Event Details */}
-              <div className="px-4 py-4 space-y-8">
-                <h1 className="font-bold text-xl">{event.title}</h1>
-                <p className="font-light text-gray-600">{event.subtitle}</p>
-                <div className="flex justify-between w-full">
-                  <p className="text-gray-500">{event.date}</p>
-                  <button
-                    onClick={() => router.push(`/main/events/${event.id}`)}
-                    className="inline-flex items-center gap-x-3 group-hover:underline"
-                  >
-                    See more <ChevronRight size={18} />
-                  </button>
+              {/* Event Content */}
+              <div className="p-6 space-y-4">
+                {/* Event Type Badge */}
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 text-xs font-medium text-[#ff9b71] bg-[#ff9b71]/10 rounded-full">
+                    {event.type || 'Career Event'}
+                  </span>
                 </div>
+
+                {/* Event Title & Description */}
+                <div className="space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-[#ff9b71] transition-colors duration-200">
+                    {event.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {event.subtitle}
+                  </p>
+                </div>
+
+                {/* Event Details */}
+                <div className="pt-4 space-y-3 border-t border-gray-100">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Clock className="w-4 h-4 text-[#ff9b71]" />
+                    <span>{event.time || '14:00 - 16:00 WIB'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <MapPin className="w-4 h-4 text-[#ff9b71]" />
+                    <span>{event.location || 'Virtual Event'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Users className="w-4 h-4 text-[#ff9b71]" />
+                    <span>{event.attendees || '150+'} Attendees</span>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={() => router.push(`/main/events/${event.id}`)}
+                  className="mt-4 w-full inline-flex items-center justify-center px-6 py-3 bg-[#ff9b71]/10 text-[#ff9b71] 
+                  font-semibold rounded-xl hover:bg-[#ff9b71] hover:text-white transition-all duration-200"
+                >
+                  Register Now
+                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </button>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Events Button */}
+        <div className="mt-10 text-center">
+          <button
+            onClick={() => router.push("/main/dashboard-events")}
+            className="inline-flex items-center px-8 py-3 bg-[#ff9b71]/10 text-[#ff9b71] font-semibold rounded-xl 
+            hover:bg-[#ff9b71] hover:text-white transition-all duration-200"
+          >
+            View All Events
+            <ArrowRight size={18} className="ml-2" />
+          </button>
         </div>
       </div>
     </div>

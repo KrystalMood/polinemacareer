@@ -8,39 +8,47 @@ export default function FeaturedJobs() {
   const { job, handleBookmarked } = useFeaturedJob();
 
   return (
-    <div className="min-h-[50vh] bg-[#fffaf8] px-4 md:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl py-12 md:py-16">
+    <div className="min-h-[50vh] bg-gradient-to-b from-[#fffaf8] to-white px-4 md:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl py-2 md:py-16">
         {/* Header Section */}
-        <div className="mb-8 md:mb-10 flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center md:justify-between">
-          <div className="text-center md:text-left space-y-2">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900">
-              Featured Jobs
-            </h1>
-            <p className="text-base md:text-lg text-gray-600">
-              Discover your next career opportunity
-            </p>
-          </div>
-          <button className="mx-auto md:mx-0 group flex items-center text-sm md:text-md font-semibold text-[#ff9b71] hover:text-[#ffb699] transition-colors">
-            View All Jobs
-            <ArrowRight className="ml-2 size-4 md:size-5 transition-transform group-hover:translate-x-1" />
-          </button>
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Featured Jobs
+          </h1>
+          <p className="text-lg text-gray-600">
+            Discover your next career opportunity with top companies
+          </p>
         </div>
 
         {/* Jobs Grid */}
-        <div className="grid grid-cols-1 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-8">
           {job.map((jobItem, index) => (
             <div
               key={jobItem.title}
-              className="group bg-white rounded-xl p-4 md:p-6 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all duration-200"
+              className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group"
             >
-              <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center justify-between gap-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 {/* Job Details */}
-                <div className="flex flex-col md:flex-row items-center gap-4">
-                  <Image
-                    src={templateImage}
-                    alt={jobItem.title}
-                    className="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover"
-                  />
+                <div className="flex items-center gap-6 w-full md:w-auto">
+                  <div className="relative">
+                    <Image
+                      src={templateImage}
+                      alt={jobItem.title}
+                      className="w-16 h-16 rounded-xl object-cover shadow-md group-hover:shadow-lg transition-all duration-300"
+                    />
+                    <div className="absolute -top-2 -right-2 bg-[#ff9b71]/10 rounded-full p-1.5">
+                      <button
+                        onClick={() => handleBookmarked(index)}
+                        className="text-[#ff9b71] hover:scale-110 transition-transform duration-300 group"
+                      >
+                        {jobItem.bookmarked ? (
+                          <Bookmark size={18} fill="#ff9b71" stroke="#ff9b71" />
+                        ) : (
+                          <Bookmark size={18} />
+                        )}
+                      </button>
+                    </div>
+                  </div>
                   <div className="text-center md:text-left space-y-2">
                     <div className="flex flex-col md:flex-row items-center gap-2">
                       <h2 className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-[#ff9b71] transition-colors">
@@ -71,16 +79,6 @@ export default function FeaturedJobs() {
 
                 {/* Actions */}
                 <div className="flex justify-center md:justify-end items-center gap-2 md:gap-3">
-                  <button
-                    onClick={() => handleBookmarked(index)}
-                    className="p-2 text-gray-400 hover:text-[#ff9b71] rounded-lg hover:bg-[#ff9b71]/10 transition-colors"
-                  >
-                    {jobItem.bookmarked ? (
-                      <Bookmark size={18} fill="#ff9b71" stroke="#ff9b71" />
-                    ) : (
-                      <Bookmark size={18} />
-                    )}
-                  </button>
                   <button
                     className="inline-flex items-center px-4 md:px-6 py-2 md:py-2.5 text-xs md:text-sm font-semibold bg-[#ff9b71]/10 text-[#ff9b71] rounded-lg group-hover:bg-[#ff9b71] group-hover:text-white transition-all duration-200"
                     onClick={() => (window.location.href = "main/jobs/apply")}

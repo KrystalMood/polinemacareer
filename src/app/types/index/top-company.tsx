@@ -1,9 +1,11 @@
 interface Company {
   id: number;
   name: string;
-  logo: string;
   location: string;
-  isFeatured?: boolean;
+  isFeatured: boolean;
+  openPositions: number;
+  employeeCount: number;
+  description?: string;
 }
 
 export type { Company };

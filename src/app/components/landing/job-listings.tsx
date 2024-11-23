@@ -43,7 +43,7 @@ const jobListings = [
 const FeaturedJobs = () => {
   return (
     <div className="min-h-screen bg-[#FFF8F3]">
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 py-0 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="mb-6 sm:mb-0">

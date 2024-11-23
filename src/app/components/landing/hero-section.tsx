@@ -22,7 +22,7 @@ const SUGGESTED_JOBS = [
   "UI/UX Design",
   "Finance",
   "Human Resources",
-  "Engineering"
+  "Engineering",
 ];
 
 const STATS = [
@@ -66,12 +66,11 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <button className="px-8 py-3 bg-[#ff9b71] text-white font-semibold rounded-xl hover:bg-[#ff8c5c] transition-colors duration-200 flex items-center gap-2">
+              <button
+              onClick={() => window.location.href = "/auth/login"}
+              className="px-8 py-3 bg-[#ff9b71] text-white font-semibold rounded-xl hover:bg-[#ff8c5c] transition-colors duration-200 flex items-center gap-2">
                 Find a Job
                 <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="px-8 py-3 bg-[#ff9b71]/10 text-[#ff9b71] font-semibold rounded-xl hover:bg-[#ff9b71]/20 transition-colors duration-200">
-                Post a Job
               </button>
             </div>
 

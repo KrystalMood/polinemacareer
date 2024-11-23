@@ -4,6 +4,10 @@ interface Event {
   subtitle: string;
   image: string;
   date: string;
+  type: string;
+  time: string;
+  location: string;
+  attendees: number;
 }
 
 export type { Event };

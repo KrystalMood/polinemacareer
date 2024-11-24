@@ -18,36 +18,46 @@ export default function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://sqlsrv.test/login.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
+      const response = await fetch(
+        "http://localhost/polinemakarir/api/login.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await response.json();
 
       if (!result.success) {
         setError(result.message);
       } else {
-        // Simpan data pengguna di localStorage
-        localStorage.setItem("user", JSON.stringify(result.user)); // Simpan data pengguna
+        localStorage.setItem("user", JSON.stringify(result.user));
 
-        // Redirect berdasarkan role pengguna
-        if (result.role === "pelamar") {
-          router.push("/main/dashboard/pelamar"); // Halaman pelamar
-        } else if (result.role === "perusahaan") {
-          router.push("/main/dashboard/perusahaan"); // Halaman perusahaan
+        switch (result.user.role.toLowerCase()) {
+          case "pelamar":
+            router.push("/main/dashboard/pelamar");
+            break;
+          case "perusahaan":
+            router.push("/main/dashboard/perusahaan");
+            break;
+          default:
+            router.push("/main/dashboard");
         }
       }
-    } catch (error: any) {
-      setError(error.message || "An unexpected error occurred");
+    } catch (error) {
+      setError("Something wrong is happening!");
+      console.error(error);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -92,10 +102,9 @@ export default function LoginForm() {
                 placeholder="Username"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white"
                 required
+                name="username"
                 value={formData.username}
-                onChange={(e) =>
-                  setFormData({ ...formData, username: e.target.value })
-                }
+                onChange={handleChange}
               />
             </div>
 
@@ -107,10 +116,9 @@ export default function LoginForm() {
                 placeholder="Password"
                 className="w-full pl-10 pr-12 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white"
                 required
+                name="password"
                 value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                onChange={handleChange}
               />
               <button
                 type="button"
@@ -133,9 +141,7 @@ export default function LoginForm() {
               Login
             </button>
 
-            {error && (
-              <p className="text-red-500 text-center">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-center">{error}</p>}
           </form>
 
           <div className="mt-6 text-center">

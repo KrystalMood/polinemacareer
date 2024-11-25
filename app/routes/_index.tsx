@@ -1,15 +1,14 @@
 import type { MetaFunction } from "@remix-run/node";
-import Footer from "~/components/common/footer";
-import Header from "~/components/common/header";
-import Category from "~/components/landing/Category";
-import Companies from "~/components/landing/Company";
-import Events from "~/components/landing/Events";
+import MainLayout from "~/components/layouts/MainLayout";
 import Hero from "~/components/landing/Hero";
 import Introduction from "~/components/landing/Introduction";
-import FeaturedJobs from "~/components/landing/JobHighlight";
-import Logo from "~/components/landing/Partner";
 import Process from "~/components/landing/Process";
+import Category from "~/components/landing/Category";
+import FeaturedJobs from "~/components/landing/JobHighlight";
+import Companies from "~/components/landing/Company";
 import SuccessStories from "~/components/landing/Testimonial";
+import Logo from "~/components/landing/Partner";
+import Events from "~/components/landing/Events";
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,8 +19,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <>
-      <Header />
+    <MainLayout>
       <Hero />
       <Introduction />
       <Process />
@@ -31,7 +29,6 @@ export default function Index() {
       <SuccessStories />
       <Logo />
       <Events />
-      <Footer />
-    </>
+    </MainLayout>
   );
 }

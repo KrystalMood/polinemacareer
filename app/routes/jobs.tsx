@@ -1,11 +1,11 @@
 import React from 'react'
-import CompaniesContent from '~/components/companies/content'
+import JobsContent from '~/components/jobs/jobs'
 import MainLayout from '~/components/layouts/MainLayout'
 
-export default function CompaniesPage() {
+export default function JobsPage() {
   return (
     <MainLayout>
-        <CompaniesContent />
+      <JobsContent />
     </MainLayout>
   )
 }

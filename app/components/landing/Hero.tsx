@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-[#ff9b71]/5 rounded-full blur-3xl" />
 
       {/* Main Content */}
-      <div className="mx-auto w-[90vw] max-w-7xl min-h-screen py-20">
+      <div className="mx-auto w-[90vw] max-w-7xl min-h-screen py-2">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
@@ -49,8 +49,9 @@ export default function Hero() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
               <button
-              onClick={() => window.location.href = "/auth/login"}
-              className="px-8 py-3 bg-[#ff9b71] text-white font-semibold rounded-xl hover:bg-[#ff8c5c] transition-colors duration-200 flex items-center gap-2">
+                onClick={() => (window.location.href = "/auth/login")}
+                className="px-8 py-3 bg-[#ff9b71] text-white font-semibold rounded-xl hover:bg-[#ff8c5c] transition-colors duration-200 flex items-center gap-2"
+              >
                 Find a Job
                 <ArrowRight className="w-5 h-5" />
               </button>

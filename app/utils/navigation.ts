@@ -1,16 +1,16 @@
 export const getPathFromMenuItem = (menuItem: string) => {
   switch (menuItem) {
     case "Home":
-      return "/main/dashboard/pelamar";
+      return "/dashboard/pelamar";
     case "Jobs":
-      return "/main/jobs"; 
+      return "/jobs";
     case "Companies":
-      return "/main/companies";
+      return "/companies";
     case "Contact":
-      return "/main/contact";
+      return "/contact";
     case "About Us":
-      return "/main/about-us";
+      return "/about-us";
     default:
       return `/${menuItem.toLowerCase().replace(/\s+/g, "")}`;
   }
-}; 
+};

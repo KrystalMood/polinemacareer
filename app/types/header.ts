@@ -3,6 +3,7 @@ export interface UserData {
   email: string;
   fullName: string;
   role: "job_seeker" | "employer";
+  companyName?: string;
 }
 
 export interface HeaderProps {

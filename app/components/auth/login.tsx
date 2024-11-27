@@ -61,7 +61,7 @@ export default function LoginForm() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       const data = await response.json();
@@ -69,10 +69,12 @@ export default function LoginForm() {
       if (data.status === "success") {
         localStorage.setItem("user", JSON.stringify(data.data));
 
-        if (data.data.role === "job_seeker") {
-          navigate("/main/dashboard/pelamar");
+        const token = btoa(JSON.stringify(data.data));
+        localStorage.setItem("token", `Bearer ${token}`);
+        if (data.data.role === "employer") {
+          navigate("/dashboard/employer/home");
         } else {
-          navigate("/main/dashboard/perusahaan");
+          navigate("/dashboard/jobseeker/home");
         }
       } else {
         setErrors({
@@ -89,18 +91,15 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen min-h-screen bg-[#fffaf8]">
-      <button
-        onClick={() => window.history.back()}
-        className="absolute top-10 left-10"
-      >
+    <div className="flex h-screen min-h-screen items-center justify-center bg-[#fffaf8]">
+      <button onClick={() => navigate("/")} className="absolute left-10 top-10">
         <ArrowLeft
-          className="z-10 cursor-pointer hover:text-gray-600 transition-colors"
+          className="z-10 cursor-pointer transition-colors hover:text-gray-600"
           size={24}
         />
       </button>
 
-      <div className="w-full max-w-md space-y-8 p-8 bg-white rounded-2xl shadow-lg">
+      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
         {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">
@@ -111,7 +110,7 @@ export default function LoginForm() {
 
         {/* Error Message */}
         {errors.message && (
-          <div className="p-4 text-sm text-red-600 bg-red-50 rounded-lg">
+          <div className="rounded-lg bg-red-50 p-4 text-sm text-red-600">
             {errors.message}
           </div>
         )}
@@ -122,7 +121,7 @@ export default function LoginForm() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Email</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Mail className="h-5 w-5 text-gray-400" />
               </div>
               <input
@@ -131,9 +130,9 @@ export default function LoginForm() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className={`text-black bg-white w-full pl-10 pr-4 py-3 rounded-lg border ${
+                className={`w-full rounded-lg border bg-white py-3 pl-10 pr-4 text-black ${
                   errors.email ? "border-red-500" : "border-gray-200"
-                } focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20 transition-colors`}
+                } transition-colors focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20`}
                 placeholder="nama@email.com"
               />
             </div>
@@ -148,7 +147,7 @@ export default function LoginForm() {
               Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Lock className="h-5 w-5 text-gray-400" />
               </div>
               <input
@@ -157,15 +156,15 @@ export default function LoginForm() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                className={`text-black bg-white w-full pl-10 pr-12 py-3 rounded-lg border ${
+                className={`w-full rounded-lg border bg-white py-3 pl-10 pr-12 text-black ${
                   errors.password ? "border-red-500" : "border-gray-200"
-                } focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20 transition-colors`}
+                } transition-colors focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20`}
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5 text-gray-400" />
@@ -183,7 +182,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#ff9b71] text-white font-semibold py-3 rounded-lg hover:bg-[#ff8c5c] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-lg bg-[#ff9b71] py-3 font-semibold text-white transition-colors duration-300 hover:bg-[#ff8c5c] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? "Memproses..." : "Masuk"}
           </button>

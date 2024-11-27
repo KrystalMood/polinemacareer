@@ -1,27 +1,34 @@
-import { Link } from "@remix-run/react";
-import { BellIcon, BriefcaseIcon, Home, LogOut, UserIcon } from "lucide-react";
+import { LoaderFunction, redirect } from "@remix-run/node";
+import { Link, useNavigate } from "@remix-run/react";
+import { BellIcon, BriefcaseIcon, HistoryIcon, Home, LogOut, UserIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "~/hooks/useAuth";
 
 const menu = [
   {
     name: "Home",
     icon: <Home />,
-    path: "/dashboard/home",
+    path: "/dashboard/jobseeker/home",
   },
   {
     name: "Jobs",
     icon: <BriefcaseIcon />,
-    path: "/dashboard/jobs",
+    path: "/dashboard/jobseeker/jobs",
+  },
+  {
+    name: "History",
+    icon: <HistoryIcon />,
+    path: "/dashboard/jobseeker/history",
   },
   {
     name: "Profile",
     icon: <UserIcon />,
-    path: "/dashboard/profile",
+    path: "/dashboard/jobseeker/profile",
   },
   {
     name: "Logout",
     icon: <LogOut />,
-    path: "/",
+    path: "/login",
   },
 ];
 export default function DashboardLayout({
@@ -30,6 +37,14 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [currentIndex, setCurrentIndex] = useState("home");
+  const { userData } = useAuth();
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   useEffect(() => {
     const pathSegments = window.location.pathname.split("/");
@@ -47,18 +62,31 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="rounded-full p-2 hover:bg-[#fffaf8]">
-              <BellIcon className="h-5 w-5 text-gray-600" />
-            </button>
-            <div className="flex items-center gap-2">
-              <img
-                src="/temp.jpg"
-                alt=""
-                className="h-8 w-8 rounded-full object-cover"
-              />
-              <span className="text-sm font-medium text-gray-700">
-                Pramudya
-              </span>
+            <div className="relative">
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="flex items-center gap-2 rounded-lg p-2 hover:bg-gray-50"
+              >
+                <img
+                  src="/temp.jpg"
+                  alt=""
+                  className="h-8 w-8 rounded-full object-cover"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  {userData?.fullName}
+                </span>
+              </button>
+
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white py-2 shadow-lg">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -77,19 +105,16 @@ export default function DashboardLayout({
                   isActive
                     ? "bg-orange-50 text-orange-600"
                     : "text-gray-700 hover:bg-gray-50"
-                }
-                ${item.name.toLowerCase() === "logout" ? "bg-red-50 text-red-400" : ""}`}
+                } ${item.name.toLowerCase() === "logout" ? "bg-red-50 text-red-400" : ""}`}
               >
                 <div
                   className={`${
                     isActive ? "text-orange-600" : "text-gray-500"
-                  }
-                  ${
+                  } ${
                     item.name.toLowerCase() === "logout"
                       ? "text-red-400"
                       : "text-gray-500"
-                  }
-                  `}
+                  } `}
                 >
                   {item.icon}
                 </div>

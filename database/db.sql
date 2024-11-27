@@ -16,6 +16,7 @@ CREATE TABLE jobs (
     type VARCHAR(50) NOT NULL,
     logo VARCHAR(255) NOT NULL,
     description TEXT,
+    requirements TEXT,
     salary VARCHAR(100),
     deadline DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

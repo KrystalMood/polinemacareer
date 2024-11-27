@@ -1,9 +1,11 @@
+import { useNavigate } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import { UserData } from "~/types/header";
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -17,12 +19,12 @@ export const useAuth = () => {
     localStorage.removeItem("user");
     setIsLoggedIn(false);
     setUserData(null);
-    window.location.href = "/";
+    navigate("/login");
   };
 
   return {
     isLoggedIn,
     userData,
-    handleLogout
+    handleLogout,
   };
-}; 
+};

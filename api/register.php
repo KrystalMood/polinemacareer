@@ -68,6 +68,15 @@ if (!in_array($gender, $validGenders)) {
     exit();
 }
 
+if ($role === 'employer' && !isset($data['companyName'])) {
+    http_response_code(400);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Company name is required for employer registration"
+    ]);
+    exit();
+}
+
 try {
     $checkQuery = "SELECT * FROM users WHERE email = :email LIMIT 1";
     $checkStmt = $pdo->prepare($checkQuery);
@@ -85,7 +94,14 @@ try {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO users (email, password, full_name, role, gender) VALUES (:email, :password, :fullName, :role, :gender)";
+    if ($role === 'employer') {
+        $companyName = htmlspecialchars(strip_tags($data['companyName']));
+        $query = "INSERT INTO users (email, password, full_name, role, gender, company_name) 
+                  VALUES (:email, :password, :fullName, :role, :gender, :companyName)";
+    } else {
+        $query = "INSERT INTO users (email, password, full_name, role, gender) 
+                  VALUES (:email, :password, :fullName, :role, :gender)";
+    }
 
     $stmt = $pdo->prepare($query);
 
@@ -94,6 +110,10 @@ try {
     $stmt->bindParam(":fullName", $fullName);
     $stmt->bindParam(":role", $role);
     $stmt->bindParam(":gender", $gender);
+
+    if ($role === 'employer') {
+        $stmt->bindParam(":companyName", $companyName);
+    }
 
     if ($stmt->execute()) {
         $userId = $pdo->lastInsertId();

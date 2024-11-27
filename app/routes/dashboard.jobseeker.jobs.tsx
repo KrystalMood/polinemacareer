@@ -1,6 +1,6 @@
-import JobsHeader from "~/components/dashboard/jobs/JobsHeader";
-import JobFilters from "~/components/dashboard/jobs/JobFilters";
-import JobsList from "~/components/dashboard/jobs/JobsList";
+import JobsHeader from "~/components/dashboard/jobseeker/jobs/JobsHeader";
+import JobFilters from "~/components/dashboard/jobseeker/jobs/JobFilters";
+import JobsList from "~/components/dashboard/jobseeker/jobs/JobsList";
 import { useRef } from "react";
 
 export default function DashboardJobs() {

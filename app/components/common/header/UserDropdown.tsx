@@ -29,7 +29,7 @@ export const UserDropdown = ({
       {showDropdown && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border border-gray-100">
           <RemixLink
-            to={userData?.role === "job_seeker" ? "/main/dashboard/pelamar" : "/main/dashboard/perusahaan"}
+            to={userData?.role === "job_seeker" ? "/dashboard/jobseeker/home" : "/dashboard/employer/home"}
             className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
           >
             Dashboard

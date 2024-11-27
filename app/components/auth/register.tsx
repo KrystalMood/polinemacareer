@@ -1,5 +1,5 @@
 "use client";
-import { Mail, Lock, Eye, EyeOff, Sparkles, User } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Sparkles, User, Building2 } from "lucide-react";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "@remix-run/react";
@@ -10,6 +10,7 @@ interface RegisterFormData {
   fullName: string;
   role: "job_seeker" | "employer";
   gender: "male" | "female";
+  companyName: string;
 }
 
 export default function RegisterForm() {
@@ -23,6 +24,7 @@ export default function RegisterForm() {
     password: "",
     role: "job_seeker",
     gender: "male",
+    companyName: "",
   });
   const [errors, setErrors] = useState({
     fullName: "",
@@ -30,6 +32,7 @@ export default function RegisterForm() {
     password: "",
     role: "",
     gender: "",
+    companyName: "",
     message: "",
   });
 
@@ -76,6 +79,13 @@ export default function RegisterForm() {
       isValid = false;
     }
 
+    if (formData.role === "employer" ) {
+      if (!formData.companyName || formData.companyName.trim() === "") {
+        newErrors.companyName = "Company name is required";
+        isValid = false;
+      }
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -90,13 +100,19 @@ export default function RegisterForm() {
     e.preventDefault();
     
     if (step === 1) {
-      if (validateStep1()) {
-        setStep(2);
-      }
+      handleNext();
       return;
     }
 
     if (!validateStep2()) {
+      return;
+    }
+
+    if (formData.role === "employer" && !formData.companyName) {
+      setErrors(prev => ({
+        ...prev,
+        companyName: "Company name is required"
+      }));
       return;
     }
 
@@ -112,14 +128,15 @@ export default function RegisterForm() {
           password: formData.password,
           fullName: formData.fullName,
           role: formData.role,
-          gender: formData.gender
+          gender: formData.gender,
+          companyName: formData.role === "employer" ? formData.companyName : undefined,
         }),
       });
 
       const data = await response.json();
 
       if (data.status === "success") {
-        navigate("/auth/login", {
+        navigate("/login", {
           state: { message: "Registration successful! Please login." }
         });
       } else {
@@ -290,6 +307,28 @@ export default function RegisterForm() {
                     <p className="mt-1 text-sm text-red-600">{errors.role}</p>
                   )}
                 </div>
+                
+                {formData.role === "employer" && (
+                  <div className="relative">
+                    <Building2
+                      className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-[#ff9b71] h-5 w-5 ${
+                        errors.companyName ? "top-6" : ""
+                      }`}
+                    />
+                    <input type="text" 
+                    placeholder="Company Name" 
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white" 
+                    value={formData.companyName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, companyName: e.target.value })
+                    }
+                    required
+                    />
+                    {errors.companyName && (
+                      <p className="mt-1 text-sm text-red-600">{errors.companyName}</p>
+                    )}
+                  </div>
+                )}
 
                 <div className="relative">
                   <select
@@ -322,8 +361,8 @@ export default function RegisterForm() {
                 </button>
               )}
               <button
-                type={step === 1 ? "button" : "submit"}
-                onClick={step === 1 ? handleNext : undefined}
+                type="button"
+                onClick={step === 1 ? handleNext : handleSubmit}
                 disabled={isLoading}
                 className={`${
                   step === 1 ? "w-full" : "w-1/2"
@@ -344,6 +383,18 @@ export default function RegisterForm() {
                 className="text-[#ff9b71] hover:text-[#ff8c5c] font-semibold"
               >
                 Login here
+              </a>
+            </p>
+          </div>
+
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              Register as an employer?
+              <a
+                href="/register-employer"
+                className="text-[#ff9b71] hover:text-[#ff8c5c] font-semibold"
+              >
+                Register here
               </a>
             </p>
           </div>

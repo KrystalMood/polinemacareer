@@ -3,7 +3,7 @@ import { PlusCircle } from "lucide-react";
 export default function JobsHeader() {
   return (
     <div className="flex items-center justify-between">
-      <div>
+      <div className="rounded-xl bg-white p-6 shadow-sm mt-2">
         <h1 className="text-2xl font-bold text-gray-900">Lowongan Pekerjaan</h1>
         <p className="mt-1 text-gray-600">
           Temukan lowongan pekerjaan yang sesuai dengan keahlian Anda

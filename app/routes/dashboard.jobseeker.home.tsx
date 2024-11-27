@@ -1,6 +1,6 @@
-import WelcomeCard from '~/components/dashboard/jobseeker/beranda/WelcomeCard'
-import StatsGrid from '~/components/dashboard/jobseeker/beranda/StatsGrid'
-import RecentApplications from '~/components/dashboard/jobseeker/beranda/RecentApplications'
+import WelcomeCard from '~/components/dashboard/jobseeker/home/WelcomeCard'
+import StatsGrid from '~/components/dashboard/jobseeker/home/StatsGrid'
+import RecentApplications from '~/components/dashboard/jobseeker/home/RecentApplications'
 
 export default function DashboardHome() {
   return (

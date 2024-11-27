@@ -36,16 +36,22 @@ try {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if (password_verify($password, $user['password'])) {
+            $tokenData = [
+                "id" => $user['id'],
+                "email" => $user['email'],
+                "fullName" => $user['full_name'],
+                "role" => $user['role'],
+                "companyName" => $user['company_name']
+            ];
+
+            $token = base64_encode(json_encode($tokenData));
+
             http_response_code(200);
             echo json_encode([
                 "status" => "success",
                 "message" => "Login berhasil",
-                "data" => [
-                    "id" => $user['id'],
-                    "email" => $user['email'],
-                    "fullName" => $user['full_name'],
-                    "role" => $user['role']
-                ]
+                "data" => $tokenData,
+                "token" => $token
             ]);
         } else {
             http_response_code(401);

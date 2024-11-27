@@ -97,6 +97,7 @@ const JobsList = forwardRef((props, ref) => {
     <div className="space-y-4">
       {jobs.map((job) => (
         <JobCard 
+          id={job.id}
           key={job.id}
           title={job.title}
           company={job.company}

@@ -10,6 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE jobs (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    employer_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     company VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -17,10 +18,12 @@ CREATE TABLE jobs (
     logo VARCHAR(255) NOT NULL,
     description TEXT,
     requirements TEXT,
-    salary VARCHAR(100),
+    salary_range VARCHAR(100),
     deadline DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('Active', 'Draft', 'Closed') DEFAULT 'Active';
+    FOREIGN KEY (employer_id) REFERENCES users(id)
 );
 
 CREATE TABLE applications (

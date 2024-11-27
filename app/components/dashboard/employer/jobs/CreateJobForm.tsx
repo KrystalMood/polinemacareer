@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import React, { useState } from "react";
+import { useAuth } from "~/hooks/useAuth";
 
 interface CreateJobFormProps {
   onClose: () => void;
@@ -10,6 +11,7 @@ export default function CreateJobForm({
   onClose,
   onSuccess,
 }: CreateJobFormProps) {
+  const { userData } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,12 +32,14 @@ export default function CreateJobForm({
     };
 
     try {
+      const token = localStorage.getItem("token")?.replace("Bearer ", "");
       const response = await fetch(
         "http://localhost/polinema_career/api/jobs/create.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: token || "",
           },
           body: JSON.stringify(jobData),
         },
@@ -59,10 +63,12 @@ export default function CreateJobForm({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="w-full max-w-2xl rounded-xl bg-white p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Create New Job</h2>
+          <h2 className="text-xl font-semibold text-gray-900">
+            Create New Job
+          </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="rounded-lg p-2 hover:bg-gray-100"
           >
             <X className="h-5 w-5" />
           </button>
@@ -126,7 +132,7 @@ export default function CreateJobForm({
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Requirements
+                requirements
               </label>
               <textarea
                 name="requirements"
@@ -164,22 +170,20 @@ export default function CreateJobForm({
             </div>
           </div>
 
-          {error && (
-            <p className="text-sm text-red-600">{error}</p>
-          )}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           <div className="flex justify-end gap-4">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="rounded-lg px-4 py-2 text-gray-700 hover:bg-gray-100"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="px-4 py-2 bg-[#ff9b71] text-white rounded-lg hover:bg-[#ff8c5c] disabled:opacity-50"
+              className="rounded-lg bg-[#ff9b71] px-4 py-2 text-white hover:bg-[#ff8c5c] disabled:opacity-50"
             >
               {isLoading ? "Processing..." : "Save"}
             </button>

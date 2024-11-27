@@ -2,19 +2,19 @@ import { Users, BriefcaseIcon, CheckCircle } from "lucide-react";
 
 const stats = [
   {
-    title: "Total Lowongan",
-    value: "12",
+    title: "Total Vacancies",
+    value: "12", 
     icon: <BriefcaseIcon className="h-6 w-6 text-blue-600" />,
     bgColor: "bg-blue-50",
   },
   {
-    title: "Total Pelamar",
+    title: "Total Applicants",
     value: "48",
     icon: <Users className="h-6 w-6 text-green-600" />,
     bgColor: "bg-green-50",
   },
   {
-    title: "Pelamar Diterima",
+    title: "Accepted Applicants",
     value: "15",
     icon: <CheckCircle className="h-6 w-6 text-orange-600" />,
     bgColor: "bg-orange-50",
@@ -39,4 +39,4 @@ export default function StatsGrid() {
       ))}
     </div>
   );
-} 
+}

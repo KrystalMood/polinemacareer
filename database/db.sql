@@ -30,7 +30,7 @@ CREATE TABLE applications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     job_id INT NOT NULL,
     user_id INT NOT NULL,
-    status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    status ENUM('Pending', 'Reviewed','Accepted', 'Rejected') DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (job_id) REFERENCES jobs(id),

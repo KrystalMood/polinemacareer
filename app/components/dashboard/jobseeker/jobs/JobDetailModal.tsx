@@ -59,6 +59,36 @@ export default function JobDetailModal({
     fetchJobDetail();
   }, [jobId]);
 
+  const handleApply = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost/polinema_career/api/applications/apply.php`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token || "",
+          },
+          body: JSON.stringify({
+            job_id: jobId,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        alert("Application submitted successfully");
+        onClose();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("An error occurred while submitting application");
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black/50">
       <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white">
@@ -135,7 +165,10 @@ export default function JobDetailModal({
               </div>
 
               <div className="flex justify-end border-t pt-6">
-                <button className="inline-flex items-center gap-2 rounded-lg bg-[#ff9b71] px-6 py-3 font-medium text-white transition-colors hover:bg-[#ff8c5c]">
+                <button
+                  onClick={handleApply}
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#ff9b71] px-6 py-3 font-medium text-white transition-colors hover:bg-[#ff8c5c]"
+                >
                   <Clock className="h-5 w-5" />
                   Apply
                 </button>

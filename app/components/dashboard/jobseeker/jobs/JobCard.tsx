@@ -1,6 +1,6 @@
-import { Building2, MapPin, Timer } from "lucide-react";
+import { Building2, MapPin, Timer, Check } from "lucide-react";
 import JobDetailModal from "./JobDetailModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface JobCardProps {
   id: number;
@@ -20,6 +20,7 @@ export default function JobCard({
   logo,
 }: JobCardProps) {
   const [showDetail, setShowDetail] = useState(false);
+
   return (
     <>
       <div className="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
@@ -29,9 +30,10 @@ export default function JobCard({
             alt={company}
             className="h-12 w-12 rounded-lg object-cover"
           />
-
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">{title}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-gray-900">{title}</h3>
+            </div>
 
             <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-1.5">
@@ -61,7 +63,10 @@ export default function JobCard({
       </div>
 
       {showDetail && (
-        <JobDetailModal jobId={id} onClose={() => setShowDetail(false)} />
+        <JobDetailModal 
+          jobId={id} 
+          onClose={() => setShowDetail(false)}
+        />
       )}
     </>
   );

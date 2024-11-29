@@ -7,7 +7,7 @@ header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     http_response_code(200);
-    exit;   
+    exit;
 }
 
 include_once "../config/db.php";
@@ -26,9 +26,7 @@ $job_id = $_GET["id"];
 try {
     $query = "SELECT j.*, 
               u.company_name,
-              u.email as company_email,
-              u.phone as company_phone,
-              u.website as company_website
+              u.email as company_email
               FROM jobs j 
               JOIN users u ON j.employer_id = u.id 
               WHERE j.id = :job_id";
@@ -38,6 +36,22 @@ try {
 
     if ($stmt->rowCount() > 0) {
         $job = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $requiredFields = [
+            'title',
+            'type',
+            'location',
+            'description',
+            'requirements',
+            'deadline',
+            'salary_range'
+        ];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($job[$field])) {
+                $job[$field] = '';
+            }
+        }
 
         http_response_code(200);
         echo json_encode([
@@ -52,10 +66,11 @@ try {
         ]);
     }
 } catch (PDOException $e) {
+    error_log("Database Error: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         "status" => "error",
-        "message" => "Internal server error"
+        "message" => "Internal server error: " . $e->getMessage()
     ]);
 }
 ?>

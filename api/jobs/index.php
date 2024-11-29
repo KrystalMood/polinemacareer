@@ -27,7 +27,7 @@ try {
         $sort_direction = 'DESC';
     }
 
-    $query = "SELECT * FROM jobs ORDER BY $sort_field $sort_direction";
+    $query = "SELECT * FROM jobs WHERE status = 'Active' ORDER BY $sort_field $sort_direction";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

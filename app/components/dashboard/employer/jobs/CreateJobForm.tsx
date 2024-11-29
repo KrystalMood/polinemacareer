@@ -49,6 +49,7 @@ export default function CreateJobForm({
       if (data.status === "success") {
         onSuccess();
         onClose();
+        window.location.reload();
       } else {
         setError(data.message || "An error occurred");
       }

@@ -1,6 +1,7 @@
-import { Clock, Edit2, MoreVertical, Trash2, Users } from "lucide-react";
+import { Clock, Edit2, MoreVertical, Trash2, Users, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import EditJobForm from "./EditJobForm";
+import ApplicantsList from "./ApplicantsList";
 
 type Job = {
   id: number;
@@ -21,6 +22,8 @@ export default function JobsList() {
   const [selectedJobId, setSelectedJobId] = useState<number | null>(null);
 
   const [showStatusMenu, setShowStatusMenu] = useState<number | null>(null);
+
+  const [showApplicants, setShowApplicants] = useState<number | null>(null);
 
   const fetchJobs = async () => {
     try {
@@ -106,6 +109,10 @@ export default function JobsList() {
     }
   };
 
+  const handleApplicantsClick = (jobId: number) => {
+    setShowApplicants(jobId);
+  };
+
   return (
     <div className="overflow-hidden rounded-xl bg-white shadow-sm">
       <div className="overflow-x-auto">
@@ -143,10 +150,13 @@ export default function JobsList() {
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">{job.type}</td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-1 text-sm text-gray-500">
+                  <button
+                    onClick={() => handleApplicantsClick(job.id)}
+                    className="flex items-center gap-1 text-sm text-gray-500"
+                  >
                     <Users className="h-4 w-4" />
                     {job.applicants}
-                  </div>
+                  </button>
                 </td>
                 <td className="px-6 py-4">
                   <span
@@ -244,6 +254,20 @@ export default function JobsList() {
             fetchJobs();
           }}
         />
+      )}
+
+      {showApplicants && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-2xl max-h-[80vh">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Applicants</h2>
+              <button onClick={() => setShowApplicants(null)}>
+                <X className="h-4 w-4 text-gray-700" />
+              </button>
+            </div>
+            <ApplicantsList jobId={showApplicants} />
+          </div>
+        </div>
       )}
     </div>
   );

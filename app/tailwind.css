@@ -6,12 +6,11 @@ html,
 body {
   @apply bg-white dark:bg-gray-950;
 
-  @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: light) {
     overflow-x: hidden;
     /* user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none; */
-
   }
 }

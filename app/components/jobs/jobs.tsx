@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Bookmark,
@@ -11,7 +11,9 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
+import debounce from "debounce";
 
+// Types & Interfaces
 interface Job {
   id: number;
   title: string;
@@ -23,68 +25,56 @@ interface Job {
   logo: string;
 }
 
+interface SearchFilters {
+  query: string;
+  location: string;
+  category: string;
+}
+
+// Constants
+const JOBS_PER_PAGE = 5;
+const MAX_VISIBLE_PAGES = 5;
+const DEBOUNCE_DELAY = 300;
+const API_URL = "http://localhost/polinema_career/api/jobs/index.php";
+
 export default function JobsContent() {
+  // State Management
   const [jobs, setJobs] = useState<Job[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [totalJobs, setTotalJobs] = useState(0);
-
   const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 5;
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const [filters, setFilters] = useState<SearchFilters>({
+    query: "",
+    location: "",
+    category: "",
+  });
+  const [debouncedFilters, setDebouncedFilters] = useState<SearchFilters>({
+    query: "",
+    location: "",
+    category: "",
+  });
 
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    const maxVisiblePages = 5;
-
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= 4; i++) {
-        pageNumbers.push(i);
-      }
-      pageNumbers.push("...");
-      pageNumbers.push(totalPages);
-    } else if (currentPage >= totalPages - 2) {
-      pageNumbers.push(1);
-      pageNumbers.push("...");
-      for (let i = totalPages - 3; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      pageNumbers.push(1);
-      pageNumbers.push("...");
-      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-        pageNumbers.push(i);
-      }
-      pageNumbers.push("...");
-      pageNumbers.push(totalPages);
-    }
-    return pageNumbers;
-  };
-
+  // Data Fetching
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch(
-          "http://localhost/polinema_career/api/jobs/index.php",
-        );
+        const response = await fetch(API_URL);
         const data = await response.json();
 
         if (data.status === "success") {
           setJobs(data.data);
           setTotalJobs(data.data.length);
           const uniqueCategories = Array.from(
-            new Set(data.data.map((job: Job) => job.type) as string[]),
-          );
+            new Set(data.data.map((job: Job) => job.type)),
+          ) as string[];
           setCategories(uniqueCategories);
         } else {
           setError(data.message);
         }
       } catch (err) {
-        setError("An error occurred while fetching jobs" + err);
+        setError(`An error occurred while fetching jobs: ${err}`);
       } finally {
         setLoading(false);
       }
@@ -92,6 +82,98 @@ export default function JobsContent() {
     fetchJobs();
   }, []);
 
+  // Search & Filter Utilities
+  const searchInText = useCallback((text: string, query: string): boolean => {
+    const normalizedText = text.toLowerCase();
+    const normalizedQuery = query.toLowerCase();
+    const queryWords = normalizedQuery
+      .split(/\s+/)
+      .filter((word) => word.length > 0);
+    return queryWords.every((word) => normalizedText.includes(word));
+  }, []);
+
+  const debouncedSetFilters = useCallback(
+    debounce((newFilters: SearchFilters) => {
+      setDebouncedFilters(newFilters);
+    }, DEBOUNCE_DELAY),
+    [],
+  );
+
+  // Event Handlers
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFilters = { ...filters, query: e.target.value };
+    setFilters(newFilters);
+    debouncedSetFilters(newFilters);
+  };
+
+  const handleLocationInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFilters = { ...filters, location: e.target.value };
+    setFilters(newFilters);
+    debouncedSetFilters(newFilters);
+  };
+
+  const handleCategoryClick = (selectedCategory: string) => {
+    const newFilters = {
+      ...filters,
+      category: filters.category === selectedCategory ? "" : selectedCategory,
+    };
+    setFilters(newFilters);
+    debouncedSetFilters(newFilters);
+  };
+
+  // Memoized Values
+  const filteredJobs = useMemo(() => {
+    return jobs.filter((job) => {
+      const matchesSearch =
+        !debouncedFilters.query ||
+        searchInText(`${job.title} ${job.company}`, debouncedFilters.query);
+      const matchesLocation =
+        !debouncedFilters.location ||
+        searchInText(job.location, debouncedFilters.location);
+      const matchesCategory =
+        !debouncedFilters.category || job.type === debouncedFilters.category;
+      return matchesSearch && matchesLocation && matchesCategory;
+    });
+  }, [jobs, debouncedFilters, searchInText]);
+
+  const paginatedJobs = useMemo(() => {
+    const indexOfLastJob = currentPage * JOBS_PER_PAGE;
+    const indexOfFirstJob = indexOfLastJob - JOBS_PER_PAGE;
+    return filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  }, [filteredJobs, currentPage]);
+
+  const totalPages = Math.ceil(filteredJobs.length / JOBS_PER_PAGE);
+
+  // Pagination Utilities
+  const getPageNumbers = useCallback(() => {
+    const pageNumbers = [];
+
+    if (totalPages <= MAX_VISIBLE_PAGES) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else if (currentPage >= totalPages - 2) {
+      pageNumbers.push(1, "...");
+      for (let i = totalPages - 3; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1);
+      if (currentPage > 3) pageNumbers.push("...");
+      for (
+        let i = Math.max(2, currentPage - 1);
+        i <= Math.min(currentPage + 1, totalPages - 1);
+        i++
+      ) {
+        pageNumbers.push(i);
+      }
+      if (currentPage < totalPages - 2) pageNumbers.push("...");
+      pageNumbers.push(totalPages);
+    }
+    return pageNumbers;
+  }, [currentPage, totalPages]);
+
+  // Loading & Error States
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -108,6 +190,20 @@ export default function JobsContent() {
     );
   }
 
+  if (
+    filteredJobs.length === 0 &&
+    !filters.query &&
+    !filters.location &&
+    !filters.category
+  ) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white">
+        No jobs found
+      </div>
+    );
+  }
+
+  // Render Main Content
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#fffaf8] to-white">
       <div className="mx-auto w-[90vw] max-w-7xl py-12">
@@ -142,6 +238,8 @@ export default function JobsContent() {
                 <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
+                  value={filters.query}
+                  onChange={handleSearchInput}
                   placeholder="Search jobs, keywords, companies"
                   className="w-full rounded-xl border border-gray-200 py-3 pl-12 pr-4 outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                 />
@@ -152,6 +250,8 @@ export default function JobsContent() {
                 <MapPin className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
+                  value={filters.location}
+                  onChange={handleLocationInput}
                   placeholder="Location"
                   className="w-full rounded-xl border border-gray-200 py-3 pl-12 pr-4 outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                 />
@@ -172,11 +272,16 @@ export default function JobsContent() {
           </div>
 
           {/* Categories */}
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-4 flex flex-wrap gap-3 px-4">
             {categories.map((category) => (
               <button
                 key={category}
-                className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-[#ff9b71] hover:text-[#ff9b71]"
+                onClick={() => handleCategoryClick(category)}
+                className={`rounded-full border ${
+                  category === filters.category
+                    ? "border-[#ff9b71] bg-[#ff9b71]/10 text-[#ff9b71]"
+                    : "border-gray-200 bg-white text-gray-700"
+                } px-4 py-2 text-sm font-medium shadow-md transition-all duration-200 hover:border-[#ff9b71] hover:bg-[#ff9b71]/10 hover:text-[#ff9b71]`}
               >
                 {category}
               </button>
@@ -184,9 +289,15 @@ export default function JobsContent() {
           </div>
         </div>
 
+        {(filters.query || filters.location || filters.category) && (
+          <div className="mb-2 px-4 text-sm text-gray-600">
+            <strong>{filteredJobs.length}</strong> jobs found
+          </div>
+        )}
+
         {/* Job Listings */}
         <div className="grid gap-6">
-          {currentJobs.map((job) => (
+          {paginatedJobs.map((job) => (
             <div
               key={job.id}
               className="group rounded-2xl border border-[#ff9b71]/10 bg-white p-6 shadow-lg transition-all duration-300 hover:border-[#ff9b71]/30 hover:shadow-xl"
@@ -261,8 +372,8 @@ export default function JobsContent() {
           ))}
         </div>
 
-        {/* Load More Section */}
-        {jobs.length > jobsPerPage && (
+        {/* Pagination */}
+        {jobs.length > JOBS_PER_PAGE && (
           <div className="mt-12 flex justify-center gap-2">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

@@ -1,49 +1,87 @@
 "use client";
-import { Mail, Lock, Eye, EyeOff, Sparkles, User, Building2 } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  Sparkles,
+  User,
+  Building2,
+  ArrowLeft,
+} from "lucide-react";
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "@remix-run/react";
 
 interface RegisterFormData {
   email: string;
   password: string;
+  confirmPassword: string;
   fullName: string;
   role: "job_seeker" | "employer";
-  gender: "male" | "female";
-  companyName: string;
+  gender: "male" | "female" | null;
+  companyName?: string;
+  companyLocation?: string;
+  companyDescription?: string;
+  employeeCount?: number | string;
+  openPositions?: number | string;
 }
+
+interface FormErrors {
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  fullName?: string;
+  role?: string;
+  gender?: string;
+  companyName?: string;
+  companyLocation?: string;
+  companyDescription?: string;
+  employeeCount?: number | string;
+  openPositions?: number | string;
+  message?: string;
+}
+
+const initialFormData: RegisterFormData = {
+  fullName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  role: "job_seeker",
+  gender: "male",
+  companyName: "",
+  companyLocation: "",
+  companyDescription: "",
+  employeeCount: 0,
+  openPositions: 0,
+};
+
+const initialErrors: FormErrors = {
+  fullName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  role: "",
+  gender: "",
+  companyName: "",
+  message: "",
+  companyLocation: "",
+  companyDescription: "",
+  employeeCount: 0,
+  openPositions: 0,
+};
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState<RegisterFormData>({
-    fullName: "",
-    email: "",
-    password: "",
-    role: "job_seeker",
-    gender: "male",
-    companyName: "",
-  });
-  const [errors, setErrors] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    role: "",
-    gender: "",
-    companyName: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState<RegisterFormData>(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>(initialErrors);
 
   const validateStep1 = () => {
     let isValid = true;
     const newErrors = { ...errors };
-
-    if (!formData.fullName) {
-      newErrors.fullName = "Full name is required";
-      isValid = false;
-    }
 
     if (!formData.email) {
       newErrors.email = "Email wajib diisi";
@@ -61,6 +99,14 @@ export default function RegisterForm() {
       isValid = false;
     }
 
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Konfirmasi password wajib diisi";
+      isValid = false;
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Password tidak cocok";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -69,19 +115,59 @@ export default function RegisterForm() {
     let isValid = true;
     const newErrors = { ...errors };
 
-    if (!formData.role) {
-      newErrors.role = "Role is required";
+    if (!formData.fullName) {
+      newErrors.fullName = "Nama lengkap wajib diisi";
       isValid = false;
     }
 
-    if (!formData.gender) {
-      newErrors.gender = "Gender is required";
+    if (formData.role === "job_seeker" && !formData.gender) {
+      newErrors.gender = "Gender wajib diisi";
       isValid = false;
     }
 
-    if (formData.role === "employer" ) {
-      if (!formData.companyName || formData.companyName.trim() === "") {
-        newErrors.companyName = "Company name is required";
+    if (formData.role === "employer") {
+      if (!formData.companyName) {
+        newErrors.companyName = "Nama perusahaan wajib diisi";
+        isValid = false;
+      }
+      if (!formData.companyLocation) {
+        newErrors.companyLocation = "Lokasi perusahaan wajib diisi";
+        isValid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const validateEmployerFields = () => {
+    let isValid = true;
+    const newErrors = { ...errors };
+
+    if (!formData.fullName?.trim()) {
+      newErrors.fullName = "Nama lengkap wajib diisi";
+      isValid = false;
+    }
+
+    if (formData.role === "employer") {
+      if (!formData.companyName?.trim()) {
+        newErrors.companyName = "Nama perusahaan wajib diisi";
+        isValid = false;
+      }
+      if (!formData.companyLocation?.trim()) {
+        newErrors.companyLocation = "Lokasi perusahaan wajib diisi";
+        isValid = false;
+      }
+      if (!formData.companyDescription?.trim()) {
+        newErrors.companyDescription = "Deskripsi perusahaan wajib diisi";
+        isValid = false;
+      }
+      if (!formData.employeeCount || formData.employeeCount <= 0) {
+        newErrors.employeeCount = "Jumlah karyawan harus lebih dari 0";
+        isValid = false;
+      }
+      if (!formData.openPositions || formData.openPositions <= 0) {
+        newErrors.openPositions = "Jumlah posisi harus lebih dari 0";
         isValid = false;
       }
     }
@@ -96,68 +182,114 @@ export default function RegisterForm() {
     }
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "employeeCount" || name === "openPositions") {
+      if (value === "0") {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: "",
+        }));
+        return;
+      }
+
+      if (value === "") {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: 0,
+        }));
+        return;
+      }
+
+      const numValue = parseInt(value, 10);
+      if (!isNaN(numValue)) {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: numValue,
+        }));
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (step === 1) {
       handleNext();
       return;
     }
 
-    if (!validateStep2()) {
-      return;
-    }
-
-    if (formData.role === "employer" && !formData.companyName) {
-      setErrors(prev => ({
-        ...prev,
-        companyName: "Company name is required"
-      }));
+    if (
+      !validateStep2() ||
+      (formData.role === "employer" && !validateEmployerFields())
+    ) {
       return;
     }
 
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost/polinema_career/api/register.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://localhost/polinema_career/api/register.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email.toLowerCase(),
+            password: formData.password,
+            fullName: formData.fullName,
+            role: formData.role,
+            gender: formData.role === "job_seeker" ? formData.gender : null,
+            companyName:
+              formData.role === "employer" ? formData.companyName : "",
+            companyLocation:
+              formData.role === "employer" ? formData.companyLocation : "",
+            companyDescription:
+              formData.role === "employer" ? formData.companyDescription : "",
+            employeeCount:
+              formData.role === "employer" ? Number(formData.employeeCount) : 0,
+            openPositions:
+              formData.role === "employer" ? Number(formData.openPositions) : 0,
+          }),
         },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          fullName: formData.fullName,
-          role: formData.role,
-          gender: formData.gender,
-          companyName: formData.role === "employer" ? formData.companyName : undefined,
-        }),
-      });
+      );
 
       const data = await response.json();
 
       if (data.status === "success") {
         navigate("/login", {
-          state: { message: "Registration successful! Please login." }
+          state: { message: "Registration successful! Please login." },
         });
       } else {
         if (data.message.includes("Email already exists")) {
-          setErrors(prev => ({
+          setErrors((prev) => ({
             ...prev,
             email: "Email sudah terdaftar",
-            message: ""
+            message: "",
           }));
           setStep(1);
         } else {
-          setErrors(prev => ({
+          setErrors((prev) => ({
             ...prev,
-            message: data.message || "Registrasi gagal"
+            message: data.message || "Registrasi gagal",
           }));
         }
       }
     } catch (error) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        message: "Terjadi kesalahan. Silakan coba lagi."
+        message: "Terjadi kesalahan. Silakan coba lagi.",
       }));
     } finally {
       setIsLoading(false);
@@ -165,85 +297,53 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fffaf8] relative overflow-hidden">
-      <div className="absolute top-20 -left-96 w-[500px] h-[500px] bg-[#ff9b71]/10 rounded-full blur-3xl opacity-80" />
-      <div className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-[#ff9b71]/5 rounded-full blur-3xl" />
+    <div className="relative min-h-screen overflow-hidden bg-[#fffaf8]">
+      <div className="absolute -left-96 top-20 h-[500px] w-[500px] rounded-full bg-[#ff9b71]/10 opacity-80 blur-3xl" />
+      <div className="absolute bottom-20 right-20 h-[500px] w-[500px] rounded-full bg-[#ff9b71]/5 blur-3xl" />
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
-        <div className="absolute top-4 left-4 text-[#ff9b71] transition-all duration-300 hover:scale-110">
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
+        <div className="absolute left-4 top-4 text-[#ff9b71] transition-all duration-300 hover:scale-110">
           <a href={"/"}>
             <ArrowLeft size={26} />
           </a>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md border border-[#FFE4D6] hover:border-[#FFBB9C] hover:shadow-xl hover:shadow-[#FFE4D6]/50 transition-all duration-300">
+        <div className="w-full max-w-md rounded-xl border border-[#FFE4D6] bg-white p-8 shadow-lg transition-all duration-300 hover:border-[#FFBB9C] hover:shadow-xl hover:shadow-[#FFE4D6]/50">
           {errors.message && (
-            <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 rounded-lg">
+            <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
               {errors.message}
             </div>
           )}
 
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ff9b71]/10">
-              <Sparkles className="w-4 h-4 text-[#ff9b71]" />
+          <div className="mb-6 flex justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#ff9b71]/10 px-4 py-2">
+              <Sparkles className="h-4 w-4 text-[#ff9b71]" />
               <span className="text-sm font-medium text-[#ff9b71]">
                 Step {step} of 2
               </span>
             </div>
           </div>
 
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight text-center mb-2">
+          <h1 className="mb-2 text-center text-3xl font-bold tracking-tight text-slate-900">
             Create your account
           </h1>
-          <p className="text-center text-gray-600 mb-8">
+          <p className="mb-8 text-center text-gray-600">
             Join Us and Discover New Opportunities
           </p>
 
           <form className="space-y-6 text-gray-600" onSubmit={handleSubmit}>
-            {step === 1 ? (
+            {step === 1 && (
               <div className="space-y-4">
                 <div className="relative">
-                  <User
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-[#ff9b71] h-5 w-5 ${
-                      errors.fullName ? "top-6" : ""
-                    }`}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white ${
-                      errors.fullName ? "border-red-600" : ""
-                    }`}
-                    value={formData.fullName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, fullName: e.target.value })
-                    }
-                    required
-                  />
-                  {errors.fullName && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.fullName}
-                    </p>
-                  )}
-                </div>
-
-                <div className="relative">
-                  <Mail
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-[#ff9b71] h-5 w-5 ${
-                      errors.email ? "top-6" : ""
-                    }`}
-                  />
+                  <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                   <input
                     type="email"
-                    placeholder="Email address"
-                    className={`w-full pl-10 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white ${
-                      errors.email ? "border-red-600" : ""
-                    }`}
+                    placeholder="Email"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    required
+                    className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-10 pr-4"
                   />
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -251,34 +351,25 @@ export default function RegisterForm() {
                 </div>
 
                 <div className="relative">
-                  <Lock
-                    className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-[#ff9b71] h-5 w-5 ${
-                      errors.password ? "top-6" : ""
-                    }`}
-                  />
+                  <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
-                    className={`w-full pl-10 pr-12 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white ${
-                      errors.password ? "border-red-600" : ""
-                    }`}
                     value={formData.password}
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    required
+                    className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-10 pr-4"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className={`absolute right-3 top-1/2 transform  -translate-y-1/2 text-[#ff9b71] hover:text-[#ff8c5c] transition-colors ${
-                      errors.password ? "top-6" : ""
-                    }`}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
                   >
                     {showPassword ? (
-                      <Eye className="h-5 w-5 ${error" />
+                      <EyeOff className="h-5 w-5 text-gray-400" />
                     ) : (
-                      <EyeOff className="h-5 w-5" />
+                      <Eye className="h-5 w-5 text-gray-400" />
                     )}
                   </button>
                   {errors.password && (
@@ -287,15 +378,52 @@ export default function RegisterForm() {
                     </p>
                   )}
                 </div>
+
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm Password"
+                    value={formData.confirmPassword}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-10 pr-4"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-gray-400" />
+                    )}
+                  </button>
+                  {errors.confirmPassword && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.confirmPassword}
+                    </p>
+                  )}
+                </div>
               </div>
-            ) : (
+            )}
+
+            {step === 2 && (
               <div className="space-y-4">
                 <div className="relative">
                   <select
-                    className="w-full pl-4 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white"
+                    className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-4 pr-4 transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                     value={formData.role}
                     onChange={(e) =>
-                      setFormData({ ...formData, role: e.target.value as "job_seeker" | "employer" })
+                      setFormData({
+                        ...formData,
+                        role: e.target.value as "job_seeker" | "employer",
+                      })
                     }
                     required
                   >
@@ -307,46 +435,195 @@ export default function RegisterForm() {
                     <p className="mt-1 text-sm text-red-600">{errors.role}</p>
                   )}
                 </div>
-                
-                {formData.role === "employer" && (
-                  <div className="relative">
-                    <Building2
-                      className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-[#ff9b71] h-5 w-5 ${
-                        errors.companyName ? "top-6" : ""
-                      }`}
-                    />
-                    <input type="text" 
-                    placeholder="Company Name" 
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white" 
-                    value={formData.companyName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, companyName: e.target.value })
-                    }
-                    required
-                    />
-                    {errors.companyName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.companyName}</p>
+
+                {formData.role === "job_seeker" && (
+                  <div>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        value={formData.fullName}
+                        onChange={(e) =>
+                          setFormData({ ...formData, fullName: e.target.value })
+                        }
+                        className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-10 pr-4"
+                      />
+                    </div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Gender
+                    </label>
+                    <select
+                      name="gender"
+                      value={formData.gender || ""}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2"
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                    {errors.gender && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.gender}
+                      </p>
                     )}
                   </div>
                 )}
 
-                <div className="relative">
-                  <select
-                    className="w-full pl-4 pr-4 py-3 rounded-xl border border-[#FFE4D6] focus:ring-2 focus:ring-[#ff9b71]/20 focus:border-[#ff9b71] transition-all bg-white"
-                    value={formData.gender}
-                    onChange={(e) =>
-                      setFormData({ ...formData, gender: e.target.value as "male" | "female" })
-                    }
-                    required
-                  >
-                    <option value="">Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                  {errors.gender && (
-                    <p className="mt-1 text-sm text-red-600">{errors.gender}</p>
-                  )}
-                </div>
+                {formData.role === "employer" && (
+                  <div className="space-y-4">
+                    <div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              fullName: e.target.value,
+                            })
+                          }
+                          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                        />
+                        {errors.fullName && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.fullName}
+                          </p>
+                        )}
+                      </div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Company Name
+                      </label>
+                      <input
+                        type="text"
+                        name="companyName"
+                        value={formData.companyName}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            companyName: e.target.value,
+                          })
+                        }
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                      {errors.companyName && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.companyName}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Company Location
+                      </label>
+                      <input
+                        type="text"
+                        name="companyLocation"
+                        value={formData.companyLocation}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            companyLocation: e.target.value,
+                          })
+                        }
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Company Description
+                      </label>
+                      <textarea
+                        name="companyDescription"
+                        value={formData.companyDescription}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            companyDescription: e.target.value,
+                          })
+                        }
+                        rows={3}
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Number of Employees
+                      </label>
+                      <input
+                        type="number"
+                        name="employeeCount"
+                        value={formData.employeeCount}
+                        onChange={handleInputChange}
+                        onFocus={(e) => {
+                          if (e.target.value === "0") {
+                            setFormData((prev) => ({
+                              ...prev,
+                              employeeCount: "",
+                            }));
+                          }
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value === "") {
+                            setFormData((prev) => ({
+                              ...prev,
+                              employeeCount: 0,
+                            }));
+                          }
+                        }}
+                        min="0"
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                      {errors.employeeCount && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.employeeCount}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Number of Open Positions
+                      </label>
+                      <input
+                        type="number"
+                        name="openPositions"
+                        value={formData.openPositions}
+                        onChange={handleInputChange}
+                        onFocus={(e) => {
+                          if (e.target.value === "0") {
+                            setFormData((prev) => ({
+                              ...prev,
+                              openPositions: "",
+                            }));
+                          }
+                        }}
+                        onBlur={(e) => {
+                          if (e.target.value === "") {
+                            setFormData((prev) => ({
+                              ...prev,
+                              openPositions: 0,
+                            }));
+                          }
+                        }}
+                        min="0"
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                      {errors.openPositions && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.openPositions}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -355,7 +632,7 @@ export default function RegisterForm() {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="w-1/2 border border-[#ff9b71] text-[#ff9b71] hover:bg-[#ff9b71] hover:text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200"
+                  className="w-1/2 rounded-xl border border-[#ff9b71] px-4 py-3 font-semibold text-[#ff9b71] transition-all duration-200 hover:bg-[#ff9b71] hover:text-white"
                 >
                   Back
                 </button>
@@ -366,8 +643,8 @@ export default function RegisterForm() {
                 disabled={isLoading}
                 className={`${
                   step === 1 ? "w-full" : "w-1/2"
-                } bg-[#ff9b71] hover:bg-[#ff8c5c] text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                } rounded-xl bg-[#ff9b71] px-4 py-3 font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#ff8c5c] ${
+                  isLoading ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
                 {isLoading ? "Processing..." : step === 1 ? "Next" : "Register"}
@@ -379,22 +656,10 @@ export default function RegisterForm() {
             <p className="text-gray-600">
               Already have an account?{" "}
               <a
-                href="/auth/login"
-                className="text-[#ff9b71] hover:text-[#ff8c5c] font-semibold"
+                href="login"
+                className="font-semibold text-[#ff9b71] hover:text-[#ff8c5c]"
               >
                 Login here
-              </a>
-            </p>
-          </div>
-
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Register as an employer?
-              <a
-                href="/register-employer"
-                className="text-[#ff9b71] hover:text-[#ff8c5c] font-semibold"
-              >
-                Register here
               </a>
             </p>
           </div>

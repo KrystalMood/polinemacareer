@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!$data || !isset($data['email']) || !isset($data['password']) || !isset($data['fullName']) || !isset($data['gender']) || !isset($data['role'])) {
+if (!$data || !isset($data['email']) || !isset($data['password']) || !isset($data['fullName']) || !isset($data['role'])) {
     http_response_code(400);
 
     echo json_encode([
@@ -33,11 +33,21 @@ if (!$data || !isset($data['email']) || !isset($data['password']) || !isset($dat
     exit();
 }
 
+if ($data['role'] === "job_seeker" && !isset($data['gender'])) {
+    http_response_code(400);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Gender is required for job seekers"
+    ]);
+    exit();
+}
+
+$gender = $data['role'] === "employer" ? null : $data['gender'];
+
 $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
 $password = $data['password'];
 $fullName = htmlspecialchars(strip_tags($data['fullName']));
 $role = htmlspecialchars(strip_tags($data['role']));
-$gender = htmlspecialchars(strip_tags($data['gender']));
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
@@ -57,7 +67,7 @@ if (strlen($password) < 8) {
     exit();
 }
 
-$validGenders = ['male', 'female'];
+$validGenders = ['male', 'female', null];
 
 if (!in_array($gender, $validGenders)) {
     http_response_code(400);
@@ -68,81 +78,114 @@ if (!in_array($gender, $validGenders)) {
     exit();
 }
 
-if ($role === 'employer' && !isset($data['companyName'])) {
-    http_response_code(400);
-    echo json_encode([
-        "status" => "error",
-        "message" => "Company name is required for employer registration"
-    ]);
-    exit();
-}
-
-try {
-    $checkQuery = "SELECT * FROM users WHERE email = :email LIMIT 1";
-    $checkStmt = $pdo->prepare($checkQuery);
-    $checkStmt->bindParam(":email", $email);
-    $checkStmt->execute();
-
-    if ($checkStmt->rowCount() > 0) {
+if ($role === "employer") {
+    if (!isset($data['companyName']) || empty($data['companyName'])) {
         http_response_code(400);
         echo json_encode([
             "status" => "error",
-            "message" => "Email already exists"
+            "message" => "Company name is required for employer registration"
         ]);
         exit();
     }
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    if ($role === 'employer') {
-        $companyName = htmlspecialchars(strip_tags($data['companyName']));
-        $query = "INSERT INTO users (email, password, full_name, role, gender, company_name) 
-                  VALUES (:email, :password, :fullName, :role, :gender, :companyName)";
-    } else {
-        $query = "INSERT INTO users (email, password, full_name, role, gender) 
-                  VALUES (:email, :password, :fullName, :role, :gender)";
+    if (!isset($data['companyLocation']) || empty($data['companyLocation'])) {
+        http_response_code(400);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Company location is required for employer registration"
+        ]);
+        exit();
     }
+}
 
+$companyName = null;
+$companyLocation = null;
+$companyDescription = null;
+$employeeCount = null;
+$openPositions = null;
+
+if ($role === "employer") {
+    $companyName = $data['companyName'];
+    $companyLocation = $data['companyLocation'];
+    $companyDescription = $data['companyDescription'];
+    $employeeCount = $data['employeeCount'];
+    $openPositions = $data['openPositions'];
+}
+
+try {
+    $pdo->beginTransaction();
+    
+    $query = "INSERT INTO users (email, password, full_name, role, gender, created_at) 
+              VALUES (:email, :password, :fullName, :role, :gender, NOW())";
+    
     $stmt = $pdo->prepare($query);
-
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":password", $hashedPassword);
     $stmt->bindParam(":fullName", $fullName);
     $stmt->bindParam(":role", $role);
     $stmt->bindParam(":gender", $gender);
+    
+    $stmt->execute();
+    $userId = $pdo->lastInsertId();
 
-    if ($role === 'employer') {
-        $stmt->bindParam(":companyName", $companyName);
+    if ($role === "employer") {
+        $companyQuery = "INSERT INTO companies (user_id, name, location, description, employee_count, open_positions, created_at) 
+                        VALUES (:user_id, :name, :location, :description, :employee_count, :open_positions, NOW())";
+        
+        $companyStmt = $pdo->prepare($companyQuery);
+        $companyStmt->bindParam(":user_id", $userId);
+        $companyStmt->bindParam(":name", $companyName);
+        $companyStmt->bindParam(":location", $companyLocation);
+        $companyStmt->bindParam(":description", $companyDescription);
+        $companyStmt->bindParam(":employee_count", $employeeCount);
+        $companyStmt->bindParam(":open_positions", $openPositions);
+        
+        $companyStmt->execute();
     }
 
-    if ($stmt->execute()) {
-        $userId = $pdo->lastInsertId();
+    $pdo->commit();
 
-        http_response_code(201);
-        echo json_encode([
-            "status" => "success",
-            "message" => "User registered successfully",
-            "userId" => [
+    if ($role === "employer") {
+        $companyDataQuery = "SELECT * FROM companies WHERE user_id = :user_id";
+        $companyDataStmt = $pdo->prepare($companyDataQuery);
+        $companyDataStmt->bindParam(":user_id", $userId);
+        $companyDataStmt->execute();
+        $companyData = $companyDataStmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    http_response_code(201);
+    echo json_encode([
+        "status" => "success",
+        "message" => "Registration successful",
+        "data" => [
+            "user" => [
                 "id" => $userId,
                 "email" => $email,
                 "fullName" => $fullName,
                 "role" => $role,
-            ]
+                "gender" => $gender
+            ],
+            "company" => $role === "employer" ? $companyData : null
+        ]
+    ]);
+
+} catch(PDOException $e) {
+    $pdo->rollBack();
+    
+    if (strpos($e->getMessage(), "Duplicate entry") !== false) {
+        http_response_code(400);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Email already registered"
         ]);
     } else {
-        throw new Exception("Failed to register user");
+        http_response_code(500);
+        echo json_encode([
+            "status" => "error",
+            "message" => "An error occurred: " . $e->getMessage()
+        ]);
     }
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode([
-        "status" => "error",
-        "message" => "Database error: " . $e->getMessage()
-    ]);
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        "status" => "error",
-        "message" => "Internal server error: " . $e->getMessage()
-    ]);
 }
 ?>

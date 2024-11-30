@@ -36,12 +36,21 @@ try {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if (password_verify($password, $user['password'])) {
+            $companyData = null;
+            if ($user['role'] === "employer") {
+                $companyDataQuery = "SELECT * FROM companies WHERE user_id = :user_id";
+                $companyDataStmt = $pdo->prepare($companyDataQuery);
+                $companyDataStmt->bindParam(":user_id", $user['id']);
+                $companyDataStmt->execute();
+                $companyData = $companyDataStmt->fetch(PDO::FETCH_ASSOC);
+            }
+
             $tokenData = [
                 "id" => $user['id'],
                 "email" => $user['email'],
                 "fullName" => $user['full_name'],
                 "role" => $user['role'],
-                "companyName" => $user['company_name']
+                "company" => $companyData
             ];
 
             $token = base64_encode(json_encode($tokenData));

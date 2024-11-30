@@ -25,10 +25,12 @@ $job_id = $_GET["id"];
 
 try {
     $query = "SELECT j.*, 
-              u.company_name,
-              u.email as company_email
+                j.company as company_name,
+              u.email as company_email,
+              c.logo as company_logo
               FROM jobs j 
               JOIN users u ON j.employer_id = u.id 
+              LEFT JOIN companies c ON j.employer_id = c.user_id
               WHERE j.id = :job_id";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":job_id", $job_id);

@@ -53,8 +53,10 @@ export default function CompaniesContent() {
     fetchCompanies();
   }, []);
 
-  const handleOpenPosition = (id: number) => {
-    router(`/main/jobs/position/${id}`);
+  const handleOpenPosition = (companyName: string) => {
+    const searchParams = new URLSearchParams();
+    searchParams.append('company', companyName);
+    router(`/jobs?${searchParams.toString()}`);
   };
 
   const categories = [
@@ -211,7 +213,7 @@ export default function CompaniesContent() {
                     </div>
 
                     <button
-                      onClick={() => handleOpenPosition(company.id)}
+                      onClick={() => handleOpenPosition(company.name)}
                       className="rounded-lg bg-blue-50 px-4 py-2 text-blue-600 transition-colors hover:bg-blue-100"
                     >
                       Open Position →

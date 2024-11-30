@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
+$data = $_POST;
+$files = $_FILES;
 
 if (!$data || !isset($data['email']) || !isset($data['password']) || !isset($data['fullName']) || !isset($data['role'])) {
     http_response_code(400);
@@ -42,12 +43,17 @@ if ($data['role'] === "job_seeker" && !isset($data['gender'])) {
     exit();
 }
 
-$gender = $data['role'] === "employer" ? null : $data['gender'];
+function generateUniqueFileName($originalName) {
+    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+    return uniqid() . '_' . time() . '.' . $extension;
+}
 
 $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
 $password = $data['password'];
 $fullName = htmlspecialchars(strip_tags($data['fullName']));
 $role = htmlspecialchars(strip_tags($data['role']));
+$gender = $data['role'] === "employer" ? null : $data['gender'];
+
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
@@ -103,6 +109,7 @@ $companyLocation = null;
 $companyDescription = null;
 $employeeCount = null;
 $openPositions = null;
+$logoPath = null;
 
 if ($role === "employer") {
     $companyName = $data['companyName'];
@@ -111,6 +118,18 @@ if ($role === "employer") {
     $employeeCount = $data['employeeCount'];
     $openPositions = $data['openPositions'];
 }
+
+if ($role === "employer" && isset($_FILES['logo'])) {
+    $uploadDir = 'C:/College/Manajemen_Proyek/remake_polinemacareer/public/uploads/companies/';
+    $fileName = generateUniqueFileName($_FILES['logo']['name']);
+    $targetPath = $uploadDir . $fileName;
+    
+    if (move_uploaded_file($_FILES['logo']['tmp_name'], $targetPath)) {
+        $logoPath = '/uploads/companies/' . $fileName;
+    }
+}
+
+
 
 try {
     $pdo->beginTransaction();
@@ -131,12 +150,13 @@ try {
     $userId = $pdo->lastInsertId();
 
     if ($role === "employer") {
-        $companyQuery = "INSERT INTO companies (user_id, name, location, description, employee_count, open_positions, created_at) 
-                        VALUES (:user_id, :name, :location, :description, :employee_count, :open_positions, NOW())";
+        $companyQuery = "INSERT INTO companies (user_id, name, logo, location, description, employee_count, open_positions, created_at) 
+                        VALUES (:user_id, :name, :logo, :location, :description, :employee_count, :open_positions, NOW())";
         
         $companyStmt = $pdo->prepare($companyQuery);
         $companyStmt->bindParam(":user_id", $userId);
         $companyStmt->bindParam(":name", $companyName);
+        $companyStmt->bindParam(":logo", $logoPath);
         $companyStmt->bindParam(":location", $companyLocation);
         $companyStmt->bindParam(":description", $companyDescription);
         $companyStmt->bindParam(":employee_count", $employeeCount);

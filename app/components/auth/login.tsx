@@ -68,8 +68,15 @@ export default function LoginForm() {
 
       if (data.status === "success") {
         localStorage.setItem("user", JSON.stringify(data.data));
-
-        const token = btoa(JSON.stringify(data.data));
+        const tokenData = {
+          id: data.data.id,
+          email: data.data.email,
+          fullName: data.data.fullName,
+          role: data.data.role,
+          companyName: data.data.company?.name
+        };
+        
+        const token = btoa(JSON.stringify(tokenData));
         localStorage.setItem("token", `Bearer ${token}`);
         if (data.data.role === "employer") {
           navigate("/dashboard/employer/home");

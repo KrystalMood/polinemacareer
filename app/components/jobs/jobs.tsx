@@ -18,11 +18,11 @@ interface Job {
   id: number;
   title: string;
   company: string;
+  company_logo: string;
   location: string;
   type: string;
   salary_range: string;
   deadline: string;
-  logo: string;
 }
 
 interface SearchFilters {
@@ -80,6 +80,22 @@ export default function JobsContent() {
       }
     };
     fetchJobs();
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const companyParam = params.get("company");
+
+    if (companyParam) {
+      setFilters(prev => ({
+        ...prev,
+        query: companyParam
+      }));
+      debouncedSetFilters({
+        ...filters,
+        query: companyParam
+      });
+    }
   }, []);
 
   // Search & Filter Utilities
@@ -176,7 +192,7 @@ export default function JobsContent() {
   // Loading & Error States
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#ff9b71] border-t-transparent"></div>
       </div>
     );
@@ -184,7 +200,7 @@ export default function JobsContent() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-red-500">
+      <div className="bg-white flex min-h-screen items-center justify-center text-red-500">
         {error}
       </div>
     );
@@ -307,7 +323,7 @@ export default function JobsContent() {
                 <div className="flex items-start gap-4 sm:items-center">
                   <div className="relative">
                     <img
-                      src={job.logo || "/public/temp.jpg"}
+                      src={job.company_logo || "/public/temp.jpg"}
                       alt={job.company}
                       className="h-16 w-16 rounded-xl object-cover shadow-md transition-all duration-300 group-hover:shadow-lg"
                     />
@@ -359,7 +375,7 @@ export default function JobsContent() {
                 <div className="flex items-center gap-3 sm:ml-auto">
                   <button
                     onClick={() =>
-                      (window.location.href = `/dashboard/jobseeker/jobs`)
+                      (window.location.href = `/jobs/${job.id}`)
                     }
                     className="inline-flex items-center rounded-lg bg-[#ff9b71]/10 px-6 py-2.5 font-semibold text-[#ff9b71] transition-all duration-200 hover:bg-[#ff9b71] hover:text-white"
                   >

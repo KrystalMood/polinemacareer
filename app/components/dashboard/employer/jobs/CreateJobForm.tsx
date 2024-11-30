@@ -32,14 +32,19 @@ export default function CreateJobForm({
     };
 
     try {
-      const token = localStorage.getItem("token")?.replace("Bearer ", "");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Unauthorized - Please login again");
+        return;
+      }
+
       const response = await fetch(
         "http://localhost/polinema_career/api/jobs/create.php",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: token || "",
+            Authorization: `${token}`,
           },
           body: JSON.stringify(jobData),
         },

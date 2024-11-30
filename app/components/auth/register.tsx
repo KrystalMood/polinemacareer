@@ -24,6 +24,7 @@ interface RegisterFormData {
   companyDescription?: string;
   employeeCount?: number | string;
   openPositions?: number | string;
+  logo?: File | null;
 }
 
 interface FormErrors {
@@ -34,6 +35,7 @@ interface FormErrors {
   role?: string;
   gender?: string;
   companyName?: string;
+  logo?: string;
   companyLocation?: string;
   companyDescription?: string;
   employeeCount?: number | string;
@@ -49,6 +51,7 @@ const initialFormData: RegisterFormData = {
   role: "job_seeker",
   gender: "male",
   companyName: "",
+  logo: null,
   companyLocation: "",
   companyDescription: "",
   employeeCount: 0,
@@ -63,6 +66,7 @@ const initialErrors: FormErrors = {
   role: "",
   gender: "",
   companyName: "",
+  logo: "",
   message: "",
   companyLocation: "",
   companyDescription: "",
@@ -84,10 +88,10 @@ export default function RegisterForm() {
     const newErrors = { ...errors };
 
     if (!formData.email) {
-      newErrors.email = "Email wajib diisi";
+      newErrors.email = "Email is required";
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Format email tidak valid (contoh: nama@domain.com)";
+      newErrors.email = "Invalid email format (example: name@domain.com)";
       isValid = false;
     }
 
@@ -100,10 +104,10 @@ export default function RegisterForm() {
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Konfirmasi password wajib diisi";
+      newErrors.confirmPassword = "Confirm password is required";
       isValid = false;
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Password tidak cocok";
+      newErrors.confirmPassword = "Passwords do not match";
       isValid = false;
     }
 
@@ -116,22 +120,22 @@ export default function RegisterForm() {
     const newErrors = { ...errors };
 
     if (!formData.fullName) {
-      newErrors.fullName = "Nama lengkap wajib diisi";
+      newErrors.fullName = "Full name is required";
       isValid = false;
     }
 
     if (formData.role === "job_seeker" && !formData.gender) {
-      newErrors.gender = "Gender wajib diisi";
+      newErrors.gender = "Gender is required";
       isValid = false;
     }
 
     if (formData.role === "employer") {
       if (!formData.companyName) {
-        newErrors.companyName = "Nama perusahaan wajib diisi";
+        newErrors.companyName = "Company name is required";
         isValid = false;
       }
       if (!formData.companyLocation) {
-        newErrors.companyLocation = "Lokasi perusahaan wajib diisi";
+        newErrors.companyLocation = "Company location is required";
         isValid = false;
       }
     }
@@ -145,29 +149,29 @@ export default function RegisterForm() {
     const newErrors = { ...errors };
 
     if (!formData.fullName?.trim()) {
-      newErrors.fullName = "Nama lengkap wajib diisi";
+      newErrors.fullName = "Full name is required";
       isValid = false;
     }
 
     if (formData.role === "employer") {
       if (!formData.companyName?.trim()) {
-        newErrors.companyName = "Nama perusahaan wajib diisi";
+        newErrors.companyName = "Company name is required";
         isValid = false;
       }
       if (!formData.companyLocation?.trim()) {
-        newErrors.companyLocation = "Lokasi perusahaan wajib diisi";
+        newErrors.companyLocation = "Company location is required";
         isValid = false;
       }
       if (!formData.companyDescription?.trim()) {
-        newErrors.companyDescription = "Deskripsi perusahaan wajib diisi";
+        newErrors.companyDescription = "Company description is required";
         isValid = false;
       }
-      if (!formData.employeeCount || formData.employeeCount <= 0) {
-        newErrors.employeeCount = "Jumlah karyawan harus lebih dari 0";
+      if (!formData.employeeCount || Number(formData.employeeCount) <= 0) {
+        newErrors.employeeCount = "Number of employees must be greater than 0";
         isValid = false;
       }
-      if (!formData.openPositions || formData.openPositions <= 0) {
-        newErrors.openPositions = "Jumlah posisi harus lebih dari 0";
+      if (!formData.openPositions || Number(formData.openPositions) <= 0) {
+        newErrors.openPositions = "Number of positions must be greater than 0";
         isValid = false;
       }
     }
@@ -238,30 +242,29 @@ export default function RegisterForm() {
 
     setIsLoading(true);
     try {
+      const formDataObj = new FormData();
+      formDataObj.append("email", formData.email.toLowerCase());
+      formDataObj.append("password", formData.password);
+      formDataObj.append("fullName", formData.fullName);
+      formDataObj.append("role", formData.role);
+      formDataObj.append("gender", formData.role === "job_seeker" ? formData.gender || "" :  "");
+
+      if (formData.role === "employer") {
+        formDataObj.append("companyName", formData.companyName || "");
+        formDataObj.append("companyLocation", formData.companyLocation || "");
+        formDataObj.append("companyDescription", formData.companyDescription || "");
+        formDataObj.append("employeeCount", String(formData.employeeCount) || "");
+        formDataObj.append("openPositions", String(formData.openPositions) || "");
+        if (formData.logo) {
+          formDataObj.append("logo", formData.logo);
+        }
+      }
+
       const response = await fetch(
         "http://localhost/polinema_career/api/register.php",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: formData.email.toLowerCase(),
-            password: formData.password,
-            fullName: formData.fullName,
-            role: formData.role,
-            gender: formData.role === "job_seeker" ? formData.gender : null,
-            companyName:
-              formData.role === "employer" ? formData.companyName : "",
-            companyLocation:
-              formData.role === "employer" ? formData.companyLocation : "",
-            companyDescription:
-              formData.role === "employer" ? formData.companyDescription : "",
-            employeeCount:
-              formData.role === "employer" ? Number(formData.employeeCount) : 0,
-            openPositions:
-              formData.role === "employer" ? Number(formData.openPositions) : 0,
-          }),
+          body: formDataObj,
         },
       );
 
@@ -275,21 +278,21 @@ export default function RegisterForm() {
         if (data.message.includes("Email already exists")) {
           setErrors((prev) => ({
             ...prev,
-            email: "Email sudah terdaftar",
+            email: "Email already registered",
             message: "",
           }));
           setStep(1);
         } else {
           setErrors((prev) => ({
             ...prev,
-            message: data.message || "Registrasi gagal",
+            message: data.message || "Registration failed",
           }));
         }
       }
     } catch (error) {
       setErrors((prev) => ({
         ...prev,
-        message: "Terjadi kesalahan. Silakan coba lagi.",
+        message: "An error occurred. Please try again.",
       }));
     } finally {
       setIsLoading(false);
@@ -473,28 +476,29 @@ export default function RegisterForm() {
                 {formData.role === "employer" && (
                   <div className="space-y-4">
                     <div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          name="fullName"
-                          value={formData.fullName}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              fullName: e.target.value,
-                            })
-                          }
-                          className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                        />
-                        {errors.fullName && (
-                          <p className="mt-1 text-sm text-red-600">
-                            {errors.fullName}
-                          </p>
-                        )}
-                      </div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            fullName: e.target.value,
+                          })
+                        }
+                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
+                      {errors.fullName && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.fullName}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
                       <label className="block text-sm font-medium text-gray-700">
                         Company Name
                       </label>
@@ -515,6 +519,27 @@ export default function RegisterForm() {
                           {errors.companyName}
                         </p>
                       )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Company Logo
+                      </label>
+                      <input 
+                      type="file" 
+                      name="logo"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setFormData((prev) => ({
+                            ...prev,
+                            logo: file,
+                          }));
+                        }
+                      }}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
+                      />
                     </div>
 
                     <div>

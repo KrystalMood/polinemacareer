@@ -44,6 +44,7 @@ export default function EmployerDashboardLayout({
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 

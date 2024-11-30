@@ -12,6 +12,7 @@ CREATE TABLE companies (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
+    logo VARCHAR(255) DEFAULT NULL,
     location VARCHAR(255) NOT NULL,
     description TEXT,
     employee_count INT DEFAULT 0,

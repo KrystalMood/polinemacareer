@@ -27,7 +27,7 @@ try {
         $sort_direction = 'DESC';
     }
 
-    $query = "SELECT * FROM jobs WHERE status = 'Active' ORDER BY $sort_field $sort_direction";
+    $query = "SELECT j.*, c.logo as company_logo FROM jobs j LEFT JOIN companies c ON j.employer_id = c.user_id WHERE j.status = 'Active' ORDER BY j.$sort_field $sort_direction";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

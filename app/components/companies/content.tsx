@@ -8,6 +8,7 @@ import {
   Star,
   ArrowRight,
   Sparkles,
+  Building2,
 } from "lucide-react";
 // import companies from "~/constants/companies";
 import { useNavigate } from "@remix-run/react";
@@ -55,7 +56,7 @@ export default function CompaniesContent() {
 
   const handleOpenPosition = (companyName: string) => {
     const searchParams = new URLSearchParams();
-    searchParams.append('company', companyName);
+    searchParams.append("company", companyName);
     router(`/jobs?${searchParams.toString()}`);
   };
 
@@ -71,7 +72,7 @@ export default function CompaniesContent() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-white">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#ff9b71] border-t-transparent"></div>
       </div>
     );
@@ -79,7 +80,7 @@ export default function CompaniesContent() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-red-500">
+      <div className="flex min-h-screen items-center justify-center bg-white text-red-500">
         {error}
       </div>
     );
@@ -132,16 +133,6 @@ export default function CompaniesContent() {
                   placeholder="Location"
                   className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                 />
-              </div>
-
-              {/* Industry Select */}
-              <div className="flex-1">
-                <select className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-black outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20">
-                  <option value="">Select Industry</option>
-                  <option value="tech">Technology</option>
-                  <option value="finance">Finance</option>
-                  <option value="healthcare">Healthcare</option>
-                </select>
               </div>
 
               {/* Search Button */}
@@ -212,12 +203,22 @@ export default function CompaniesContent() {
                       </p>
                     </div>
 
-                    <button
-                      onClick={() => handleOpenPosition(company.name)}
-                      className="rounded-lg bg-blue-50 px-4 py-2 text-blue-600 transition-colors hover:bg-blue-100"
-                    >
-                      Open Position →
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => handleOpenPosition(company.name)}
+                        className="flex items-center gap-2 rounded-lg bg-[#ff9b71]/10 px-4 py-2 text-[#ff9b71] transition-all duration-300 hover:bg-[#ff9b71]/20"
+                      >
+                        <Briefcase size={16} />
+                        <span>Open Positions</span>
+                      </button>
+                      <button
+                        onClick={() => router(`/companies/${company.id}`)}
+                        className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-700 transition-all duration-300 hover:bg-gray-200"
+                      >
+                        <Building2 size={16} />
+                        <span>View Company</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

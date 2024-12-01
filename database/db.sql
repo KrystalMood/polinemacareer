@@ -16,6 +16,9 @@ CREATE TABLE companies (
     location VARCHAR(255) NOT NULL,
     description TEXT,
     employee_count INT DEFAULT 0,
+    industry VARCHAR(255) DEFAULT NULL,
+    founded_year INT DEFAULT NULL,
+    website VARCHAR(255) DEFAULT NULL,
     open_positions INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)

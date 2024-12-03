@@ -1,6 +1,13 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { Link, useNavigate } from "@remix-run/react";
-import { BellIcon, BriefcaseIcon, HistoryIcon, Home, LogOut, UserIcon } from "lucide-react";
+import {
+  BellIcon,
+  BriefcaseIcon,
+  HistoryIcon,
+  Home,
+  LogOut,
+  UserIcon,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
 
@@ -79,6 +86,12 @@ export default function DashboardLayout({
 
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 rounded-lg bg-white py-2 shadow-lg">
+                  <button
+                    onClick={() => navigate("/dashboard/jobseeker/profile")}
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                  >
+                    Edit Profile
+                  </button>
                   <button
                     onClick={handleLogout}
                     className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50"

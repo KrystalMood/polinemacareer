@@ -71,7 +71,6 @@ export default function LoginForm() {
         const tokenData = {
           id: data.data.id,
           email: data.data.email,
-          fullName: data.data.fullName,
           role: data.data.role,
           companyName: data.data.company?.name
         };

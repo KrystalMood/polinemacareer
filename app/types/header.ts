@@ -1,9 +1,14 @@
+interface Company {
+  name: string;
+  logo: string;
+}
+
 export interface UserData {
   id: number;
   email: string;
   fullName: string;
   role: "job_seeker" | "employer";
-  companyName?: string;
+  company?: Company;
 }
 
 export interface HeaderProps {

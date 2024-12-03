@@ -18,9 +18,6 @@ export interface LoginFormData {
 export interface RegisterFormData {
   email: string;
   password: string;
-  fullName: string;
+  confirmPassword: string;
   role: UserRole;
-  companyName?: string;
-  companyLogo?: string;
-  gender: string;
 } 

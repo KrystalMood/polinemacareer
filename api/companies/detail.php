@@ -24,7 +24,7 @@ if (!isset($_GET["id"])) {
 $company_id = $_GET["id"];
 
 try {
-    $query = "SELECT c.*, u.email, u.phone
+    $query = "SELECT c.*, u.email
     FROM companies c
     JOIN users u ON c.user_id = u.id
     WHERE c.id = :company_id";

@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "@remix-run/react";
-import { 
-  Home, 
-  BriefcaseIcon, 
-  Users, 
+import {
+  Home,
+  BriefcaseIcon,
+  Users,
   Settings,
   LogOut,
-  Bell
+  Bell,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
@@ -19,7 +19,7 @@ const menu = [
   {
     name: "Jobs",
     icon: <BriefcaseIcon />,
-    path: "/dashboard/employer/jobs", 
+    path: "/dashboard/employer/jobs",
   },
   {
     name: "Applicants",
@@ -30,7 +30,7 @@ const menu = [
     name: "Settings",
     icon: <Settings />,
     path: "/dashboard/employer/settings",
-  }
+  },
 ];
 
 export default function EmployerDashboardLayout({
@@ -55,26 +55,28 @@ export default function EmployerDashboardLayout({
         <div className="flex h-full items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <img src="/favicon.ico" alt="logo" className="h-8 w-8" />
-            <h1 className="text-xl font-bold text-gray-900">Dashboard Perusahaan</h1>
+            <h1 className="text-xl font-bold text-gray-900">
+              Dashboard Perusahaan
+            </h1>
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded-full">
+            <button className="rounded-full p-2 hover:bg-gray-100">
               <Bell className="h-5 w-5 text-gray-600" />
             </button>
-            
+
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="flex items-center gap-2 rounded-lg p-2 hover:bg-gray-50"
               >
                 <img
-                  src="/company-logo.jpg"
-                  alt=""
+                  src={userData?.company?.logo || "/company-logo.jpg"}
+                  alt={userData?.company?.name || "Company Logo"}
                   className="h-8 w-8 rounded-full object-cover"
                 />
                 <span className="text-sm font-medium text-gray-700">
-                  {userData?.companyName || "Perusahaan"}
+                  {userData?.company?.name || "Company"}
                 </span>
               </button>
 
@@ -113,4 +115,4 @@ export default function EmployerDashboardLayout({
       <div className="ml-64 p-8 pt-16">{children}</div>
     </main>
   );
-} 
+}

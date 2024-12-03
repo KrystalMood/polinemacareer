@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Search,
   MapPin,
@@ -12,11 +12,13 @@ import {
 } from "lucide-react";
 // import companies from "~/constants/companies";
 import { useNavigate } from "@remix-run/react";
+import debounce from "debounce";
 
 interface Company {
   id: number;
   name: string;
   location: string;
+  industry: string;
   description: string;
   logo: string;
   employee_count: number;
@@ -29,6 +31,16 @@ export default function CompaniesContent() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Companies");
+
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      setSearchQuery(query);
+    }, 500),
+    [],
+  );
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -60,6 +72,18 @@ export default function CompaniesContent() {
     router(`/jobs?${searchParams.toString()}`);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleLocationSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationQuery(e.target.value);
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   const categories = [
     "All Companies",
     "Technology",
@@ -69,6 +93,23 @@ export default function CompaniesContent() {
     "Manufacturing",
     "Retail",
   ];
+
+  const filteredCompanies = companies.filter((company) => {
+    const matchesSearch =
+      !searchQuery ||
+      company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      company.industry?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesLocation =
+      !locationQuery ||
+      company.location.toLowerCase().includes(locationQuery.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "All Companies" ||
+      company.industry === selectedCategory;
+
+    return matchesSearch && matchesLocation && matchesCategory;
+  });
 
   if (loading) {
     return (
@@ -121,6 +162,8 @@ export default function CompaniesContent() {
                 <input
                   type="text"
                   placeholder="Search companies, industries..."
+                  value={searchQuery}
+                  onChange={handleSearch}
                   className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                 />
               </div>
@@ -131,6 +174,8 @@ export default function CompaniesContent() {
                 <input
                   type="text"
                   placeholder="Location"
+                  value={locationQuery}
+                  onChange={handleLocationSearch}
                   className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-12 pr-4 outline-none transition-all focus:border-[#ff9b71] focus:ring-2 focus:ring-[#ff9b71]/20"
                 />
               </div>
@@ -148,7 +193,12 @@ export default function CompaniesContent() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:border-[#ff9b71] hover:text-[#ff9b71]"
+                onClick={() => handleCategoryClick(category)}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  selectedCategory === category
+                    ? "border-[#ff9b71] bg-[#ff9b71]/10 text-[#ff9b71]"
+                    : "border-gray-200 bg-white text-gray-700 hover:border-[#ff9b71] hover:text-[#ff9b71]"
+                }`}
               >
                 {category}
               </button>
@@ -167,7 +217,7 @@ export default function CompaniesContent() {
           {/* Companies Grid */}
           <div className="flex-1">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
-              {companies.map((company) => (
+              {filteredCompanies.map((company) => (
                 <div
                   key={company.id}
                   className="group rounded-2xl border border-[#ff9b71]/10 bg-white p-6 shadow-lg transition-all duration-300 hover:border-[#ff9b71]/30 hover:shadow-xl"

@@ -18,7 +18,7 @@ if (!$data || !isset($data->email) || !isset($data->password)) {
     http_response_code(400);
     echo json_encode([
         "status" => "error",
-        "message" => "Data tidak lengkap"
+        "message" => "Email and password are required"
     ]);
     exit();
 }
@@ -48,7 +48,6 @@ try {
             $tokenData = [
                 "id" => $user['id'],
                 "email" => $user['email'],
-                "fullName" => $user['full_name'],
                 "role" => $user['role'],
                 "company" => $companyData
             ];

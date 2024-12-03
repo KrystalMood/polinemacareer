@@ -16,62 +16,30 @@ interface RegisterFormData {
   email: string;
   password: string;
   confirmPassword: string;
-  fullName: string;
   role: "job_seeker" | "employer";
-  gender: "male" | "female" | null;
-  companyName?: string;
-  companyLocation?: string;
-  companyDescription?: string;
-  employeeCount?: number | string;
-  openPositions?: number | string;
-  logo?: File | null;
 }
 
 interface FormErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
-  fullName?: string;
   role?: string;
-  gender?: string;
-  companyName?: string;
-  logo?: string;
-  companyLocation?: string;
-  companyDescription?: string;
-  employeeCount?: number | string;
-  openPositions?: number | string;
-  message?: string;
+  message?: string; 
 }
 
 const initialFormData: RegisterFormData = {
-  fullName: "",
   email: "",
   password: "",
   confirmPassword: "",
   role: "job_seeker",
-  gender: "male",
-  companyName: "",
-  logo: null,
-  companyLocation: "",
-  companyDescription: "",
-  employeeCount: 0,
-  openPositions: 0,
 };
 
 const initialErrors: FormErrors = {
-  fullName: "",
   email: "",
   password: "",
   confirmPassword: "",
   role: "",
-  gender: "",
-  companyName: "",
-  logo: "",
   message: "",
-  companyLocation: "",
-  companyDescription: "",
-  employeeCount: 0,
-  openPositions: 0,
 };
 
 export default function RegisterForm() {
@@ -119,61 +87,9 @@ export default function RegisterForm() {
     let isValid = true;
     const newErrors = { ...errors };
 
-    if (!formData.fullName) {
-      newErrors.fullName = "Full name is required";
+    if (!formData.role) {
+      newErrors.role = "Please select a role";
       isValid = false;
-    }
-
-    if (formData.role === "job_seeker" && !formData.gender) {
-      newErrors.gender = "Gender is required";
-      isValid = false;
-    }
-
-    if (formData.role === "employer") {
-      if (!formData.companyName) {
-        newErrors.companyName = "Company name is required";
-        isValid = false;
-      }
-      if (!formData.companyLocation) {
-        newErrors.companyLocation = "Company location is required";
-        isValid = false;
-      }
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
-  const validateEmployerFields = () => {
-    let isValid = true;
-    const newErrors = { ...errors };
-
-    if (!formData.fullName?.trim()) {
-      newErrors.fullName = "Full name is required";
-      isValid = false;
-    }
-
-    if (formData.role === "employer") {
-      if (!formData.companyName?.trim()) {
-        newErrors.companyName = "Company name is required";
-        isValid = false;
-      }
-      if (!formData.companyLocation?.trim()) {
-        newErrors.companyLocation = "Company location is required";
-        isValid = false;
-      }
-      if (!formData.companyDescription?.trim()) {
-        newErrors.companyDescription = "Company description is required";
-        isValid = false;
-      }
-      if (!formData.employeeCount || Number(formData.employeeCount) <= 0) {
-        newErrors.employeeCount = "Number of employees must be greater than 0";
-        isValid = false;
-      }
-      if (!formData.openPositions || Number(formData.openPositions) <= 0) {
-        newErrors.openPositions = "Number of positions must be greater than 0";
-        isValid = false;
-      }
     }
 
     setErrors(newErrors);
@@ -186,45 +102,6 @@ export default function RegisterForm() {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) => {
-    const { name, value } = e.target;
-
-    if (name === "employeeCount" || name === "openPositions") {
-      if (value === "0") {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: "",
-        }));
-        return;
-      }
-
-      if (value === "") {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: 0,
-        }));
-        return;
-      }
-
-      const numValue = parseInt(value, 10);
-      if (!isNaN(numValue)) {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: numValue,
-        }));
-      }
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -233,10 +110,7 @@ export default function RegisterForm() {
       return;
     }
 
-    if (
-      !validateStep2() ||
-      (formData.role === "employer" && !validateEmployerFields())
-    ) {
+    if (!validateStep2()) {
       return;
     }
 
@@ -245,20 +119,7 @@ export default function RegisterForm() {
       const formDataObj = new FormData();
       formDataObj.append("email", formData.email.toLowerCase());
       formDataObj.append("password", formData.password);
-      formDataObj.append("fullName", formData.fullName);
       formDataObj.append("role", formData.role);
-      formDataObj.append("gender", formData.role === "job_seeker" ? formData.gender || "" :  "");
-
-      if (formData.role === "employer") {
-        formDataObj.append("companyName", formData.companyName || "");
-        formDataObj.append("companyLocation", formData.companyLocation || "");
-        formDataObj.append("companyDescription", formData.companyDescription || "");
-        formDataObj.append("employeeCount", String(formData.employeeCount) || "");
-        formDataObj.append("openPositions", String(formData.openPositions) || "");
-        if (formData.logo) {
-          formDataObj.append("logo", formData.logo);
-        }
-      }
 
       const response = await fetch(
         "http://localhost/polinema_career/api/register.php",
@@ -425,7 +286,7 @@ export default function RegisterForm() {
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        role: e.target.value as "job_seeker" | "employer",
+                        role: e.target.value as "job_seeker" | "employer"
                       })
                     }
                     required
@@ -438,217 +299,6 @@ export default function RegisterForm() {
                     <p className="mt-1 text-sm text-red-600">{errors.role}</p>
                   )}
                 </div>
-
-                {formData.role === "job_seeker" && (
-                  <div>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        value={formData.fullName}
-                        onChange={(e) =>
-                          setFormData({ ...formData, fullName: e.target.value })
-                        }
-                        className="w-full rounded-xl border border-[#FFE4D6] bg-white py-3 pl-10 pr-4"
-                      />
-                    </div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Gender
-                    </label>
-                    <select
-                      name="gender"
-                      value={formData.gender || ""}
-                      onChange={handleInputChange}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2"
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    {errors.gender && (
-                      <p className="mt-1 text-sm text-red-600">
-                        {errors.gender}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {formData.role === "employer" && (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            fullName: e.target.value,
-                          })
-                        }
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                      {errors.fullName && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.fullName}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Company Name
-                      </label>
-                      <input
-                        type="text"
-                        name="companyName"
-                        value={formData.companyName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            companyName: e.target.value,
-                          })
-                        }
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                      {errors.companyName && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.companyName}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Company Logo
-                      </label>
-                      <input 
-                      type="file" 
-                      name="logo"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setFormData((prev) => ({
-                            ...prev,
-                            logo: file,
-                          }));
-                        }
-                      }}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Company Location
-                      </label>
-                      <input
-                        type="text"
-                        name="companyLocation"
-                        value={formData.companyLocation}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            companyLocation: e.target.value,
-                          })
-                        }
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Company Description
-                      </label>
-                      <textarea
-                        name="companyDescription"
-                        value={formData.companyDescription}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            companyDescription: e.target.value,
-                          })
-                        }
-                        rows={3}
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Number of Employees
-                      </label>
-                      <input
-                        type="number"
-                        name="employeeCount"
-                        value={formData.employeeCount}
-                        onChange={handleInputChange}
-                        onFocus={(e) => {
-                          if (e.target.value === "0") {
-                            setFormData((prev) => ({
-                              ...prev,
-                              employeeCount: "",
-                            }));
-                          }
-                        }}
-                        onBlur={(e) => {
-                          if (e.target.value === "") {
-                            setFormData((prev) => ({
-                              ...prev,
-                              employeeCount: 0,
-                            }));
-                          }
-                        }}
-                        min="0"
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                      {errors.employeeCount && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.employeeCount}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Number of Open Positions
-                      </label>
-                      <input
-                        type="number"
-                        name="openPositions"
-                        value={formData.openPositions}
-                        onChange={handleInputChange}
-                        onFocus={(e) => {
-                          if (e.target.value === "0") {
-                            setFormData((prev) => ({
-                              ...prev,
-                              openPositions: "",
-                            }));
-                          }
-                        }}
-                        onBlur={(e) => {
-                          if (e.target.value === "") {
-                            setFormData((prev) => ({
-                              ...prev,
-                              openPositions: 0,
-                            }));
-                          }
-                        }}
-                        min="0"
-                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-[#ff9b71] focus:outline-none focus:ring-1 focus:ring-[#ff9b71]"
-                      />
-                      {errors.openPositions && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.openPositions}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
             )}
 
